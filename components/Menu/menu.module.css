@@ -1,0 +1,33 @@
+.container {
+  padding: 0rem 4rem;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+  position: fixed;
+  border-radius: 5px;
+
+  color: var(--menuLabel);
+
+  height: 4rem;
+
+  /* Frosty Glass Effect */
+  z-index: 1;
+  box-shadow: 0 0 10rem 0 var(--menubg);
+  backdrop-filter: blur(5px);
+}
+
+.menu-items-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+
+.menuButton {
+  border: 1px solid var(--menuLabel);
+  border-radius: 2em;
+  padding: 0.5em 1em;
+}
