@@ -47,7 +47,7 @@ export default function Home() {
           </p>
 
           <p>
-            Here's what I'm doing right <a href="/now/">now</a>.
+            Here&apos;s what I&apos;m doing right <a href="/now/">now</a>.
           </p>
         </div>
       </main>
