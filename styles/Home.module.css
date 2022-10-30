@@ -16,7 +16,7 @@
 .homeHeader {
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: flex-end;
   gap: 4em;
 }
 
@@ -140,10 +140,13 @@
 }
 
 @media (max-width: 700px) {
+  .main {
+    padding-top: 6rem;
+  }
   .homeHeader {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     gap: 4em;
   }
 
