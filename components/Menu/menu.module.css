@@ -30,6 +30,7 @@
   border: 1px solid var(--menuLabel);
   border-radius: 2em;
   padding: 0.5em 1em;
+  cursor: pointer;
 }
 
 @media (max-width: 700px) {

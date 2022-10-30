@@ -1,0 +1,9 @@
+.footerContainer {
+  padding: 0rem 4rem;
+}
+
+@media (max-width: 700px) {
+  .footerContainer {
+    padding: 0rem 2rem;
+  }
+}
