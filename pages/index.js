@@ -1,5 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -16,10 +17,21 @@ export default function Home() {
             <h1>shak&apos;s </h1>
             <h1>corner</h1>
           </div>
-          <div className={styles.subtitle}>
-            <p>Making things.</p>
-            <p>Writing code.</p>
-            <p>Minimalist.</p>
+          <div>
+            {/* <Image
+              priority
+              // className={iconClassName}
+              src={`/icons/Corner.svg`}
+              height={120}
+              width={120}
+              alt="Theme-changer"
+              // onClick={clickHander}
+            /> */}
+            <div className={styles.subtitle}>
+              <p>Making things.</p>
+              <p>Writing code.</p>
+              <p>Minimalist.</p>
+            </div>
           </div>
         </div>
 
@@ -31,6 +43,18 @@ export default function Home() {
             I was an integral part of the development of a design collaboration
             application called <a href="https://nila.cloud/">Nila.</a> I prefer
             front end. I can do back end.
+          </p>
+
+          <p>
+            I consider myself a Minimalist, and a digital privacy advocate.
+            Always curious and to some extend perplexed by the rapid evolution
+            of trends in technology.
+          </p>
+
+          <p>
+            I consider myself a Minimalist, and a digital privacy advocate.
+            Always curious and to some extend perplexed by the rapid evolution
+            of trends in technology.
           </p>
 
           <p>
