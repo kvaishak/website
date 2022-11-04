@@ -1,13 +1,8 @@
 .container {
-  padding: 0rem 4rem;
+  padding: 1rem 4rem;
   width: 100%;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-shrink: 0;
   position: fixed;
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
 
   color: var(--menuLabel);
 
@@ -15,13 +10,33 @@
 
   /* Frosty Glass Effect */
   z-index: 1;
-  box-shadow: 0 0 10rem 0 var(--menubg);
+  box-shadow: 10rem 0 10rem 0 var(--menubg);
   backdrop-filter: blur(15px);
 
   transition: all 0.5s ease;
 }
 
+.click {
+  height: 50vh;
+}
+
+.navContainer {
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .homeContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: none;
+}
+
+.logoContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -34,6 +49,7 @@
   flex-direction: row;
   gap: 20px;
   align-items: center;
+  /* transition: all 1.5s ease; */
 }
 
 .itemsContainer a {
@@ -62,12 +78,33 @@
 
 @media (max-width: 700px) {
   .container {
-    padding: 0rem 2rem;
+    padding: 1rem 2rem;
   }
   .itemsContainer {
     display: none;
   }
   .MenuIconContainer {
     display: block;
+  }
+  .homeContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0px;
+    align-items: center;
+  }
+  .navContainer {
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 4rem;
+    align-items: flex-end;
+  }
+
+  .click .itemsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
 }
