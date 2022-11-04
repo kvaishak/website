@@ -18,6 +18,8 @@
   flex-direction: row;
   align-items: flex-end;
   gap: 4em;
+  width: inherit;
+  justify-content: center;
 }
 
 .footer {
@@ -49,8 +51,9 @@
 
 .title {
   margin: 0;
-  line-height: 0.835;
-  font-size: 4rem;
+  line-height: 1;
+  font-size: 2rem;
+  text-align: end;
 }
 
 .title h1:nth-child(2) {
@@ -146,12 +149,13 @@
   .homeHeader {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 4em;
+    align-items: flex-start;
+    gap: 2em;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    text-align: start;
   }
 
   .title h1:nth-child(2) {

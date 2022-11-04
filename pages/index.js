@@ -14,8 +14,8 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.homeHeader}>
           <div className={styles.title}>
-            <h1>shak&apos;s </h1>
-            <h1>corner</h1>
+            <h1>Hello I&apos;am Vaishak</h1>
+            <h1>Kaippanchery</h1>
           </div>
           <div>
             {/* <Image
