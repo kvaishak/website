@@ -1,8 +1,16 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import Image from "next/image";
+// import Image from "next/image";
+const { Client } = require("@notionhq/client");
 
-export default function Home() {
+export default function Home({ list }) {
+  const content =
+    list &&
+    list.map((element) => {
+      const data = element[element.type].rich_text[0].plain_text;
+      return <p key={element.id}>{data}</p>;
+    });
+
   return (
     <div className={styles.container}>
       <Head>
@@ -35,45 +43,25 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={styles.description}>
-          <p>
-            I am a Software Engineer working as a Front end Developer for
-            <a href="http://liqid.de/"> Liqid Investments</a>, Berlin. I
-            previously worked for <a href="https://www.zoho.com/">Zoho</a> where
-            I was an integral part of the development of a design collaboration
-            application called <a href="https://nila.cloud/">Nila.</a> I prefer
-            front end. I can do back end.
-          </p>
-
-          <p>
-            I consider myself a Minimalist, and a digital privacy advocate.
-            Always curious and to some extend perplexed by the rapid evolution
-            of trends in technology.
-          </p>
-
-          <p>
-            I consider myself a Minimalist, and a digital privacy advocate.
-            Always curious and to some extend perplexed by the rapid evolution
-            of trends in technology.
-          </p>
-
-          <p>
-            I consider myself a Minimalist, and a digital privacy advocate.
-            Always curious and to some extend perplexed by the rapid evolution
-            of trends in technology.
-          </p>
-
-          <p>
-            I have always been fascinated by tools of thought and am currently
-            in the neverending pursuit of finding that one <b>perfect</b> tool
-            to add it to my stack.
-          </p>
-
-          <p>
-            Here&apos;s what I&apos;m doing right <a href="/now/">now</a>.
-          </p>
-        </div>
+        <div className={styles.description}>{content}</div>
       </main>
     </div>
   );
+}
+
+//notion API
+export async function getStaticProps() {
+  const notion = new Client({ auth: process.env.NOTION_API_KEY });
+
+  const response = await notion.blocks.children.list({
+    block_id: process.env.NOTION_HOME_ID,
+    page_size: 50,
+  });
+
+  return {
+    props: {
+      list: response.results,
+    },
+    revalidate: 60,
+  };
 }
