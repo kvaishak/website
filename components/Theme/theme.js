@@ -4,11 +4,12 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
+import ClientOnly from "../../HOC/ClientOnly";
+
 export default function Theme() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
 
-  let isLightTheme = theme == "light" ? true : false;
+  let isLightTheme = theme === "light";
   const iconType = isLightTheme ? "SunIcon" : "MoonIcon";
   const iconClassName = isLightTheme ? "" : "iconInvert";
 
@@ -20,25 +21,19 @@ export default function Theme() {
     }
   };
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
   return (
-    <div className={styles.logoIcon}>
-      <Image
-        priority
-        className={iconClassName}
-        src={`/icons/${iconType}.svg`}
-        height={20}
-        width={20}
-        alt="Theme-changer"
-        onClick={clickHander}
-      />
-    </div>
+    <ClientOnly>
+      <div className={styles.logoIcon}>
+        <Image
+          priority
+          className={iconClassName}
+          src={`/icons/${iconType}.svg`}
+          height={20}
+          width={20}
+          alt="Theme-changer"
+          onClick={clickHander}
+        />
+      </div>
+    </ClientOnly>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useCurrentWidth from "../../styles/customHooks/Resizer";
+import useCurrentWidth from "../../customHooks/Resizer";
 
 import styles from "../Menu/menu.module.css";
 import Link from "next/link";
@@ -10,7 +10,7 @@ import { useTheme } from "next-themes";
 
 export default function Menu() {
   const [click, setClick] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   let width = useCurrentWidth();
   const router = useRouter();
 
