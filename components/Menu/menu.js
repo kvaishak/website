@@ -55,7 +55,7 @@ export default function Menu() {
   return (
     <div className={navigationContainerStyle}>
       <div className={styles.navContainer}>
-        <div className={styles.homeContainer}>
+        <div className={styles.homeContainer} onClick={navBtnClick}>
           <Link href="/">
             <div className={styles.logoContainer}>
               shak{" "}

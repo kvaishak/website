@@ -10,7 +10,7 @@
   /* Frosty Glass Effect */
   z-index: 1;
   box-shadow: 10rem 0 10rem 0 var(--menubg);
-  border: 1px solid hsla(0, 0%, 59%, 0.16);
+  border-bottom: 1px solid hsla(0, 0%, 59%, 0.16);
   backdrop-filter: blur(15px);
 
   transition: all 0.5s ease;
