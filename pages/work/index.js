@@ -7,9 +7,9 @@ import ClientOnly from "../../HOC/ClientOnly";
 import workStyles from "./index.module.css";
 
 const Work = ({ recordMap }) => {
-  console.log(recordMap);
-  const { theme } = useTheme();
-  const isDarkMode = theme === "dark";
+  const { theme, systemTheme } = useTheme();
+  const isDarkMode =
+    theme === "system" ? systemTheme === "dark" : theme === "dark";
 
   return (
     <ClientOnly>
