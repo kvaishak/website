@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useCurrentWidth from "../../customHooks/Resizer";
+// import Contact from "../Contact/contact";
 
 import styles from "../Menu/menu.module.css";
 import Link from "next/link";
@@ -85,7 +86,11 @@ export default function Menu() {
 
         <div className={styles.itemsContainer}>
           {navMenuItems.map((navMenu) => (
-            <div key={navMenu.path} onClick={navBtnClick}>
+            <div
+              key={navMenu.path}
+              onClick={navBtnClick}
+              className={styles.navMenuItemsContainer}
+            >
               <Link href={navMenu.path}>
                 <a
                   className={
@@ -102,6 +107,7 @@ export default function Menu() {
           <div className={styles.menuButton}>
             <span>Let&apos;s chat</span>
           </div>
+          {/* <Contact svg="chat" label="Let's Chat" shortcut="/" /> */}
           <Theme />
         </div>
       </div>

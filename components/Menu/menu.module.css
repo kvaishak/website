@@ -58,9 +58,9 @@
   border-radius: 10px;
 }
 
-.itemsContainer a:hover {
+/* .itemsContainer a:hover {
   background-color: var(--linkContainerBgHover);
-}
+} */
 
 .itemsContainer .selected {
   text-decoration: overline;
@@ -86,6 +86,16 @@
   left: 31.5em;
   position: absolute;
 } */
+
+.navMenuItemsContainer {
+  padding: 10px;
+}
+
+.navMenuItemsContainer:hover {
+  background-color: var(--linkContainerBgHover);
+  border-radius: 6px;
+  cursor: pointer;
+}
 
 .MenuIconContainer {
   display: none;
