@@ -30,21 +30,20 @@ html {
 /* @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap"); */
 
 :root {
+  /* Font */
   --font-sans: Aktiv Grotesk;
+  --font-title: 20px
   --font-l: 14.9px;
   --font-m: 13.7px;
   --font-s: 12.3px;
 
-  --appbg: rgb(248, 248, 248);
+  /* Color */
+
   --bg: white;
   --menubg: rgba(255, 255, 255, 0.05);
-  --bgSticky: rgba(255, 255, 255, 0.746);
-
-  --menu: rgba(255, 255, 255, 0.452);
   --menuLabel: rgba(0, 0, 0, 0.825);
 
   --highlight: rgba(255, 255, 255, 0.95);
-  /* --highlight: rgba(0, 0, 0, 0.06); */
   --highlighthover: rgba(0, 0, 0, 0.04);
   --highlightActiveBorder: rgba(0, 0, 0, 0.064);
   --tabbg: rgba(0, 0, 0, 0.04);
@@ -64,6 +63,7 @@ html {
 }
 @media (max-width: 700px) {
   :root {
+    --font-title: 18px
     --font-l: 16px;
     --font-m: 14.8px;
     --font-s: 13.3px;
@@ -72,13 +72,11 @@ html {
 
 .dark-theme {
   /* Remap your colors for dark mode */
-  --appbg: rgb(32, 32, 32);
   --bg: rgb(16, 16, 16);
-  --menubg: rgba(16, 16, 16, 0.05);
-  --bgSticky: rgba(16, 16, 16, 0.746);
 
-  --menu: rgba(10, 10, 10, 0.8);
+  --menubg: rgba(16, 16, 16, 0.05);
   --menuLabel: rgba(255, 255, 255, 0.8);
+
   --highlight: rgba(255, 255, 255, 0.1);
   --highlighthover: rgba(255, 255, 255, 0.05);
   --highlightActiveBorder: rgba(255, 255, 255, 0.04);
@@ -98,30 +96,6 @@ html {
   --imageBg: #191919;
 }
 
-.bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0px;
-  top: 0px;
-  opacity: 0.04;
-  z-index: -1;
-  height: 100%;
-}
-
-.dark-theme .bg {
-  opacity: 0.08;
-}
-
-.base {
-  background-color: var(--appbg);
-  height: 100%;
-  position: fixed;
-  width: 100%;
-  left: 0px;
-  top: 0px;
-  z-index: -2;
-}
 .dark-theme .iconInvert {
   filter: invert(1);
   transition: color 0.2s ease;
@@ -146,6 +120,7 @@ h2,
 h3,
 h4,
 h5,
+div,
 button {
   padding: 0;
   margin: 0;
@@ -155,8 +130,8 @@ button {
 
 p {
   letter-spacing: 0.1px;
-  /* font-weight: 390; */
-  font-size: 1.2rem;
+  font-weight: 390;
+  /* font-size: 1.2rem; */
 }
 
 a {
@@ -173,9 +148,9 @@ code {
   padding: 0px 4px;
   margin: 0px 0px 0px;
 }
-/* ::-webkit-scrollbar {
-  display: none;
-} */
+
+/* Tags */
+
 .tag {
   padding: 3px 4px;
   margin-left: 3px;
@@ -263,9 +238,8 @@ code {
     margin-left: 0px;
     margin-right: 3px;
   }
-  p {
+  /* p {
     letter-spacing: 0.1px;
-    /* font-weight: 390; */
     font-size: 1rem;
-  }
+  } */
 }

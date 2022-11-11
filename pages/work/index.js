@@ -1,10 +1,10 @@
 import Head from "next/head";
-import styles from "../../styles/Home.module.css";
 import { NotionAPI } from "notion-client";
 import { NotionRenderer } from "react-notion-x";
 import { useTheme } from "next-themes";
 import ClientOnly from "../../HOC/ClientOnly";
 import workStyles from "./index.module.css";
+import util from "../../styles/util.module.css";
 
 const Work = ({ recordMap }) => {
   const { theme, systemTheme } = useTheme();
@@ -13,18 +13,16 @@ const Work = ({ recordMap }) => {
 
   return (
     <ClientOnly>
-      <div className={styles.container}>
+      <div className={util.container}>
         <Head>
           <title>Work | shak&apos;s corner</title>
           <meta name="description" content="I am working" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className={styles.main}>
-          <div className={styles.homeHeader}>
-            <div className={styles.title}>
-              <h1>Work</h1>
-            </div>
+        <main className={util.main}>
+          <div className={util.title}>
+            <h1>Work</h1>
           </div>
 
           <NotionRenderer
