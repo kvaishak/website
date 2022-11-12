@@ -1,9 +1,35 @@
 .footerContainer {
-  padding: 0rem 4rem;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 4rem 4rem 4rem;
+  background-color: var(--bg);
+  transition: background-color 0.2s ease;
+}
+
+.footerContent {
+  border-top: 1px solid var(--footerBorder);
+  width: 100%;
+  max-width: 70rem;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 2rem;
+  flex-direction: row;
+}
+
+.footerContainer div > p,
+.footerContainer div span {
+  display: block;
+  margin-top: 20px;
+  cursor: pointer;
 }
 
 @media (max-width: 700px) {
   .footerContainer {
-    padding: 0rem 2rem;
+    padding: 1rem 2rem 2rem 2rem;
+  }
+  .footerContent {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 1rem;
   }
 }

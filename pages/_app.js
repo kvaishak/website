@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
       />
       <Menu />
       <Component {...pageProps} />
-      {/* <Footer /> */}
+      <Footer />
     </ThemeProvider>
   );
 }

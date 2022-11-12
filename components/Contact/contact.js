@@ -6,23 +6,23 @@ import util from "../../styles/util.module.css";
 import ContactContent from "./contactContent";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
-export default function Contact({ svg, label, shortcut }) {
-  var time = 0;
+export default function Contact({ label, shortcut }) {
+  // var time = 0;
 
-  useEffect(() => {
-    setInterval(function () {
-      time++;
-    }, 200);
-  }, []);
+  // useEffect(() => {
+  //   setInterval(function () {
+  //     time++;
+  //   }, 200);
+  // }, []);
 
-  useEffect(() => {
-    document.addEventListener("keypress", function (event) {
-      if (event.key === shortcut && time > 1) {
-        document.getElementById("contactTrigger").click();
-        time = 0;
-      }
-    });
-  });
+  // useEffect(() => {
+  //   document.addEventListener("keypress", function (event) {
+  //     if (event.key === shortcut) {
+  //       document.getElementById("contactTrigger").click();
+  //       time = 0;
+  //     }
+  //   });
+  // });
 
   return (
     <Dialog.Root>

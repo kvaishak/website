@@ -60,6 +60,7 @@ html {
   --modalBg: rgb(255, 255, 255);
 
   --imageBg: #f9fafb;
+  --footerBorder: rgba(0, 0, 0, 0.064);
 }
 @media (max-width: 700px) {
   :root {
@@ -94,6 +95,7 @@ html {
   --modalBg: rgb(28, 28, 28);
 
   --imageBg: #191919;
+  --footerBorder: rgba(255, 255, 255, 0.04);
 }
 
 .dark-theme .iconInvert {
