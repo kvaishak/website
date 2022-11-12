@@ -108,7 +108,7 @@ export default function ContactContent() {
           </a>
           <a
             className={styles.textButton}
-            href="https://www.linkedin.com/in/s-j-zhang/"
+            href="https://www.linkedin.com/in/kvaishak/"
             target="_blank"
             rel="noopener noreferrer"
           >
