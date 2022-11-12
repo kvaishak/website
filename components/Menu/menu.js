@@ -84,7 +84,7 @@ export default function Menu() {
           </div>
         </div>
 
-        <div className={styles.itemsContainer}>
+        <div className={`${styles.itemsContainer} ${styles.center}`}>
           {navMenuItems.map((navMenu) => (
             <div
               key={navMenu.path}
@@ -103,10 +103,11 @@ export default function Menu() {
             </div>
           ))}
         </div>
-        <div className={styles.itemsContainer}>
+        <div className={`${styles.itemsContainer} ${styles.right}`}>
           <div className={styles.menuButton}>
             <span>Let&apos;s chat</span>
           </div>
+
           {/* <Contact svg="chat" label="Let's Chat" shortcut="/" /> */}
           <Theme />
         </div>
