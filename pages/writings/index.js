@@ -11,19 +11,10 @@ export default function Home() {
       </Head>
 
       <main className={util.main}>
-        <div className={util.title}>
-          <h1>Writings</h1>
-        </div>
+        <div className={util.title}>{/* <h1>Writings</h1> */}</div>
 
         <div className={util.content}>
-          <p>
-            I am a Software Engineer working as a Front end Developer for
-            <a href="http://liqid.de/"> Liqid Investments</a>, Berlin. I
-            previously worked for <a href="https://www.zoho.com/">Zoho</a> where
-            I was an integral part of the development of a design collaboration
-            application called <a href="https://nila.cloud/">Nila.</a> I prefer
-            front end. I can do back end.
-          </p>
+          <p>🚧 Page Under Construction 🚧</p>
         </div>
       </main>
     </div>

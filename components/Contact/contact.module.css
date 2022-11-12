@@ -95,8 +95,8 @@
   align-items: stretch;
   z-index: 10;
 
-  width: 94%;
-  padding: 2rem;
+  width: 570px;
+  padding: 2.25rem 2.5rem;
 }
 
 .overlay[data-state="open"] {
@@ -179,14 +179,14 @@
   .item:hover {
     background: none;
   }
-  /* .content {
+  .content {
     display: flex;
     flex-direction: column;
 
     width: 94%;
 
     padding: 2rem;
-  } */
+  }
   .title {
     margin-bottom: 0rem;
   }

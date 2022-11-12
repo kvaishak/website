@@ -2,6 +2,8 @@ import Head from "next/head";
 import { NotionAPI } from "notion-client";
 import { NotionRenderer } from "react-notion-x";
 import { useTheme } from "next-themes";
+import Image from "next/image";
+import Link from "next/link";
 import ClientOnly from "../../HOC/ClientOnly";
 import workStyles from "./index.module.css";
 import util from "../../styles/util.module.css";
@@ -30,6 +32,10 @@ const Work = ({ recordMap }) => {
             fullPage={false}
             darkMode={isDarkMode}
             className={workStyles.notionContainer}
+            components={{
+              nextImage: Image,
+              nextLink: Link,
+            }}
             // rootPageId="5d7c9f2439964f05b4c78b30a7686e8e"
           />
         </main>
