@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useCurrentWidth from "../../customHooks/Resizer";
-// import Contact from "../Contact/contact";
+import Contact from "../Contact/contact";
 
 import styles from "../Menu/menu.module.css";
 import Link from "next/link";
@@ -71,16 +71,21 @@ export default function Menu() {
               />
             </div>
           </Link>
-          <div className={styles.MenuIconContainer} onClick={handleClick}>
-            <Image
-              priority
-              className={iconClassName}
-              src={`/icons/Menu.svg`}
-              height={20}
-              width={20}
-              alt="Theme-changer"
-              // onClick={clickHander}
-            />
+
+          <div className={styles.MenuItemsContainer}>
+            <Contact svg="chat" label="Let's Chat" shortcut="/" />
+
+            <div className={styles.MenuIconContainer} onClick={handleClick}>
+              <Image
+                priority
+                className={iconClassName}
+                src={`/icons/Menu.svg`}
+                height={20}
+                width={20}
+                alt="Theme-changer"
+                // onClick={clickHander}
+              />
+            </div>
           </div>
         </div>
 
@@ -104,11 +109,11 @@ export default function Menu() {
           ))}
         </div>
         <div className={`${styles.itemsContainer} ${styles.right}`}>
-          <div className={styles.menuButton}>
+          {/* <div className={styles.menuButton}>
             <span>Let&apos;s chat</span>
-          </div>
+          </div> */}
 
-          {/* <Contact svg="chat" label="Let's Chat" shortcut="/" /> */}
+          <Contact svg="chat" label="Let's Chat" shortcut="/" />
           <Theme />
         </div>
       </div>
