@@ -4,7 +4,6 @@ import "react-notion-x/src/styles.css";
 import { ThemeProvider } from "next-themes";
 import Menu from "../components/Menu/menu";
 import { Toaster } from "react-hot-toast";
-import Footer from "../components/Footer/footer";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -21,7 +20,6 @@ function MyApp({ Component, pageProps }) {
       />
       <Menu />
       <Component {...pageProps} />
-      {/* <Footer /> */}
     </ThemeProvider>
   );
 }
