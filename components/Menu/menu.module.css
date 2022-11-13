@@ -46,6 +46,12 @@
   justify-content: center;
   gap: 10px;
   cursor: pointer;
+  font-size: 2rem;
+  font-family: Caveat;
+}
+
+.logoContainer span {
+  color: var(--primaryColor);
 }
 
 .itemsContainer {
@@ -97,6 +103,10 @@
   left: 31.5em;
   position: absolute;
 } */
+
+.iconClassName {
+  color: var(--primaryColor);
+}
 
 .navMenuItemsContainer {
   padding: 10px;

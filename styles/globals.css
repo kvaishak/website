@@ -11,11 +11,11 @@
 
   font-weight: 100 900;
 }
-/* @font-face {
+@font-face {
   font-family: "Caveat";
   src: url("/fonts/Caveat-VariableFont_wght.ttf");
   font-weight: 400 700;
-} */
+}
 /* @import url("https://rsms.me/inter/inter.css");
 html {
   font-family: "Inter", sans-serif;
@@ -38,8 +38,8 @@ html {
   --font-s: 12.3px;
 
   /* Color */
-
   --bg: white;
+  --primaryColor: #33cc66;
   --menubg: rgba(255, 255, 255, 0.05);
   --menuLabel: rgba(0, 0, 0, 0.825);
 

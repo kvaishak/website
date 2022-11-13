@@ -59,16 +59,15 @@ export default function Menu() {
         <div className={styles.homeContainer} onClick={navBtnClick}>
           <Link href="/">
             <div className={styles.logoContainer}>
-              shak{" "}
-              <Image
+              shak<span>.</span>
+              {/* <Image
                 priority
-                className={iconClassName}
-                src={`/icons/Corner.svg`}
+                src={`/icons/Logo.png`}
                 height={20}
                 width={20}
                 alt="Theme-changer"
                 // onClick={clickHander}
-              />
+              /> */}
             </div>
           </Link>
 

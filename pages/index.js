@@ -34,9 +34,15 @@ export default function Home({ list }) {
               // onClick={clickHander}
             /> */}
             <div className={styles.homeSubtitle}>
-              <p>Making things.</p>
-              <p>Writing code.</p>
-              <p>Minimalist.</p>
+              <p>
+                Making things<span>.</span>
+              </p>
+              <p>
+                Writing code<span>.</span>
+              </p>
+              <p>
+                Minimalist<span>.</span>
+              </p>
             </div>
           </div>
         </div>
