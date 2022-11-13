@@ -21,12 +21,6 @@ const Work = ({ recordMap }) => {
           <title>Work | shak&apos;s corner</title>
           <meta name="description" content="I am working" />
           <link rel="icon" href="/favicon.ico" />
-
-          {/* Testing to make the page work better on Safari Mobile */}
-          <meta
-            name="viewport"
-            content="width = device-width, minimal-ui, initial-scale = 1.0, minimum-scale = 1, maximum-scale = 1, user-scalable = no"
-          />
         </Head>
 
         <main className={util.main}>
