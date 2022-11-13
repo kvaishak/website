@@ -66,7 +66,7 @@ export default function Footer() {
           >
             <span>Resume</span>
           </a>
-          <p>Misc.</p>
+          <p>Colophon</p>
         </div>
       </div>
     </div>

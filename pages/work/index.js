@@ -7,6 +7,7 @@ import Link from "next/link";
 import ClientOnly from "../../HOC/ClientOnly";
 import workStyles from "./index.module.css";
 import util from "../../styles/util.module.css";
+import Footer from "../../components/Footer/footer";
 
 const Work = ({ recordMap }) => {
   const { theme, systemTheme } = useTheme();
@@ -39,6 +40,7 @@ const Work = ({ recordMap }) => {
             // rootPageId="5d7c9f2439964f05b4c78b30a7686e8e"
           />
         </main>
+        <Footer />
       </div>
     </ClientOnly>
   );

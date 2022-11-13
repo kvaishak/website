@@ -3,6 +3,8 @@
   padding: 0 2rem;
   background-color: var(--bg);
   transition: background-color 0.2s ease;
+  overflow: auto;
+  height: 100vh;
 }
 
 .main {
@@ -25,7 +27,6 @@
 
 .content {
   line-height: 1.5;
-  /* margin: 4rem 0; */
   max-width: 50rem;
 
   display: flex;

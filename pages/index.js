@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 import util from "../styles/util.module.css";
 // import Image from "next/image";
 const { Client } = require("@notionhq/client");
+import Footer from "../components/Footer/footer";
 
 export default function Home({ list }) {
   const content =
@@ -46,6 +47,7 @@ export default function Home({ list }) {
 
         <div className={util.content}>{content}</div>
       </main>
+      <Footer />
     </div>
   );
 }

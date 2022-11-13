@@ -16,7 +16,7 @@
   src: url("/fonts/Caveat-VariableFont_wght.ttf");
   font-weight: 400 700;
 } */
-@import url("https://rsms.me/inter/inter.css");
+/* @import url("https://rsms.me/inter/inter.css");
 html {
   font-family: "Inter", sans-serif;
 }
@@ -25,7 +25,7 @@ html {
     font-family: "Inter var", sans-serif;
     font-weight: 100 900;
   }
-}
+} */
 
 /* @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap"); */
 
@@ -149,6 +149,10 @@ code {
   border-radius: 3px;
   padding: 0px 4px;
   margin: 0px 0px 0px;
+}
+
+body{
+  overflow: hidden;
 }
 
 /* Tags */
