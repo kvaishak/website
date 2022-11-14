@@ -81,7 +81,8 @@
 } */
 
 .itemsContainer .selected {
-  text-decoration: overline;
+  /* text-decoration: overline; */
+  color: var(--primaryColor);
 }
 
 .menuButton {
@@ -118,6 +119,7 @@
   /* border: 1px solid var(--linkContainerBorderHover); */
   border-radius: 6px;
   cursor: pointer;
+  color: var(--primaryColor);
 }
 
 .MenuItemsContainer {
