@@ -4,10 +4,12 @@ import Contact from "../Contact/contact";
 
 import styles from "../Menu/menu.module.css";
 import Link from "next/link";
-import Theme from "../Theme/theme";
+import { ThemeChanger, ThemeChangerMobile } from "../Theme/theme";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
+
+const mobileWidthCutOff = 700;
 
 export default function Menu() {
   const [click, setClick] = useState(false);
@@ -39,7 +41,7 @@ export default function Menu() {
     setClick(!click);
   };
 
-  if (width > 700 && click) {
+  if (width > mobileWidthCutOff && click) {
     closeMobileMenu();
   }
 
@@ -108,12 +110,12 @@ export default function Menu() {
           ))}
         </div>
         <div className={`${styles.itemsContainer} ${styles.right}`}>
-          {/* <div className={styles.menuButton}>
-            <span>Let&apos;s chat</span>
-          </div> */}
-
           <Contact svg="chat" label="Let's Chat" shortcut="/" />
-          <Theme />
+          <ThemeChanger />
+        </div>
+
+        <div className={styles.mobileThemeContainer}>
+          <ThemeChangerMobile />
         </div>
       </div>
     </div>

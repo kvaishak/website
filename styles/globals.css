@@ -130,6 +130,10 @@ button {
   position: relative;
 }
 
+body{
+  overflow: overlay;
+}
+
 p {
   letter-spacing: 0.1px;
   font-weight: 390;
