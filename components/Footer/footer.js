@@ -27,6 +27,7 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             <span>LinkedIn</span>
+            <span className={styles.externalIcon}>↗</span>
           </a>
 
           <a
@@ -36,6 +37,7 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             <span>Github</span>
+            <span className={styles.externalIcon}>↗</span>
           </a>
 
           <a
@@ -45,6 +47,7 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             <span>Twitter</span>
+            <span className={styles.externalIcon}>↗</span>
           </a>
 
           <a
@@ -54,6 +57,7 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             <span>ReadCV</span>
+            <span className={styles.externalIcon}>↗</span>
           </a>
         </div>
 
@@ -65,8 +69,11 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             <span>Resume</span>
+            <span className={styles.externalIcon}>↗</span>
           </a>
-          <p>Colophon</p>
+          <Link href="/colophon">
+            <p>Colophon</p>
+          </Link>
         </div>
       </div>
     </div>

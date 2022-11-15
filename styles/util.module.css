@@ -55,6 +55,13 @@
   flex-grow: 1;
 }
 
+.notionContainer {
+  padding-left: 0px;
+  padding-right: 0px;
+
+  --notion-max-width: 50rem;
+}
+
 /* Mobile  */
 
 @media (max-width: 700px) {

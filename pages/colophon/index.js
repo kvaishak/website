@@ -3,7 +3,6 @@ import { NotionRenderer } from "react-notion-x";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import workStyles from "./index.module.css";
 import util from "../../styles/util.module.css";
 import PageContainer from "../../HOC/PageContainer";
 
@@ -12,8 +11,8 @@ const Work = ({ recordMap }) => {
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
 
-  const title = "Work";
-  const description = "My Experience in the Field";
+  const title = "Colophon";
+  const description = "How I Built this website";
 
   return (
     <PageContainer title={title} description={description} clientOnly={true}>
@@ -43,7 +42,7 @@ export async function getStaticProps() {
     activeUser: process.env.NOTION_ACTIVE_USER,
     authToken: process.env.NOTION_TOKEN_V2,
   });
-  const recordMap = await notion.getPage(process.env.NOTION_WORK_ID);
+  const recordMap = await notion.getPage(process.env.NOTION_COLOPHON_ID);
 
   return {
     props: {
