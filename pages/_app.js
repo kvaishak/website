@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 // core styles shared by all of react-notion-x (required)
 import "react-notion-x/src/styles.css";
 import { ThemeProvider } from "next-themes";
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }) {
       />
       <Menu />
       <Component {...pageProps} />
+      <Analytics />
     </ThemeProvider>
   );
 }
