@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import util from "../../styles/util.module.css";
 import PageContainer from "../../HOC/PageContainer";
+import { defaultMapImageUrl } from "react-notion-x";
 
 const Work = ({ recordMap }) => {
   const { theme, systemTheme } = useTheme();
@@ -26,6 +27,8 @@ const Work = ({ recordMap }) => {
           fullPage={false}
           darkMode={isDarkMode}
           className={util.notionContainer}
+          previewImages={true}
+          mapImageUrl={defaultMapImageUrl}
           components={{
             nextImage: Image,
             nextLink: Link,

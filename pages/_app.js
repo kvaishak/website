@@ -1,7 +1,7 @@
 import "../styles/globals.css";
+import "../styles/notion.css";
+
 import { Analytics } from "@vercel/analytics/react";
-// core styles shared by all of react-notion-x (required)
-import "react-notion-x/src/styles.css";
 import { ThemeProvider } from "next-themes";
 import Menu from "../components/Menu/menu";
 import { Toaster } from "react-hot-toast";
