@@ -992,6 +992,10 @@ svg.notion-page-icon {
   border-color: var(--bg-color-0);
 }
 
+.dark-mode .notion-bookmark:hover {
+  border-color: var(--primaryColor);
+}
+
 .notion-bookmark > div:first-child {
   flex: 4 1 180px;
   padding: 12px 14px 14px;
