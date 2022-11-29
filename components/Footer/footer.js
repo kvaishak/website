@@ -14,8 +14,8 @@ export default function Footer() {
             <p>Work</p>
           </Link>
 
-          <Link href="/writings">
-            <p>Writings</p>
+          <Link href="/now">
+            <p>Now</p>
           </Link>
         </div>
 
@@ -47,6 +47,16 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             <span>Twitter</span>
+            <span className={styles.externalIcon}>↗</span>
+          </a>
+
+          <a
+            className={styles.socialButton}
+            href="https://kvaishak.substack.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>Substack</span>
             <span className={styles.externalIcon}>↗</span>
           </a>
 
