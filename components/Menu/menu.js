@@ -25,8 +25,8 @@ export default function Menu() {
       path: "/work",
     },
     {
-      label: "Writings",
-      path: "/writings",
+      label: "Now",
+      path: "/now",
     },
   ];
 
