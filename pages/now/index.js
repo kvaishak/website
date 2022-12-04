@@ -6,8 +6,9 @@ import { NotionAPI } from "notion-client";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
+import Wakatime from "../../components/Wakatime/wakatime";
 
-const Now = ({ recordMap }) => {
+const Now = ({ recordMap, wakatimeData }) => {
   const { theme, systemTheme } = useTheme();
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
@@ -33,6 +34,7 @@ const Now = ({ recordMap }) => {
           }}
           // rootPageId="5d7c9f2439964f05b4c78b30a7686e8e"
         />
+        <Wakatime data={wakatimeData} />
       </main>
     </PageContainer>
   );
@@ -45,9 +47,14 @@ export async function getStaticProps() {
   });
   const recordMap = await notion.getPage(process.env.NOTION_NOW_ID);
 
+  // Wakatime data fetching
+  const response = await fetch(process.env.WAKATIME_URL);
+  const wakatimeData = await response.json();
+
   return {
     props: {
       recordMap,
+      wakatimeData,
     },
     revalidate: 60,
   };
