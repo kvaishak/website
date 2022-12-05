@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryPie, VictoryContainer } from "victory";
+import { VictoryPie, VictoryContainer, Bar } from "victory";
 import { useTheme } from "next-themes";
 import style from "./wakatime.module.css";
 
@@ -10,6 +10,7 @@ const Wakatime = ({ data }) => {
 
   const formattedData = dataFormatter(data);
   const textColor = isDarkMode ? "rgba(255, 255, 255, 0.9)" : "rgb(55, 53, 47)";
+  const chartEvents = eventConstructor();
 
   return (
     <div className={style.container}>
@@ -41,16 +42,65 @@ const Wakatime = ({ data }) => {
             parent: {
               padding: "30px 0",
             },
+            data: {
+              cursor: "pointer",
+            },
             labels: {
               fill: textColor,
             },
           }}
+          events={chartEvents}
           containerComponent={<VictoryContainer responsive={false} />}
         />
       </div>
     </div>
   );
 };
+
+function eventConstructor() {
+  return [
+    {
+      target: "data",
+      eventHandlers: {
+        onMouseOver: () => {
+          return [
+            {
+              target: "data",
+              mutation: ({ style }) => {
+                return { style: { ...style, stroke: "#181a1b" } };
+              },
+            },
+            {
+              target: "labels",
+              mutation: ({ style, datum }) => {
+                return {
+                  style: { ...style, fill: "#33cc66" },
+                  text: `${datum.y}%`,
+                };
+              },
+            },
+          ];
+        },
+        onMouseOut: () => {
+          return [
+            {
+              target: "data",
+              mutation: ({ style }) => {
+                return { style: { ...style, stroke: "none" } };
+              },
+            },
+            {
+              target: "labels",
+              mutation: ({ datum }) => {
+                return { text: datum.x };
+              },
+            },
+          ];
+        },
+      },
+    },
+  ];
+}
 
 function dataFormatter(sourceData) {
   const data = sourceData.data.map((datum) => ({
