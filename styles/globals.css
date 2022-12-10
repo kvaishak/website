@@ -10,11 +10,13 @@
     url("/fonts/AktivGroteskVF_W_Wght.woff2") format("woff2-variations");
 
   font-weight: 100 900;
+  font-display: block
 }
 @font-face {
   font-family: "Caveat";
   src: url("/fonts/Caveat-VariableFont_wght.ttf");
   font-weight: 400 700;
+  font-display: block
 }
 /* @import url("https://rsms.me/inter/inter.css");
 html {
@@ -27,7 +29,7 @@ html {
   }
 } */
 
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap"); */
 
 :root {
   /* Font */
