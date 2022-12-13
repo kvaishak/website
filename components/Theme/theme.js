@@ -2,22 +2,23 @@ import styles from "../Theme/theme.module.css";
 
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 import ClientOnly from "../../HOC/ClientOnly";
 
 export const ThemeChanger = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, systemTheme , setTheme } = useTheme();
 
-  let isLightTheme = theme === "light";
-  const iconType = isLightTheme ? "SunIcon" : "MoonIcon";
-  const iconClassName = isLightTheme ? "" : "iconInvert";
+  const isDarkMode =
+    theme === "system" ? systemTheme === "dark" : theme === "dark";
+
+  const iconType = isDarkMode ? "MoonIcon": "SunIcon" ;
+  const iconClassName = isDarkMode ? "iconInvert" : "";
 
   const clickHander = () => {
-    if (isLightTheme) {
-      setTheme("dark");
-    } else {
+    if (isDarkMode) {
       setTheme("light");
+    } else {
+      setTheme("dark");
     }
   };
 
