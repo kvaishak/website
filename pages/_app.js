@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "next-themes";
 import Menu from "../components/Menu/menu";
 import { Toaster } from "react-hot-toast";
+import Script from "next/script";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }) {
       <Menu />
       <Component {...pageProps} />
       <Analytics />
+      <Script src="https://app.embed.im/snow.js"></Script>
     </ThemeProvider>
   );
 }
