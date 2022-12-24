@@ -19,7 +19,9 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
         />
         <meta
           property="og:image"
-          content={`https://my-og-img.vercel.app/api/og?title=${pageTitle}`}
+          content={`${
+            process.env.VERCEL_URL ? "https://" + process.env.VERCEL_URL : ""
+          }/api/og?title=${pageTitle}`}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
