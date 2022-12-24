@@ -8,6 +8,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { NotionAPI } from "notion-client";
 import Image from "next/image";
+import Head from "next/head";
 
 export default function Home({ recordMap }) {
   // const content =
@@ -26,6 +27,16 @@ export default function Home({ recordMap }) {
 
   return (
     <PageContainer title={title} description={description} clientOnly={true}>
+      <Head>
+        <meta name="og:title" content={pageTitle} />
+        <meta name="og:description" content="Vaishak's Website" />
+        <meta
+          property="og:image"
+          content={`${
+            process.env.VERCEL_URL ? "https://" + process.env.VERCEL_URL : ""
+          }/api/og`}
+        />
+      </Head>
       <main className={util.main}>
         <div className={styles.homeHeader}>
           <div className={styles.homeGreetingTitle}>

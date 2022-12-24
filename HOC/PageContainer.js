@@ -17,7 +17,7 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
           name="description"
           content={description ? description : "Vaishak Website"}
         />
-        <meta name="og:title" content={pageTitle} />
+        {/* <meta name="og:title" content={pageTitle} />
         <meta
           name="og:description"
           content={description ? description : "Vaishak's Website"}
@@ -27,7 +27,7 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
           content={`${
             process.env.VERCEL_URL ? "https://" + process.env.VERCEL_URL : ""
           }/api/og`}
-        />
+        /> */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
