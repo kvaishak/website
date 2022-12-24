@@ -21,11 +21,8 @@ export default function Home({ recordMap }) {
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
 
-  const title = "Home";
-  const description = "My Home Page";
-
   return (
-    <PageContainer title={title} description={description} clientOnly={true}>
+    <PageContainer clientOnly={true}>
       <main className={util.main}>
         <div className={styles.homeHeader}>
           <div className={styles.homeGreetingTitle}>
