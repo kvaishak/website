@@ -32,9 +32,7 @@ export default function Home({ recordMap }) {
         <meta name="og:description" content="Vaishak's Website" />
         <meta
           property="og:image"
-          content={`${
-            process.env.VERCEL_URL ? "https://" + process.env.VERCEL_URL : ""
-          }/api/og`}
+          content={`https://kvaishak-git-open-graph-kvaishak.vercel.app/api/og`}
         />
       </Head>
       <main className={util.main}>
