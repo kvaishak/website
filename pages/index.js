@@ -8,7 +8,6 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { NotionAPI } from "notion-client";
 import Image from "next/image";
-import Head from "next/head";
 
 export default function Home({ recordMap }) {
   // const content =
@@ -22,19 +21,8 @@ export default function Home({ recordMap }) {
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
 
-  const title = "Home";
-  const description = "My Home Page";
-
   return (
-    <PageContainer title={title} description={description} clientOnly={true}>
-      <Head>
-        <meta name="og:title" content="My Title" />
-        <meta name="og:description" content="Vaishak's Website" />
-        <meta
-          property="og:image"
-          content={`https://kvaishak-git-open-graph-kvaishak.vercel.app/api/og`}
-        />
-      </Head>
+    <PageContainer clientOnly={true}>
       <main className={util.main}>
         <div className={styles.homeHeader}>
           <div className={styles.homeGreetingTitle}>

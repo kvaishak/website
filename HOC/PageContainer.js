@@ -7,27 +7,24 @@ import Footer from "../components/Footer/footer";
 import util from "../styles/util.module.css";
 
 const PageContainer = ({ children, title, description, clientOnly }) => {
-  const pageTitle = title ? `${title} | Vaishak` : "Vaishak";
+  const pageTitle = title ? title : "Vaishak Kaippanchery";
+  const pageDescription = description
+    ? description
+    : "My virtual Home on the Internet";
 
   const content = (
     <div className={util.container}>
       <Head>
         <title>{pageTitle}</title>
-        <meta
-          name="description"
-          content={description ? description : "Vaishak Website"}
-        />
-        {/* <meta name="og:title" content={pageTitle} />
-        <meta
-          name="og:description"
-          content={description ? description : "Vaishak's Website"}
-        />
+        <meta name="description" content={pageDescription} />
+        <meta name="og:title" content={pageTitle} />
+        <meta name="og:description" content={pageDescription} />
         <meta
           property="og:image"
           content={`${
             process.env.VERCEL_URL ? "https://" + process.env.VERCEL_URL : ""
           }/api/og`}
-        /> */}
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
