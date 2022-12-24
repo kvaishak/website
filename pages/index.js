@@ -28,7 +28,7 @@ export default function Home({ recordMap }) {
   return (
     <PageContainer title={title} description={description} clientOnly={true}>
       <Head>
-        <meta name="og:title" content={pageTitle} />
+        <meta name="og:title" content="My Title" />
         <meta name="og:description" content="Vaishak's Website" />
         <meta
           property="og:image"
