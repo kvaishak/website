@@ -1,7 +1,7 @@
 import { ImageResponse } from "@vercel/og";
 
 export const config = {
-  runtime: "experimental-edge",
+  runtime: "edge",
 };
 
 export default function handler(req) {
@@ -34,10 +34,12 @@ export default function handler(req) {
             style={{
               display: "flex",
               alignItems: "center",
+              alignContent: "center",
               justifyContent: "center",
               justifyItems: "center",
             }}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt="Vercel"
               height={200}
