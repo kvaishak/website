@@ -17,6 +17,10 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
           name="description"
           content={description ? description : "Vaishak Website"}
         />
+        <meta
+          property="og:image"
+          content={`https://my-og-img.vercel.app/api/og?title=${pageTitle}`}
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
