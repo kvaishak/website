@@ -23,12 +23,7 @@ export default function Home({ recordMap }) {
     theme === "system" ? systemTheme === "dark" : theme === "dark";
 
   return (
-    <PageContainer clientOnly={true}>
-      <Head>
-        <meta name="description" content="Hello there" />
-        <meta name="og:title" content="I am a title" />
-        <meta name="og:description" content="I am a description" />
-      </Head>
+    <PageContainer>
       <main className={util.main}>
         <div className={styles.homeHeader}>
           <div className={styles.homeGreetingTitle}>
