@@ -8,6 +8,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { NotionAPI } from "notion-client";
 import Image from "next/image";
+import Head from "next/head";
 
 export default function Home({ recordMap }) {
   // const content =
@@ -23,6 +24,11 @@ export default function Home({ recordMap }) {
 
   return (
     <PageContainer clientOnly={true}>
+      <Head>
+        <meta name="description" content="Hello there" />
+        <meta name="og:title" content="I am a title" />
+        <meta name="og:description" content="I am a description" />
+      </Head>
       <main className={util.main}>
         <div className={styles.homeHeader}>
           <div className={styles.homeGreetingTitle}>
