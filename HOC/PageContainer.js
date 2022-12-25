@@ -11,7 +11,10 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
   const pageDescription = description
     ? description
     : "My virtual Home on the Internet";
-  const pageURL = "https://kvaishak.com";
+  const pageURL = process.env.VERCEL_URL
+    ? process.env.VERCEL_URL
+    : "https://kvaishak.com";
+  const imageURL = `${pageURL}/api/og?title=${pageTitle}&description=${pageDescription}`;
 
   const headerContent = (
     <Head>
@@ -19,10 +22,12 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
       <meta name="description" content={pageDescription} />
       <meta name="og:title" content={pageTitle} />
       <meta name="og:description" content={pageDescription} />
-      <meta
-        property="og:image"
-        content={`${pageURL}/api/og?title=${pageTitle}&description=${pageDescription}`}
-      />
+      <meta property="og:image" content={imageURL} />
+      {/* Twitter OG Tags */}
+      <meta name="twitter:card" content="summary"></meta>
+      <meta name="twitter:title" content={pageTitle} />
+      <meta name="twitter:description" content={pageDescription} />
+      <meta name="twitter:image" content={imageURL} />
       <link rel="icon" href="/favicon.ico" />
     </Head>
   );
