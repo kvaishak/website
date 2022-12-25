@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "next-themes";
 import Menu from "../components/Menu/menu";
 import { Toaster } from "react-hot-toast";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }) {
   return (
