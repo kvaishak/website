@@ -11,7 +11,7 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
   const pageDescription = description
     ? description
     : "My virtual Home on the Internet";
-  const pageURL = "https://kvaishak.com/";
+  const pageURL = "https://kvaishak.com";
 
   const content = (
     <div className={util.container}>
