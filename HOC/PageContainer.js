@@ -17,9 +17,9 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
     <div className={util.container}>
       <Head>
         <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
+        {/* <meta name="description" content={pageDescription} />
         <meta name="og:title" content={pageTitle} />
-        <meta name="og:description" content={pageDescription} />
+        <meta name="og:description" content={pageDescription} /> */}
         <meta
           property="og:image"
           content={`${pageURL}/api/og?title=${pageTitle}&description=${pageDescription}`}
