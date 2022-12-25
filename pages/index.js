@@ -8,7 +8,6 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { NotionAPI } from "notion-client";
 import Image from "next/image";
-import Head from "next/head";
 
 export default function Home({ recordMap }) {
   // const content =
@@ -23,7 +22,7 @@ export default function Home({ recordMap }) {
     theme === "system" ? systemTheme === "dark" : theme === "dark";
 
   return (
-    <PageContainer>
+    <PageContainer clientOnly={true}>
       <main className={util.main}>
         <div className={styles.homeHeader}>
           <div className={styles.homeGreetingTitle}>
