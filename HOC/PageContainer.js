@@ -11,8 +11,8 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
   const pageDescription = description
     ? description
     : "My virtual Home on the Internet";
-  const pageURL = process.env.NEXT_PUBLIC_VERCEL_URL
-    ? process.env.NEXT_PUBLIC_VERCEL_URL
+  const pageURL = process.env.PUBLIC_DEPLOYED_URL
+    ? process.env.PUBLIC_DEPLOYED_URL
     : "https://kvaishak.com";
   const imageURL = `${pageURL}/api/og?title=${pageTitle}&description=${pageDescription}`;
 
