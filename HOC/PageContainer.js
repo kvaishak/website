@@ -24,7 +24,7 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
       <meta name="og:description" content={pageDescription} />
       <meta property="og:image" content={imageURL} />
       {/* Twitter OG Tags */}
-      <meta name="twitter:card" content="summary"></meta>
+      <meta name="twitter:card" content="summary_large_image"></meta>
       <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={pageDescription} />
       <meta name="twitter:image" content={imageURL} />
