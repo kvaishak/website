@@ -13,7 +13,8 @@ const Work = ({ recordMap }) => {
     theme === "system" ? systemTheme === "dark" : theme === "dark";
 
   const title = "Work";
-  const description = "My Experience in the Field";
+  const description =
+    "Summary of my professional background and the various roles I have held throughout my career";
 
   return (
     <PageContainer title={title} description={description} clientOnly={true}>

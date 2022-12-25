@@ -10,7 +10,7 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
   const pageTitle = title ? title : "Vaishak Kaippanchery";
   const pageDescription = description
     ? description
-    : "My virtual Home on the Internet";
+    : "Welcome to my virtual haven on the internet!";
   const pageURL = process.env.PUBLIC_DEPLOYED_URL
     ? process.env.PUBLIC_DEPLOYED_URL
     : "https://kvaishak.com";
