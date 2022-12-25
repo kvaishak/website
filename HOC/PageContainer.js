@@ -13,29 +13,37 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
     : "My virtual Home on the Internet";
   const pageURL = "https://kvaishak.com";
 
+  const headerContent = (
+    <Head>
+      <title>{pageTitle}</title>
+      <meta name="description" content={pageDescription} />
+      <meta name="og:title" content={pageTitle} />
+      <meta name="og:description" content={pageDescription} />
+      <meta
+        property="og:image"
+        content={`${pageURL}/api/og?title=${pageTitle}&description=${pageDescription}`}
+      />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+  );
+
   const content = (
     <div className={util.container}>
-      <Head>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <meta name="og:title" content={pageTitle} />
-        <meta name="og:description" content={pageDescription} />
-        <meta
-          property="og:image"
-          content={`${pageURL}/api/og?title=${pageTitle}&description=${pageDescription}`}
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       {children}
       <Footer />
     </div>
   );
 
   return clientOnly === true ? (
-    <ClientOnly>{content}</ClientOnly>
+    <React.Fragment>
+      {headerContent}
+      <ClientOnly>{content}</ClientOnly>
+    </React.Fragment>
   ) : (
-    <React.Fragment>{content}</React.Fragment>
+    <React.Fragment>
+      {headerContent}
+      {content}
+    </React.Fragment>
   );
 };
 
