@@ -17,7 +17,7 @@ const Now = ({ recordMap, wakatimeData }) => {
   const description = "What I am doing now, an asynchronous update page.";
 
   return (
-    <PageContainer title={title} description={description}>
+    <PageContainer title={title} description={description} clientOnly={true}>
       <main className={util.main}>
         <div className={util.title}>
           <h1>{title}</h1>
