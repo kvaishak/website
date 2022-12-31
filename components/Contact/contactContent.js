@@ -92,7 +92,7 @@ export default function ContactContent() {
         <div className={styles.flexRow}>
           <a
             className={styles.textButton}
-            href="https://twitter.com/kvaish4k"
+            href="https://twitter.com/kvaishack"
             target="_blank"
             rel="noopener noreferrer"
           >

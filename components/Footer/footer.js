@@ -42,7 +42,7 @@ export default function Footer() {
 
           <a
             className={styles.socialButton}
-            href="https://twitter.com/kvaish4k"
+            href="https://twitter.com/kvaishack"
             target="_blank"
             rel="noopener noreferrer"
           >
