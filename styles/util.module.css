@@ -6,6 +6,12 @@
   overflow: auto;
 }
 
+.embed {
+  width: 100%;
+  max-width: 50rem;
+  height: 320px;
+}
+
 .main {
   min-height: 100vh;
   padding: 9rem 0 4rem 0;
