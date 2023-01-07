@@ -67,12 +67,11 @@ export default function Home({ recordMap }) {
           // rootPageId="5d7c9f2439964f05b4c78b30a7686e8e"
         />
 
-        <iframe
+        {/* <iframe
           src="https://kvaishak.substack.com/embed"
-          width="480"
-          height="320"
+          className={util.embed}
           style={{ border: "1px solid #EEE", background: "var(--bg)" }}
-        ></iframe>
+        ></iframe> */}
       </main>
     </PageContainer>
   );

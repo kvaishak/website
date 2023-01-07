@@ -5,7 +5,8 @@
   gap: 4em;
   width: inherit;
   justify-content: center;
-  margin-bottom: 4rem;
+  margin-bottom: 8rem;
+  padding-top: 3rem;
 }
 
 .homeGreetingTitle {
