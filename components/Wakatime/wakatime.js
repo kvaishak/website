@@ -1,7 +1,12 @@
 import React from "react";
-import { VictoryPie, VictoryContainer, Bar } from "victory";
+import { VictoryPie, VictoryContainer, VictoryLegend } from "victory";
 import { useTheme } from "next-themes";
 import style from "./wakatime.module.css";
+
+const COLOR_RANGE = ["tomato", "orange", "gold", "cyan", "navy", "green"];
+const DARK_MODE = "rgba(255, 255, 255, 0.9)";
+const LIGHT_MODE = "rgb(55, 53, 47)";
+const DATA_LIMIT = 6;
 
 const Wakatime = ({ data }) => {
   const { theme, systemTheme } = useTheme();
@@ -9,8 +14,11 @@ const Wakatime = ({ data }) => {
     theme === "system" ? systemTheme === "dark" : theme === "dark";
 
   const formattedData = dataFormatter(data);
-  const textColor = isDarkMode ? "rgba(255, 255, 255, 0.9)" : "rgb(55, 53, 47)";
-  const chartEvents = eventConstructor();
+  const legendData = formatDataForLegend(formattedData);
+
+  const textColor = isDarkMode ? DARK_MODE : LIGHT_MODE;
+
+  // const chartEvents = eventConstructor();
 
   return (
     <div className={style.container}>
@@ -31,17 +39,21 @@ const Wakatime = ({ data }) => {
         and was instead having fun.
       </div>
       <div className="blank"></div>
-      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          flexWrap: "wrap",
+        }}
+      >
         <VictoryPie
           data={formattedData}
-          colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
+          colorScale={COLOR_RANGE}
           width={400}
           height={300}
           innerRadius={50}
           style={{
-            parent: {
-              padding: "30px 0",
-            },
             data: {
               cursor: "pointer",
             },
@@ -49,13 +61,52 @@ const Wakatime = ({ data }) => {
               fill: textColor,
             },
           }}
-          events={chartEvents}
+          labels={({ datum }) => ``}
+          // events={chartEvents}
+          containerComponent={<VictoryContainer responsive={false} />}
+        />
+
+        <VictoryLegend
+          width={400}
+          height={300}
+          x={125}
+          y={50}
+          orientation="vertical"
+          gutter={20}
+          data={legendData}
+          style={{
+            labels: {
+              fill: textColor,
+            },
+          }}
           containerComponent={<VictoryContainer responsive={false} />}
         />
       </div>
     </div>
   );
 };
+
+function formatDataForLegend(data) {
+  let dataForLegend = [];
+  for (let i = 0; i < DATA_LIMIT; i++) {
+    dataForLegend.push({
+      name: `${data[i].x} : ${data[i].y} %`,
+      symbol: {
+        fill: COLOR_RANGE[i],
+      },
+    });
+  }
+  return dataForLegend;
+}
+
+function dataFormatter(sourceData) {
+  const data = sourceData.data.map((datum) => ({
+    x: datum.name,
+    y: datum.percent,
+  }));
+
+  return data.slice(0, DATA_LIMIT);
+}
 
 function eventConstructor() {
   return [
@@ -100,15 +151,6 @@ function eventConstructor() {
       },
     },
   ];
-}
-
-function dataFormatter(sourceData) {
-  const data = sourceData.data.map((datum) => ({
-    x: datum.name,
-    y: datum.percent,
-  }));
-
-  return data.slice(0, 5);
 }
 
 export default Wakatime;

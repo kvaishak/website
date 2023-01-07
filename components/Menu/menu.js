@@ -45,8 +45,13 @@ export default function Menu() {
     closeMobileMenu();
   }
 
-  const navBtnClick = () => {
-    if (click) {
+  const navBtnClick = (e) => {
+    if (
+      click &&
+      (e.target.id === "navigation-container" ||
+        e.target.id === "hamburger-icon" ||
+        e.target.id === "nav-button")
+    ) {
       closeMobileMenu();
     }
   };
@@ -56,9 +61,13 @@ export default function Menu() {
   }`;
 
   return (
-    <div className={navigationContainerStyle}>
+    <div
+      className={navigationContainerStyle}
+      onClick={navBtnClick}
+      id="navigation-container"
+    >
       <div className={styles.navContainer}>
-        <div className={styles.homeContainer} onClick={navBtnClick}>
+        <div className={styles.homeContainer}>
           <Link href="/">
             <div className={styles.logoContainer}>
               shak<span>.</span>
@@ -76,7 +85,11 @@ export default function Menu() {
           <div className={styles.MenuItemsContainer}>
             <Contact svg="chat" label="Let's Chat" shortcut="/" />
 
-            <div className={styles.MenuIconContainer} onClick={handleClick}>
+            <div
+              className={styles.MenuIconContainer}
+              onClick={handleClick}
+              id="hamburger-icon"
+            >
               <Image
                 priority
                 className={iconClassName}
@@ -102,6 +115,7 @@ export default function Menu() {
                   className={
                     navMenu.path === router.pathname ? styles.selected : ""
                   }
+                  id="nav-button"
                 >
                   {navMenu.label}
                 </a>
