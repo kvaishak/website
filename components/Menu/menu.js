@@ -21,11 +21,11 @@ export default function Menu() {
 
   const navMenuItems = [
     {
-      label: "Work",
+      label: "work",
       path: "/work",
     },
     {
-      label: "Now",
+      label: "now",
       path: "/now",
     },
   ];
