@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import Wakatime from "../../components/Wakatime/wakatime";
+import Reading from "../../components/Reading/reading";
 
 const Now = ({ recordMap, wakatimeData }) => {
   const { theme, systemTheme } = useTheme();
@@ -34,6 +35,8 @@ const Now = ({ recordMap, wakatimeData }) => {
           }}
           // rootPageId="5d7c9f2439964f05b4c78b30a7686e8e"
         />
+
+        <Reading />
         <Wakatime data={wakatimeData} />
       </main>
     </PageContainer>

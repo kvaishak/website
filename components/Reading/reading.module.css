@@ -1,0 +1,11 @@
+.container {
+  width: 100%;
+  max-width: 50rem;
+  margin-bottom: 4rem;
+}
+
+.booksContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
