@@ -9,3 +9,81 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
+.literalBookItem {
+  display: flex;
+  text-align: left;
+  position: relative;
+  transition: all 0.2s linear;
+}
+
+.literalBookItem:hover {
+  border-color: #e1dddd;
+  z-index: 1;
+}
+
+.literalBookItem a {
+  width: 100%;
+  display: flex;
+  padding: 10px 10px 10px 0;
+}
+
+.literalBookItem__inner {
+  flex: 1 0;
+  display: flex;
+  align-items: center;
+}
+
+.literalBookItem__image {
+  width: 40px;
+  flex: 0 0 40px;
+  align-self: flex-start;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  margin-right: 23px;
+}
+
+.literalBookItem__imageCover__outer {
+  position: relative;
+  display: inline-block;
+  line-height: 100%;
+}
+
+.literalBookItem__imageCover__outer img {
+  user-select: none;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  border-top-left-radius: 1px;
+  border-bottom-left-radius: 1px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  filter: drop-shadow(
+    0 calc((0 + 0) * 2px) calc((5 + 0) * 2px)
+      rgba(0, 0, 0, calc((1.5 + 0) * 0.03))
+  );
+  border: 1px solid #f5f5f5;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+}
+
+.literalBookItem__info {
+  flex: 1 0;
+}
+
+.literalBookItem__title {
+  font-weight: 400;
+  color: var(--fg-textColor);
+  font-size: 14px;
+  line-height: 150%;
+}
+
+.literalBookItem__authors {
+  font-size: 14px;
+  color: #9a988b;
+  line-height: 145%;
+  margin-top: 4px;
+}
