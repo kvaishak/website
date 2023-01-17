@@ -6,12 +6,10 @@ import { ThemeProvider } from "next-themes";
 import Menu from "../components/Menu/menu";
 import { Toaster } from "react-hot-toast";
 import Head from "next/head";
-import Script from "next/script";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider attribute="class" value={{ dark: "dark-theme" }}>
-      <Script src="https://literal.club/js/widget.js"></Script>
       <Toaster
         toastOptions={{
           duration: 1500,
