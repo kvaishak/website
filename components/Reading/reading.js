@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import style from "./reading.module.css";
 
@@ -36,7 +37,12 @@ const Reading = ({ data }) => {
                 <div className={style.literalBookItem__inner}>
                   <div className={style.literalBookItem__image}>
                     <div className={style.literalBookItem__imageCover__outer}>
-                      <img src={book.cover} alt={book.title} />
+                      <Image
+                        width={40}
+                        height={64}
+                        src={book.cover}
+                        alt={book.title}
+                      />
                     </div>
                   </div>
                   <div className={style.literalBookItem__info}>
