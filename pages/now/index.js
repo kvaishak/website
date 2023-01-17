@@ -37,7 +37,7 @@ const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
           }}
           // rootPageId="5d7c9f2439964f05b4c78b30a7686e8e"
         />
-
+        
         <Reading data={currentlyReading} />
         <Wakatime data={wakatimeData} />
       </main>
