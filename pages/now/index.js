@@ -9,7 +9,9 @@ import Link from "next/link";
 import Wakatime from "../../components/Wakatime/wakatime";
 import Reading from "../../components/Reading/reading";
 
-const Now = ({ recordMap, wakatimeData }) => {
+import { fetchCurrentlyReading } from "../../lib/reading";
+
+const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
   const { theme, systemTheme } = useTheme();
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
@@ -36,7 +38,7 @@ const Now = ({ recordMap, wakatimeData }) => {
           // rootPageId="5d7c9f2439964f05b4c78b30a7686e8e"
         />
 
-        <Reading />
+        <Reading data={currentlyReading} />
         <Wakatime data={wakatimeData} />
       </main>
     </PageContainer>
@@ -54,10 +56,14 @@ export async function getStaticProps() {
   const response = await fetch(process.env.WAKATIME_URL);
   const wakatimeData = await response.json();
 
+  // Currently Reading Books Data from Literal
+  const currentlyReading = await fetchCurrentlyReading();
+
   return {
     props: {
       recordMap,
       wakatimeData,
+      currentlyReading,
     },
     revalidate: 60,
   };
