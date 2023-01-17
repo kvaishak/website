@@ -9,7 +9,7 @@ import Link from "next/link";
 import Wakatime from "../../components/Wakatime/wakatime";
 import Reading from "../../components/Reading/reading";
 
-import { fetchCurrentlyReading } from "./reading";
+import { fetchCurrentlyReading } from "../../lib/reading";
 
 const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
   const { theme, systemTheme } = useTheme();
@@ -37,7 +37,7 @@ const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
           }}
           // rootPageId="5d7c9f2439964f05b4c78b30a7686e8e"
         />
-        
+
         <Reading data={currentlyReading} />
         <Wakatime data={wakatimeData} />
       </main>
