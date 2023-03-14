@@ -15,6 +15,7 @@ const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
   const { theme, systemTheme } = useTheme();
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
+  const isWakatimeDataPresent = wakatimeData.data.length > 0;
 
   const title = "Now";
   const description = "What I am doing now, an asynchronous update page.";
@@ -39,7 +40,7 @@ const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
         />
 
         <Reading data={currentlyReading} />
-        <Wakatime data={wakatimeData} />
+        {isWakatimeDataPresent && <Wakatime data={wakatimeData} />}
       </main>
     </PageContainer>
   );
