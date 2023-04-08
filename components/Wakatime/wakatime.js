@@ -88,8 +88,9 @@ const Wakatime = ({ data }) => {
 
 function formatDataForLegend(data) {
   let dataForLegend = [];
+  const dataLength = data.length;
   console.log("Data for Wakatime :", data);
-  for (let i = 0; i < DATA_LIMIT; i++) {
+  for (let i = 0; i < DATA_LIMIT && i < dataLength; i++) {
     dataForLegend.push({
       name: `${data[i].x} : ${data[i].y} %`,
       symbol: {
