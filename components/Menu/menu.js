@@ -28,6 +28,10 @@ export default function Menu() {
       label: "now",
       path: "/now",
     },
+    {
+      label: "top-reads",
+      path: "/top-reads",
+    },
   ];
 
   const closeMobileMenu = () => {
