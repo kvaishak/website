@@ -49,9 +49,13 @@ export default function Footer() {
       label: "Resume",
       href: "/resume.pdf",
     },
+    // {
+    //   label: "ReadCV",
+    //   href: "https://read.cv/vaishak",
+    // },
     {
-      label: "ReadCV",
-      href: "https://read.cv/kvaishak",
+      label: "Peerlist",
+      href: "https://peerlist.io/vaishak",
     },
   ];
 

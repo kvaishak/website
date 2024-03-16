@@ -122,9 +122,9 @@ export default function ContactContent() {
             />
             <span className={util.iconButtonText}>LinkedIn</span>
           </a>
-          <a
+          {/* <a
             className={styles.textButton}
-            href="https://read.cv/kvaishak"
+            href="https://read.cv/vaishak"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -137,6 +137,23 @@ export default function ContactContent() {
               alt="readcv"
             />
             <span className={util.iconButtonText}>CV</span>
+          </a> */}
+
+          <a
+            className={styles.textButton}
+            href="https://peerlist.io/vaishak"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              className={styles.icon}
+              priority
+              src={"/icons/peerlist.svg"}
+              height={18}
+              width={18}
+              alt="peerlist"
+            />
+            <span className={util.iconButtonText}>PeerList</span>
           </a>
         </div>
       </div>
