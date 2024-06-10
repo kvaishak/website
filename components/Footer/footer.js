@@ -24,7 +24,7 @@ export default function Footer() {
   const centerColumn = [
     {
       label: "Twitter",
-      href: "https://twitter.com/kvaishack",
+      href: "https://twitter.com/kvaishark",
     },
     {
       label: "Substack",
