@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }) {
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
+          transition={{ duration: 0.1, ease: "easeInOut" }}
         >
           <Component {...pageProps} />
         </motion.div>
