@@ -1,6 +1,5 @@
 import styles from "./index.module.css";
 import util from "../styles/util.module.css";
-// import Image from "next/image";
 const { Client } = require("@notionhq/client");
 import PageContainer from "../HOC/PageContainer";
 import { NotionRenderer } from "react-notion-x";

@@ -1,7 +1,4 @@
-@import "@radix-ui/colors/gray.css";
-@import "@radix-ui/colors/whiteA.css";
-@import "@radix-ui/colors/blackA.css";
-@import "@radix-ui/colors/grayDark.css";
+@import "@radix-ui/themes/styles.css";
 
 @font-face {
   font-family: "Aktiv Grotesk";
@@ -32,6 +29,48 @@ html {
 /* @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap"); */
 
 :root {
+  /* Radix UI Colors */
+  --gray1: hsl(0, 0%, 99%);
+  --gray2: hsl(0, 0%, 97.3%);
+  --gray3: hsl(0, 0%, 95.1%);
+  --gray4: hsl(0, 0%, 93%);
+  --gray5: hsl(0, 0%, 90.9%);
+  --gray6: hsl(0, 0%, 88.7%);
+  --gray7: hsl(0, 0%, 85%);
+  --gray8: hsl(0, 0%, 78%);
+  --gray9: hsl(0, 0%, 56.1%);
+  --gray10: hsl(0, 0%, 52.3%);
+  --gray11: hsl(0, 0%, 43.5%);
+  --gray12: hsl(0, 0%, 9%);
+
+  --whiteA1: hsla(0, 0%, 100%, 0);
+  --whiteA2: hsla(0, 0%, 100%, 0.013);
+  --whiteA3: hsla(0, 0%, 100%, 0.034);
+  --whiteA4: hsla(0, 0%, 100%, 0.056);
+  --whiteA5: hsla(0, 0%, 100%, 0.086);
+  --whiteA6: hsla(0, 0%, 100%, 0.124);
+  --whiteA7: hsla(0, 0%, 100%, 0.176);
+  --whiteA8: hsla(0, 0%, 100%, 0.249);
+  --whiteA9: hsla(0, 0%, 100%, 0.386);
+  --whiteA10: hsla(0, 0%, 100%, 0.446);
+  --whiteA11: hsla(0, 0%, 100%, 0.592);
+  --whiteA12: hsla(0, 0%, 100%, 0.923);
+
+  --blackA1: hsla(0, 0%, 0%, 0);
+  --blackA2: hsla(0, 0%, 0%, 0.026);
+  --blackA3: hsla(0, 0%, 0%, 0.056);
+  --blackA4: hsla(0, 0%, 0%, 0.086);
+  --blackA5: hsla(0, 0%, 0%, 0.124);
+  --blackA6: hsla(0, 0%, 0%, 0.176);
+  --blackA7: hsla(0, 0%, 0%, 0.249);
+  --blackA8: hsla(0, 0%, 0%, 0.386);
+  --blackA9: hsla(0, 0%, 0%, 0.446);
+  --blackA10: hsla(0, 0%, 0%, 0.592);
+  --blackA11: hsla(0, 0%, 0%, 0.923);
+  --blackA12: hsla(0, 0%, 0%, 0.965);
+
+  /* Add other Radix UI colors as needed */
+
   /* Font */
   --font-sans: Aktiv Grotesk;
   --font-title: 20px

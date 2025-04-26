@@ -10,9 +10,10 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.2",
-    "@radix-ui/colors": "^0.1.8",
+    "@radix-ui/colors": "3.0.0",
     "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.2",
+    "@radix-ui/themes": "3.2.1",
     "@vercel/analytics": "^0.1.5",
     "@vercel/og": "^0.0.20",
     "next": "12.3.1",
