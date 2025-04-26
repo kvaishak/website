@@ -15,7 +15,7 @@
     "@radix-ui/react-tooltip": "^1.0.2",
     "@vercel/analytics": "^0.1.5",
     "@vercel/og": "^0.0.20",
-    "framer-motion": "12.7.2",
+    "framer-motion": "12.9.2",
     "next": "12.3.1",
     "next-themes": "^0.2.1",
     "notion-client": "^6.15.6",
