@@ -32,7 +32,7 @@ export default function Footer() {
     },
     {
       label: "Notes",
-      href: "https://notes.kvaishak.com/",
+      href: "https://notes.vaishak.de/",
     },
   ];
 

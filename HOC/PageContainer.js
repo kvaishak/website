@@ -13,7 +13,7 @@ const PageContainer = ({ children, title, description, clientOnly }) => {
     : "Welcome to my virtual haven on the internet!";
   const pageURL = process.env.PUBLIC_DEPLOYED_URL
     ? process.env.PUBLIC_DEPLOYED_URL
-    : "https://kvaishak.com";
+    : "https://vaishak.de";
   const imageURL = `${pageURL}/api/og?title=${pageTitle}&description=${pageDescription}`;
 
   const headerContent = (
