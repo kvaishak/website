@@ -1,0 +1,126 @@
+[
+  {
+    "id": 4,
+    "title": "Mallorca Getaway",
+    "year": 2025,
+    "cover": "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?w=800&h=500&auto=format&fit=crop",
+    "location": "Palma, Valldemossa, Sóller",
+    "date": "May 15 - May 20, 2025",
+    "days": [
+      {
+        "day": 1,
+        "title": "Arrival in Palma",
+        "description": "Landed at Palma de Mallorca Airport. Checked into boutique hotel in the historic center. Explored the cobblestone streets of the old town and had dinner at a seaside restaurant with views of the cathedral.",
+        "artifact": "https://images.unsplash.com/photo-1591960539424-2d95633539ed?w=800&h=500&auto=format&fit=crop",
+        "location": "Palma, Mallorca"
+      },
+      {
+        "day": 2,
+        "title": "Palma Cathedral & Beach Day",
+        "description": "Morning visit to La Seu Cathedral, followed by exploring the Royal Palace of La Almudaina. Afternoon relaxing at Illetas Beach with crystal clear waters. Evening tapas tour through local favorites in Santa Catalina neighborhood.",
+        "artifact": "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?w=800&h=500&auto=format&fit=crop",
+        "location": "Palma, Mallorca"
+      },
+      {
+        "day": 3,
+        "title": "Mountain Village of Valldemossa",
+        "description": "Day trip to the charming mountain village of Valldemossa. Visited the Carthusian Monastery where Chopin once stayed. Enjoyed local pastries called 'coca de patata' at a hillside café. Hiked through olive groves with stunning mountain views.",
+        "artifact": "https://images.unsplash.com/photo-1593201464703-79e28ad558b9?w=800&h=500&auto=format&fit=crop",
+        "location": "Valldemossa, Mallorca"
+      },
+      {
+        "day": 4,
+        "title": "Vintage Train to Sóller",
+        "description": "Took the historic wooden train through the mountains to Sóller. Wandered through orange groves and the botanical gardens. Rode the vintage tram to Port de Sóller for a seafood lunch by the harbor. Afternoon swimming and kayaking in the bay.",
+        "artifact": "https://images.unsplash.com/photo-1562873904-60a8bef7beeb?w=800&h=500&auto=format&fit=crop",
+        "location": "Sóller, Mallorca"
+      },
+      {
+        "day": 5,
+        "title": "Caves and Farewell",
+        "description": "Morning visit to the spectacular Drach Caves with their underground lakes. Farewell lunch at a vineyard in the countryside, sampling local wines and Mallorcan specialties. Last evening stroll along Palma's marina promenade at sunset.",
+        "artifact": "https://images.unsplash.com/photo-1558006508-2c552102d53a?w=800&h=500&auto=format&fit=crop",
+        "location": "Palma, Mallorca"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Japan Adventure",
+    "year": 2024,
+    "cover": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&auto=format&fit=crop",
+    "location": "Tokyo, Kyoto, Osaka",
+    "date": "April 10 - April 24, 2024",
+    "days": [
+      {
+        "day": 1,
+        "title": "Arrival in Tokyo",
+        "description": "Landed at Narita Airport. Checked in at the hotel in Shinjuku. Explored the nearby streets and had dinner at a local ramen shop.",
+        "artifact": "https://images.unsplash.com/photo-1683120057335-440c32aa38ff?w=800&h=500&auto=format&fit=crop",
+        "location": "Shinjuku, Tokyo"
+      },
+      {
+        "day": 2,
+        "title": "Tokyo Exploration",
+        "description": "Visited Meiji Shrine in the morning. Explored Harajuku and Shibuya in the afternoon. Crossed the famous Shibuya Crossing and had dinner at a local izakaya.",
+        "artifact": "https://images.unsplash.com/photo-1587151940594-58bd770fdda7?w=800&h=500&auto=format&fit=crop",
+        "location": "Shibuya, Tokyo"
+      },
+      {
+        "day": 3,
+        "title": "Asakusa and Ueno",
+        "description": "Visited Senso-ji Temple in Asakusa. Explored Ueno Park and the Tokyo National Museum. Had dinner at a sushi restaurant in Ueno.",
+        "artifact": "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=600&auto=format&fit=crop",
+        "location": "Asakusa, Tokyo"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "European Tour",
+    "year": 2024,
+    "cover": "https://images.unsplash.com/photo-1491557345352-5929e343eb89",
+    "location": "Paris, Rome, Barcelona",
+    "date": "June 15 - July 2, 2024",
+    "days": [
+      {
+        "day": 1,
+        "title": "Arrival in Paris",
+        "description": "Landed at Charles de Gaulle Airport. Checked in at the hotel near the Eiffel Tower. Explored the nearby area and had dinner at a local bistro.",
+        "artifact": "/api/placeholder/600/400",
+        "location": "Paris, France"
+      },
+      {
+        "day": 2,
+        "title": "Paris Exploration",
+        "description": "Visited the Louvre Museum in the morning. Explored the Champs-Élysées and Arc de Triomphe in the afternoon. Had dinner at a local restaurant near Montmartre.",
+        "artifact": "/api/placeholder/600/400",
+        "location": "Paris, France"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Southeast Asia Backpacking",
+    "year": 2022,
+    "cover": "https://images.unsplash.com/photo-1528181304800-259b08848526",
+    "location": "Thailand, Vietnam, Cambodia",
+    "date": "November 5 - November 25, 2022",
+    "days": [
+      {
+        "day": 1,
+        "title": "Arrival in Bangkok",
+        "description": "Landed at Suvarnabhumi Airport. Checked in at the hostel in Khao San Road. Explored the nearby area and had dinner at a local street food stall.",
+        "artifact": "/api/placeholder/600/400",
+        "location": "Bangkok, Thailand"
+      },
+      {
+        "day": 2,
+        "title": "Bangkok Exploration",
+        "description": "Visited the Grand Palace and Wat Pho in the morning. Explored Chatuchak Weekend Market in the afternoon. Had dinner at a local restaurant near the river.",
+        "artifact": "/api/placeholder/600/400",
+        "location": "Bangkok, Thailand"
+      }
+    ]
+  }
+]

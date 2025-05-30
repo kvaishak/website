@@ -32,6 +32,10 @@ export default function Menu() {
       label: "top-reads",
       path: "/top-reads",
     },
+    {
+      label: "travels",
+      path: "/travels",
+    },
   ];
 
   const closeMobileMenu = () => {
