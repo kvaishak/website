@@ -110,19 +110,19 @@
 }
 
 /* Dark mode styles */
-.dark-theme .tagButton {
+:global(.dark-theme) .tagButton {
   color: rgba(255, 255, 255, 0.7);
   background-color: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.12);
 }
 
-.dark-theme .tagButton:hover {
+:global(.dark-theme) .tagButton:hover {
   background-color: rgba(51, 204, 102, 0.15);
   border-color: rgba(51, 204, 102, 0.4);
   color: #66d98f;
 }
 
-.dark-theme .tagButtonActive {
+:global(.dark-theme) .tagButtonActive {
   background-color: rgba(51, 204, 102, 0.25);
   border-color: rgba(51, 204, 102, 0.6);
   color: #7ee0a3;
