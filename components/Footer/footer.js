@@ -30,10 +30,6 @@ export default function Footer() {
       label: "Substack",
       href: "https://kvaishak.substack.com/",
     },
-    {
-      label: "Notes",
-      href: "https://notes.vaishak.de/",
-    },
   ];
 
   const rightColumn = [
