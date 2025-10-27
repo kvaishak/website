@@ -1,0 +1,32 @@
+.noteMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-start;
+  margin-top: 16px;
+  margin-bottom: 48px;
+  color: #9a988b;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 50rem;
+  width: 100%;
+}
+
+.noteDate {
+  color: #9a988b;
+  white-space: nowrap;
+}
+
+.noteTags {
+  color: #9a988b;
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.noteTags::before {
+  content: '•';
+  margin-left: 12px;
+  margin-right: 12px;
+  display: inline-block;
+}
