@@ -13,21 +13,21 @@
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.2",
-    "@vercel/analytics": "^0.1.5",
-    "@vercel/og": "^0.0.20",
-    "next": "12.3.1",
+    "@vercel/analytics": "^1.4.1",
+    "@vercel/og": "^0.6.3",
+    "next": "15.5.7",
     "next-themes": "^0.2.1",
     "notion-client": "^6.15.6",
     "notion-utils": "^6.15.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.0",
     "react-notion-x": "^6.15.6",
     "victory": "^36.6.8"
   },
   "devDependencies": {
-    "eslint": "8.26.0",
-    "eslint-config-next": "12.3.1"
+    "eslint": "^8.57.1",
+    "eslint-config-next": "15.5.7"
   },
   "engines": {
     "node": "20.x"

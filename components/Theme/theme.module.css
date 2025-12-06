@@ -4,6 +4,20 @@
   height: 20px;
   overflow: hidden;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoIcon img {
+  display: block;
+  width: 15px !important;
+  height: 15px !important;
+  max-width: 15px !important;
+  max-height: 15px !important;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  object-fit: contain;
 }
 
 /* Mobile Theme Changer */

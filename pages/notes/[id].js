@@ -43,8 +43,12 @@ const NotePage = ({ recordMap, pageId, noteTitle, noteDate, noteTags }) => {
           {noteTags && noteTags.length > 0 && (
             <span className={noteStyles.noteTags}>
               {noteTags.map((tag) => (
-                <Link key={tag} href={`/notes?tags=${encodeURIComponent(tag)}`}>
-                  <a className={noteStyles.tagLink}>{tag}</a>
+                <Link
+                  key={tag}
+                  href={`/notes?tags=${encodeURIComponent(tag)}`}
+                  className={noteStyles.tagLink}
+                >
+                  {tag}
                 </Link>
               ))}
             </span>
