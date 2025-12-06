@@ -118,15 +118,14 @@ export default function Menu() {
               onClick={navBtnClick}
               className={styles.navMenuItemsContainer}
             >
-              <Link href={navMenu.path}>
-                <a
-                  className={
-                    navMenu.path === router.pathname ? styles.selected : ""
-                  }
-                  id="nav-button"
-                >
-                  {navMenu.label}
-                </a>
+              <Link
+                href={navMenu.path}
+                className={
+                  navMenu.path === router.pathname ? styles.selected : ""
+                }
+                id="nav-button"
+              >
+                {navMenu.label}
               </Link>
             </div>
           ))}

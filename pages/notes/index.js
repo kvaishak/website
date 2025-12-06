@@ -114,29 +114,27 @@ const Notes = ({ notes, allTags }) => {
             filteredNotes.map((note) => (
               <div key={note.id} className={notesStyles.notesItem}>
                 <Link href={`/notes/${note.id}`}>
-                  <a>
-                    <div>
-                      <div className={notesStyles.notesItem__title}>
-                        {note.title}
-                      </div>
-                      <div className={notesStyles.notesItem__meta}>
-                        {note.date && (
-                          <span className={notesStyles.notesItem__date}>
-                            {new Date(note.date).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric'
-                            })}
-                          </span>
-                        )}
-                        {note.tags && note.tags.length > 0 && (
-                          <span className={notesStyles.notesItem__tags}>
-                            {note.tags.join(' · ')}
-                          </span>
-                        )}
-                      </div>
+                  <div>
+                    <div className={notesStyles.notesItem__title}>
+                      {note.title}
                     </div>
-                  </a>
+                    <div className={notesStyles.notesItem__meta}>
+                      {note.date && (
+                        <span className={notesStyles.notesItem__date}>
+                          {new Date(note.date).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                          })}
+                        </span>
+                      )}
+                      {note.tags && note.tags.length > 0 && (
+                        <span className={notesStyles.notesItem__tags}>
+                          {note.tags.join(' · ')}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </Link>
               </div>
             ))
