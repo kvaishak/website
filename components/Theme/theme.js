@@ -1,6 +1,5 @@
 import styles from "../Theme/theme.module.css";
 
-import Image from "next/image";
 import { useTheme } from "next-themes";
 
 import ClientOnly from "../../HOC/ClientOnly";
@@ -25,12 +24,12 @@ export const ThemeChanger = () => {
   return (
     <ClientOnly>
       <div className={styles.logoIcon}>
-        <Image
-          priority
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           className={iconClassName}
           src={`/icons/${iconType}.svg`}
-          height={20}
-          width={20}
+          height={15}
+          width={15}
           alt="Theme-changer"
           onClick={clickHander}
         />
