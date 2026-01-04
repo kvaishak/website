@@ -32,6 +32,10 @@ export default function Menu() {
       label: "notes",
       path: "/notes",
     },
+    // {
+    //   label: "travels",
+    //   path: "/travels",
+    // },
     {
       label: "top-reads",
       path: "/top-reads",

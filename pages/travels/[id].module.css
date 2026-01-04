@@ -1,0 +1,43 @@
+.travelMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 48px;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 50rem;
+  width: 100%;
+}
+
+.travelDuration {
+  color: #9a988b;
+  white-space: nowrap;
+}
+
+.travelCountries {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.countryTag {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #f5f5f5;
+  border: 1px solid #e8e8e8;
+  border-radius: 14px;
+  color: #6b6b6b;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* Dark mode */
+:global(.dark-theme) .countryTag {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+}
