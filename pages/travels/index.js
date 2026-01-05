@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { idToUuid, getTextContent, getDateValue } from "notion-utils";
+import { geocodeTravels } from "../../lib/geocoding";
 import travelsStyles from "./index.module.css";
 import util from "../../styles/util.module.css";
 import PageContainer from "../../HOC/PageContainer";
@@ -117,14 +118,19 @@ const Travels = ({ travels, allYears }) => {
   return (
     <PageContainer title={title} description={description} clientOnly={true}>
       <main className={util.main}>
-        <div className={util.title}>
-          <h1>{title}</h1>
+        <div className={travelsStyles.header}>
+          <div className={travelsStyles.headerContent}>
+            <div className={util.title}>
+              <h1>{title}</h1>
+            </div>
+            <p className={travelsStyles.description}>{description}</p>
+          </div>
+          <Link href="/travels/map" className={travelsStyles.mapLink}>
+            View Map →
+          </Link>
         </div>
 
         <div className={travelsStyles.container}>
-          <div className={travelsStyles.gap}>&nbsp;</div>
-          <p>{description}</p>
-          <div className={travelsStyles.gap}>&nbsp;</div>
 
           {/* Year Filter Section */}
           {allYears && allYears.length > 0 && (
@@ -252,6 +258,9 @@ export async function getStaticProps() {
         } else if (propType === 'select' && propName.toLowerCase() === 'status') {
           // For status select field
           travel.status = getTextContent(val);
+        } else if ((propType === 'text' || propType === 'rich_text') && propName.toLowerCase() === 'location') {
+          // For location text/rich_text field (comma-separated place names)
+          travel.location = getTextContent(val);
         }
       }
 
@@ -285,9 +294,13 @@ export async function getStaticProps() {
       console.log('Sample travel:', JSON.stringify(travels[0], null, 2));
     }
 
+    // Geocode travels with location data
+    console.log('🗺️  Starting geocoding for travels...');
+    const travelsWithCoordinates = await geocodeTravels(travels);
+
     return {
       props: {
-        travels,
+        travels: travelsWithCoordinates,
         allYears,
       },
       revalidate: 60,

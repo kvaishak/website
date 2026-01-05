@@ -1,0 +1,44 @@
+.statsContainer {
+  width: 100%;
+  max-width: 50rem;
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.statValue {
+  font-size: 14px;
+  font-weight: 450;
+  color: var(--fg-textColor);
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: #9a988b;
+  font-weight: 400;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .statsContainer {
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .statValue {
+    font-size: 13px;
+  }
+
+  .statLabel {
+    font-size: 13px;
+  }
+}
