@@ -15,6 +15,7 @@
     "@radix-ui/react-tooltip": "^1.0.2",
     "@vercel/analytics": "^1.4.1",
     "@vercel/og": "^0.6.3",
+    "leaflet": "^1.9.4",
     "next": "15.5.7",
     "next-themes": "^0.2.1",
     "notion-client": "^6.15.6",
@@ -22,6 +23,9 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.0",
+    "react-leaflet": "^4.2.1",
+    "react-leaflet-cluster": "^4.0.0",
+    "react-markdown": "^10.1.0",
     "react-notion-x": "^6.15.6",
     "victory": "^36.6.8"
   },
