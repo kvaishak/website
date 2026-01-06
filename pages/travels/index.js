@@ -191,7 +191,9 @@ const Travels = ({ travels, allYears }) => {
 export async function getStaticProps() {
   try {
     const pageId = process.env.NOTION_TRAVELS_ID;
-    const notion = new NotionAPI();
+    const notion = new NotionAPI({
+      activeUser: process.env.NOTION_ACTIVE_USER,
+    });
     const recordMap = await notion.getPage(pageId);
 
     const uuid = idToUuid(pageId);

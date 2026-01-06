@@ -73,7 +73,9 @@ const NotePage = ({ recordMap, pageId, noteTitle, noteDate, noteTags }) => {
 
 export async function getStaticPaths() {
   const pageId = process.env.NOTION_NOTES_ID;
-  const notion = new NotionAPI();
+  const notion = new NotionAPI({
+    activeUser: process.env.NOTION_ACTIVE_USER,
+  });
   const recordMap = await notion.getPage(pageId);
 
   const uuid = idToUuid(pageId);
@@ -131,7 +133,9 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   try {
     const { id } = params;
-    const notion = new NotionAPI();
+    const notion = new NotionAPI({
+      activeUser: process.env.NOTION_ACTIVE_USER,
+    });
 
     // First, get the database to access schema
     const databaseId = process.env.NOTION_NOTES_ID;
