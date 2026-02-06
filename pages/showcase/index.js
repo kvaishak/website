@@ -1,37 +1,48 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import showcaseStyles from "./index.module.css";
 import util from "../../styles/util.module.css";
 import PageContainer from "../../HOC/PageContainer";
-import projectsData from "../../data/projects.json";
 
-const Showcase = () => {
+const Showcase = ({ projects, allTypes, allStatuses }) => {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [imageErrors, setImageErrors] = useState({});
 
   const title = "Showcase";
   const description =
     "A collection of projects and applications I have built across various domains and technologies";
 
-  const allTypes = useMemo(() => {
-    const types = new Set();
-    projectsData.forEach(project => {
-      if (project.type) types.add(project.type);
-    });
-    return Array.from(types).sort();
-  }, []);
+  useEffect(() => {
+    if (router.isReady) {
+      const { search, type, status } = router.query;
+      if (search) setSearchQuery(search);
+      if (type) setSelectedType(type);
+      if (status) setSelectedStatus(status);
+    }
+  }, [router.isReady, router.query]);
 
-  const allStatuses = useMemo(() => {
-    const statuses = new Set();
-    projectsData.forEach(project => {
-      if (project.status) statuses.add(project.status);
-    });
-    return Array.from(statuses).sort();
-  }, []);
+  const updateURL = (search, type, status) => {
+    const query = {};
+    if (search) query.search = search;
+    if (type) query.type = type;
+    if (status) query.status = status;
+
+    router.push(
+      {
+        pathname: router.pathname,
+        query: query,
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
 
   const filteredProjects = useMemo(() => {
-    return projectsData.filter(project => {
+    return projects.filter(project => {
       const matchesSearch = searchQuery === "" ||
         project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -42,12 +53,32 @@ const Showcase = () => {
 
       return matchesSearch && matchesType && matchesStatus;
     });
-  }, [searchQuery, selectedType, selectedStatus]);
+  }, [projects, searchQuery, selectedType, selectedStatus]);
 
   const resetFilters = () => {
     setSearchQuery("");
     setSelectedType("");
     setSelectedStatus("");
+    router.push(router.pathname, undefined, { shallow: true });
+  };
+
+  const handleSearchChange = (value) => {
+    setSearchQuery(value);
+    updateURL(value, selectedType, selectedStatus);
+  };
+
+  const handleTypeChange = (type) => {
+    setSelectedType(type);
+    updateURL(searchQuery, type, selectedStatus);
+  };
+
+  const handleStatusChange = (status) => {
+    setSelectedStatus(status);
+    updateURL(searchQuery, selectedType, status);
+  };
+
+  const handleImageError = (projectId) => {
+    setImageErrors(prev => ({ ...prev, [projectId]: true }));
   };
 
   return (
@@ -67,7 +98,7 @@ const Showcase = () => {
               type="text"
               placeholder="Search projects..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
               className={showcaseStyles.searchInput}
             />
           </div>
@@ -80,7 +111,7 @@ const Showcase = () => {
                   className={`${showcaseStyles.filterButton} ${
                     selectedType === "" ? showcaseStyles.filterButtonActive : ""
                   }`}
-                  onClick={() => setSelectedType("")}
+                  onClick={() => handleTypeChange("")}
                 >
                   All
                 </button>
@@ -90,7 +121,7 @@ const Showcase = () => {
                     className={`${showcaseStyles.filterButton} ${
                       selectedType === type ? showcaseStyles.filterButtonActive : ""
                     }`}
-                    onClick={() => setSelectedType(type)}
+                    onClick={() => handleTypeChange(type)}
                   >
                     {type}
                   </button>
@@ -105,7 +136,7 @@ const Showcase = () => {
                   className={`${showcaseStyles.filterButton} ${
                     selectedStatus === "" ? showcaseStyles.filterButtonActive : ""
                   }`}
-                  onClick={() => setSelectedStatus("")}
+                  onClick={() => handleStatusChange("")}
                 >
                   All
                 </button>
@@ -115,7 +146,7 @@ const Showcase = () => {
                     className={`${showcaseStyles.filterButton} ${
                       selectedStatus === status ? showcaseStyles.filterButtonActive : ""
                     }`}
-                    onClick={() => setSelectedStatus(status)}
+                    onClick={() => handleStatusChange(status)}
                   >
                     {status}
                   </button>
@@ -141,7 +172,7 @@ const Showcase = () => {
                   rel="noopener noreferrer"
                   className={showcaseStyles.card}
                 >
-                  {project.image && (
+                  {project.image && !imageErrors[project.id] && (
                     <div className={showcaseStyles.cardImage}>
                       <Image
                         src={project.image}
@@ -149,6 +180,7 @@ const Showcase = () => {
                         width={400}
                         height={250}
                         style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                        onError={() => handleImageError(project.id)}
                       />
                     </div>
                   )}
@@ -181,5 +213,25 @@ const Showcase = () => {
     </PageContainer>
   );
 };
+
+export async function getStaticProps() {
+  const fs = require('fs');
+  const path = require('path');
+  
+  const filePath = path.join(process.cwd(), 'data', 'projects.json');
+  const fileContents = fs.readFileSync(filePath, 'utf8');
+  const projects = JSON.parse(fileContents);
+
+  const allTypes = [...new Set(projects.map(p => p.type).filter(Boolean))].sort();
+  const allStatuses = [...new Set(projects.map(p => p.status).filter(Boolean))].sort();
+
+  return {
+    props: {
+      projects,
+      allTypes,
+      allStatuses,
+    },
+  };
+}
 
 export default Showcase;
