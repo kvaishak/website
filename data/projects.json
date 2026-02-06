@@ -1,0 +1,32 @@
+[
+  {
+    "id": "project-1",
+    "title": "Sample Project 1",
+    "description": "A brief description of what this project does and its main purpose.",
+    "technologies": ["React", "Node.js", "MongoDB"],
+    "link": "https://example.com",
+    "image": "/icons/Logo.png",
+    "status": "completed",
+    "type": "web"
+  },
+  {
+    "id": "project-2",
+    "title": "Sample Project 2",
+    "description": "Another interesting project that showcases specific skills and technologies.",
+    "technologies": ["Next.js", "TypeScript", "TailwindCSS"],
+    "link": "https://example.com",
+    "image": "/icons/Logo.png",
+    "status": "in-progress",
+    "type": "web"
+  },
+  {
+    "id": "project-3",
+    "title": "Sample Mobile App",
+    "description": "A mobile application built with modern frameworks and best practices.",
+    "technologies": ["React Native", "Firebase", "Redux"],
+    "link": "https://example.com",
+    "image": "/icons/Logo.png",
+    "status": "completed",
+    "type": "mobile"
+  }
+]
