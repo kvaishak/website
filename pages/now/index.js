@@ -53,12 +53,21 @@ export async function getStaticProps() {
   });
   const recordMap = await notion.getPage(process.env.NOTION_NOW_ID);
 
-  // Wakatime data fetching
-  const response = await fetch(process.env.WAKATIME_URL);
-  const wakatimeData = await response.json();
+  let wakatimeData = { data: [] };
+  let currentlyReading = [];
 
-  // Currently Reading Books Data from Literal
-  const currentlyReading = await fetchCurrentlyReading();
+  try {
+    const response = await fetch(process.env.WAKATIME_URL);
+    wakatimeData = await response.json();
+  } catch (error) {
+    console.warn('Failed to fetch Wakatime data:', error.message);
+  }
+
+  try {
+    currentlyReading = await fetchCurrentlyReading();
+  } catch (error) {
+    console.warn('Failed to fetch currently reading books:', error.message);
+  }
 
   return {
     props: {

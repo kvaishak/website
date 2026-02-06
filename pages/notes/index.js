@@ -148,7 +148,9 @@ const Notes = ({ notes, allTags }) => {
 export async function getStaticProps() {
   try {
     const pageId = process.env.NOTION_NOTES_ID;
-    const notion = new NotionAPI();
+    const notion = new NotionAPI({
+      activeUser: process.env.NOTION_ACTIVE_USER,
+    });
     const recordMap = await notion.getPage(pageId);
 
     const uuid = idToUuid(pageId);
