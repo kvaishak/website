@@ -111,7 +111,7 @@ export async function getStaticPaths() {
 
       // Check if published
       for (const [key, val] of Object.entries(properties)) {
-        if (!schema[key]) continue;
+        if (!schema || !schema[key]) continue;
         const propName = schema[key].name;
         const propType = schema[key].type;
 
@@ -147,12 +147,22 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   try {
     const { id } = params;
+    
+    // First, get the database to access schema
+    const databaseId = process.env.NOTION_NOTES_ID;
+    
+    // If environment variable is not set, return not found
+    if (!databaseId) {
+      console.log('ℹ️ NOTION_NOTES_ID environment variable is not set in getStaticProps.');
+      return {
+        notFound: true,
+      };
+    }
+    
     const notion = new NotionAPI({
       activeUser: process.env.NOTION_ACTIVE_USER,
     });
-
-    // First, get the database to access schema
-    const databaseId = process.env.NOTION_NOTES_ID;
+    
     const databaseRecordMap = await notion.getPage(databaseId);
     const collection = Object.values(databaseRecordMap.collection)[0]?.value;
     const schema = collection?.schema;
@@ -171,7 +181,7 @@ export async function getStaticProps({ params }) {
 
     // Extract properties based on schema
     for (const [key, val] of Object.entries(properties)) {
-      if (!schema[key]) continue;
+      if (!schema || !schema[key]) continue;
 
       const propName = schema[key].name;
       const propType = schema[key].type;
@@ -202,14 +212,7 @@ export async function getStaticProps({ params }) {
   } catch (error) {
     console.error("Error fetching note:", error);
     return {
-      props: {
-        recordMap: null,
-        pageId: null,
-        noteTitle: 'Note',
-        noteDate: null,
-        noteTags: [],
-      },
-      revalidate: 60,
+      notFound: true,
     };
   }
 }
