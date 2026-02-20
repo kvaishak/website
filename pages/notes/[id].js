@@ -128,7 +128,7 @@ export async function getStaticPaths() {
   }
 
   // Strategy 4: Fallback to block entries if no collection_query data
-  if (pageIds.length === 0 && block) {
+  if (pageIds.length === 0 && block && uuid) {
     Object.keys(block).forEach((id) => {
       const pageBlock = block[id]?.value;
       // Check if it's a page (not a collection itself)
@@ -159,7 +159,7 @@ export async function getStaticPaths() {
       }
     }
 
-    if (status.toLowerCase() === 'published' || !status) {
+    if ((typeof status === 'string' && status.toLowerCase() === 'published') || !status) {
       paths.push({
         params: { id },
       });

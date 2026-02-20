@@ -203,7 +203,7 @@ export async function getStaticProps() {
     }
 
     // Strategy 4: Fallback to block entries if no collection_query data
-    if (pageIds.length === 0 && block) {
+    if (pageIds.length === 0 && block && uuid) {
       Object.keys(block).forEach((id) => {
         const pageBlock = block[id]?.value;
         // Check if it's a page (not a collection itself)
@@ -257,7 +257,7 @@ export async function getStaticProps() {
 
       // Only include notes with title and 'published' status
       // If status field is missing or empty, include the note by default
-      const isPublished = !note.status || note.status.toLowerCase() === 'published';
+      const isPublished = !note.status || (typeof note.status === 'string' && note.status.toLowerCase() === 'published');
 
       if (note.title && isPublished) {
         notes.push(note);
