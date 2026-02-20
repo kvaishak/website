@@ -41,18 +41,41 @@ const Work = ({ recordMap }) => {
 };
 
 export async function getStaticProps() {
-  const notion = new NotionAPI({
-    activeUser: process.env.NOTION_ACTIVE_USER,
-    // authToken: process.env.NOTION_TOKEN_V2,
-  });
-  const recordMap = await notion.getPage(process.env.NOTION_COLOPHON_ID);
+  try {
+    const pageId = process.env.NOTION_COLOPHON_ID;
+    
+    // If environment variable is not set, return empty record map
+    if (!pageId) {
+      console.log('ℹ️ NOTION_COLOPHON_ID environment variable is not set. Returning empty data for build.');
+      return {
+        props: {
+          recordMap: { block: {} },
+        },
+        revalidate: 60,
+      };
+    }
 
-  return {
-    props: {
-      recordMap,
-    },
-    revalidate: 60,
-  };
+    const notion = new NotionAPI({
+      activeUser: process.env.NOTION_ACTIVE_USER,
+      // authToken: process.env.NOTION_TOKEN_V2,
+    });
+    const recordMap = await notion.getPage(pageId);
+
+    return {
+      props: {
+        recordMap,
+      },
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error('❌ Error in getStaticProps for colophon:', error);
+    return {
+      props: {
+        recordMap: { block: {} },
+      },
+      revalidate: 60,
+    };
+  }
 }
 
 export default Work;

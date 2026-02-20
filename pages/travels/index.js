@@ -191,6 +191,19 @@ const Travels = ({ travels, allYears }) => {
 export async function getStaticProps() {
   try {
     const pageId = process.env.NOTION_TRAVELS_ID;
+    
+    // If environment variable is not set, return empty travels
+    if (!pageId) {
+      console.log('ℹ️ NOTION_TRAVELS_ID environment variable is not set. Returning empty travels array for build.');
+      return {
+        props: {
+          travels: [],
+          allYears: [],
+        },
+        revalidate: 60,
+      };
+    }
+
     const notion = new NotionAPI({
       activeUser: process.env.NOTION_ACTIVE_USER,
     });

@@ -107,73 +107,109 @@ const TravelPage = ({ recordMap, pageId, travelTitle, travelStartDate, travelEnd
 };
 
 export async function getStaticPaths() {
-  const pageId = process.env.NOTION_TRAVELS_ID;
-  const notion = new NotionAPI({
-    activeUser: process.env.NOTION_ACTIVE_USER,
-  });
-  const recordMap = await notion.getPage(pageId);
+  try {
+    const pageId = process.env.NOTION_TRAVELS_ID;
+    
+    // If environment variable is not set, return empty paths
+    if (!pageId) {
+      console.log('ℹ️ NOTION_TRAVELS_ID environment variable is not set. Returning empty paths for build.');
+      return {
+        paths: [],
+        fallback: 'blocking',
+      };
+    }
 
-  const uuid = idToUuid(pageId);
-  const collection = Object.values(recordMap.collection)[0]?.value;
-  const block = recordMap.block;
-  const schema = collection?.schema;
-
-  // Get all page IDs from collection_query
-  const collectionQuery = recordMap.collection_query;
-  const views = Object.values(collectionQuery)[0];
-  const pageIds = [];
-
-  Object.values(views).forEach((view) => {
-    view?.collection_group_results?.blockIds?.forEach((id) => {
-      if (!pageIds.includes(id)) {
-        pageIds.push(id);
-      }
+    const notion = new NotionAPI({
+      activeUser: process.env.NOTION_ACTIVE_USER,
     });
-  });
+    const recordMap = await notion.getPage(pageId);
 
-  // Extract published travels
-  const paths = [];
-  for (const id of pageIds) {
-    const pageBlock = block[id]?.value;
-    if (!pageBlock) continue;
+    const uuid = idToUuid(pageId);
+    const collection = Object.values(recordMap.collection)[0]?.value;
+    const block = recordMap.block;
+    const schema = collection?.schema;
 
-    const properties = pageBlock.properties || {};
-    let status = '';
+    // Get all page IDs from collection_query
+    const collectionQuery = recordMap.collection_query;
+    const views = Object.values(collectionQuery)[0];
+    const pageIds = [];
 
-    // Check if published
-    for (const [key, val] of Object.entries(properties)) {
-      if (!schema[key]) continue;
-      const propName = schema[key].name;
-      const propType = schema[key].type;
+    Object.values(views).forEach((view) => {
+      view?.collection_group_results?.blockIds?.forEach((id) => {
+        if (!pageIds.includes(id)) {
+          pageIds.push(id);
+        }
+      });
+    });
 
-      if (propType === 'select' && propName.toLowerCase() === 'status') {
-        status = getTextContent(val);
-        break;
+    // Extract published travels
+    const paths = [];
+    for (const id of pageIds) {
+      const pageBlock = block[id]?.value;
+      if (!pageBlock) continue;
+
+      const properties = pageBlock.properties || {};
+      let status = '';
+
+      // Check if published
+      for (const [key, val] of Object.entries(properties)) {
+        if (!schema[key]) continue;
+        const propName = schema[key].name;
+        const propType = schema[key].type;
+
+        if (propType === 'select' && propName.toLowerCase() === 'status') {
+          status = getTextContent(val);
+          break;
+        }
+      }
+
+      if (status.toLowerCase() === 'published') {
+        paths.push({
+          params: { id },
+        });
       }
     }
 
-    if (status.toLowerCase() === 'published') {
-      paths.push({
-        params: { id },
-      });
-    }
+    return {
+      paths,
+      fallback: 'blocking',
+    };
+  } catch (error) {
+    console.error('❌ Error in getStaticPaths for travels:', error);
+    return {
+      paths: [],
+      fallback: 'blocking',
+    };
   }
-
-  return {
-    paths,
-    fallback: 'blocking',
-  };
 }
 
 export async function getStaticProps({ params }) {
   try {
     const { id } = params;
+    
+    // First, get the database to access schema
+    const databaseId = process.env.NOTION_TRAVELS_ID;
+    
+    // If environment variable is not set, return not found
+    if (!databaseId) {
+      console.log('ℹ️ NOTION_TRAVELS_ID environment variable is not set. Returning empty travel data.');
+      return {
+        props: {
+          recordMap: null,
+          pageId: null,
+          travelTitle: 'Travel',
+          travelStartDate: null,
+          travelEndDate: null,
+          travelCountries: [],
+        },
+        revalidate: 60,
+      };
+    }
+
     const notion = new NotionAPI({
       activeUser: process.env.NOTION_ACTIVE_USER,
     });
-
-    // First, get the database to access schema
-    const databaseId = process.env.NOTION_TRAVELS_ID;
+    
     const databaseRecordMap = await notion.getPage(databaseId);
     const collection = Object.values(databaseRecordMap.collection)[0]?.value;
     const schema = collection?.schema;

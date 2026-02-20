@@ -15,7 +15,7 @@ const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
   const { theme, systemTheme } = useTheme();
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
-  const isWakatimeDataPresent = wakatimeData.data.length > 0;
+  const isWakatimeDataPresent = wakatimeData && wakatimeData.data && wakatimeData.data.length > 0;
 
   const title = "Now";
   const description = "What I am doing now, an asynchronous update page.";
@@ -47,27 +47,54 @@ const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
 };
 
 export async function getStaticProps() {
-  const notion = new NotionAPI({
-    activeUser: process.env.NOTION_ACTIVE_USER,
-    // authToken: process.env.NOTION_TOKEN_V2,
-  });
-  const recordMap = await notion.getPage(process.env.NOTION_NOW_ID);
+  try {
+    const pageId = process.env.NOTION_NOW_ID;
+    
+    // If environment variable is not set, return empty data
+    if (!pageId) {
+      console.log('ℹ️ NOTION_NOW_ID environment variable is not set. Returning empty data for build.');
+      return {
+        props: {
+          recordMap: { block: {} },
+          wakatimeData: null,
+          currentlyReading: [],
+        },
+        revalidate: 60,
+      };
+    }
 
-  // Wakatime data fetching
-  const response = await fetch(process.env.WAKATIME_URL);
-  const wakatimeData = await response.json();
+    const notion = new NotionAPI({
+      activeUser: process.env.NOTION_ACTIVE_USER,
+      // authToken: process.env.NOTION_TOKEN_V2,
+    });
+    const recordMap = await notion.getPage(pageId);
 
-  // Currently Reading Books Data from Literal
-  const currentlyReading = await fetchCurrentlyReading();
+    // Wakatime data fetching
+    const response = await fetch(process.env.WAKATIME_URL);
+    const wakatimeData = await response.json();
 
-  return {
-    props: {
-      recordMap,
-      wakatimeData,
-      currentlyReading,
-    },
-    revalidate: 60,
-  };
+    // Currently Reading Books Data from Literal
+    const currentlyReading = await fetchCurrentlyReading();
+
+    return {
+      props: {
+        recordMap,
+        wakatimeData,
+        currentlyReading,
+      },
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error('❌ Error in getStaticProps for now:', error);
+    return {
+      props: {
+        recordMap: { block: {} },
+        wakatimeData: null,
+        currentlyReading: [],
+      },
+      revalidate: 60,
+    };
+  }
 }
 
 export default Now;
