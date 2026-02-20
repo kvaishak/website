@@ -152,7 +152,7 @@ export async function getStaticProps() {
     
     // If environment variable is not set, return empty notes
     if (!pageId) {
-      console.warn('⚠️ NOTION_NOTES_ID environment variable is not set');
+      console.log('ℹ️ NOTION_NOTES_ID environment variable is not set. Returning empty notes array for build.');
       return {
         props: {
           notes: [],

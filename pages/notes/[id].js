@@ -78,7 +78,7 @@ export async function getStaticPaths() {
     
     // If environment variable is not set, return empty paths
     if (!pageId) {
-      console.warn('⚠️ NOTION_NOTES_ID environment variable is not set');
+      console.log('ℹ️ NOTION_NOTES_ID environment variable is not set. Returning empty paths for build.');
       return {
         paths: [],
         fallback: 'blocking',
