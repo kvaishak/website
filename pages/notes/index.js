@@ -256,7 +256,9 @@ export async function getStaticProps() {
       }
 
       // Only include notes with title and 'published' status
-      // If status field is missing or empty, include the note by default
+      // NOTE: If status field is missing or empty, we assume the note is published by default.
+      // This behavior allows notes without explicit status to be displayed.
+      // To exclude notes without status, change the condition to: note.status && typeof note.status === 'string' && note.status.toLowerCase() === 'published'
       const isPublished = !note.status || (typeof note.status === 'string' && note.status.toLowerCase() === 'published');
 
       if (note.title && isPublished) {

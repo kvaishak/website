@@ -159,6 +159,9 @@ export async function getStaticPaths() {
       }
     }
 
+    // NOTE: If status field is missing or empty, we assume the note is published by default.
+    // This behavior allows notes without explicit status to be included in static paths.
+    // To exclude notes without status, change the condition to: typeof status === 'string' && status.toLowerCase() === 'published'
     if ((typeof status === 'string' && status.toLowerCase() === 'published') || !status) {
       paths.push({
         params: { id },
