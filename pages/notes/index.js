@@ -9,6 +9,7 @@ import { idToUuid, getTextContent, getDateValue } from "notion-utils";
 import notesStyles from "./index.module.css";
 import util from "../../styles/util.module.css";
 import PageContainer from "../../HOC/PageContainer";
+import { extractPageIdsFromRecordMap } from "../../lib/notionHelpers";
 
 const Notes = ({ notes, allTags }) => {
   const { theme, systemTheme } = useTheme();
@@ -148,6 +149,19 @@ const Notes = ({ notes, allTags }) => {
 export async function getStaticProps() {
   try {
     const pageId = process.env.NOTION_NOTES_ID;
+    
+    // If environment variable is not set, return empty notes
+    if (!pageId) {
+      console.warn('⚠️ NOTION_NOTES_ID environment variable is not set');
+      return {
+        props: {
+          notes: [],
+          allTags: [],
+        },
+        revalidate: 60,
+      };
+    }
+
     const notion = new NotionAPI({
       activeUser: process.env.NOTION_ACTIVE_USER,
     });
@@ -159,59 +173,7 @@ export async function getStaticProps() {
     const schema = collection?.schema;
 
     // Get all page IDs from collection_query with multiple fallback strategies
-    const collectionQuery = recordMap.collection_query;
-    const pageIds = [];
-
-    if (collectionQuery) {
-      // Strategy 1: Try collection_group_results (standard approach)
-      const views = Object.values(collectionQuery)[0];
-      if (views) {
-        Object.values(views).forEach((view) => {
-          view?.collection_group_results?.blockIds?.forEach((id) => {
-            if (!pageIds.includes(id)) {
-              pageIds.push(id);
-            }
-          });
-        });
-      }
-
-      // Strategy 2: If no IDs found, try direct blockIds access
-      if (pageIds.length === 0) {
-        Object.values(collectionQuery).forEach((queryResult) => {
-          if (queryResult?.blockIds) {
-            queryResult.blockIds.forEach((id) => {
-              if (!pageIds.includes(id)) {
-                pageIds.push(id);
-              }
-            });
-          }
-        });
-      }
-
-      // Strategy 3: Try accessing through results property
-      if (pageIds.length === 0) {
-        Object.values(collectionQuery).forEach((queryResult) => {
-          Object.values(queryResult || {}).forEach((view) => {
-            view?.results?.blockIds?.forEach((id) => {
-              if (!pageIds.includes(id)) {
-                pageIds.push(id);
-              }
-            });
-          });
-        });
-      }
-    }
-
-    // Strategy 4: Fallback to block entries if no collection_query data
-    if (pageIds.length === 0 && block && uuid) {
-      Object.keys(block).forEach((id) => {
-        const pageBlock = block[id]?.value;
-        // Check if it's a page (not a collection itself)
-        if (pageBlock && pageBlock.type === 'page' && pageBlock.parent_id === uuid) {
-          pageIds.push(id);
-        }
-      });
-    }
+    const pageIds = extractPageIdsFromRecordMap(recordMap, uuid);
 
     console.log(`📊 Found ${pageIds.length} page IDs from collection_query`);
 

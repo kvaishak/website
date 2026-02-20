@@ -7,6 +7,7 @@ import { idToUuid, getTextContent, getDateValue } from "notion-utils";
 import util from "../../styles/util.module.css";
 import noteStyles from "./[id].module.css";
 import PageContainer from "../../HOC/PageContainer";
+import { extractPageIdsFromRecordMap } from "../../lib/notionHelpers";
 
 const NotePage = ({ recordMap, pageId, noteTitle, noteDate, noteTags }) => {
   const { theme, systemTheme } = useTheme();
@@ -72,107 +73,75 @@ const NotePage = ({ recordMap, pageId, noteTitle, noteDate, noteTags }) => {
 };
 
 export async function getStaticPaths() {
-  const pageId = process.env.NOTION_NOTES_ID;
-  const notion = new NotionAPI({
-    activeUser: process.env.NOTION_ACTIVE_USER,
-  });
-  const recordMap = await notion.getPage(pageId);
-
-  const uuid = idToUuid(pageId);
-  const collection = Object.values(recordMap.collection)[0]?.value;
-  const block = recordMap.block;
-  const schema = collection?.schema;
-
-  // Get all page IDs from collection_query with multiple fallback strategies
-  const collectionQuery = recordMap.collection_query;
-  const pageIds = [];
-
-  if (collectionQuery) {
-    // Strategy 1: Try collection_group_results (standard approach)
-    const views = Object.values(collectionQuery)[0];
-    if (views) {
-      Object.values(views).forEach((view) => {
-        view?.collection_group_results?.blockIds?.forEach((id) => {
-          if (!pageIds.includes(id)) {
-            pageIds.push(id);
-          }
-        });
-      });
+  try {
+    const pageId = process.env.NOTION_NOTES_ID;
+    
+    // If environment variable is not set, return empty paths
+    if (!pageId) {
+      console.warn('⚠️ NOTION_NOTES_ID environment variable is not set');
+      return {
+        paths: [],
+        fallback: 'blocking',
+      };
     }
 
-    // Strategy 2: If no IDs found, try direct blockIds access
-    if (pageIds.length === 0) {
-      Object.values(collectionQuery).forEach((queryResult) => {
-        if (queryResult?.blockIds) {
-          queryResult.blockIds.forEach((id) => {
-            if (!pageIds.includes(id)) {
-              pageIds.push(id);
-            }
-          });
-        }
-      });
-    }
-
-    // Strategy 3: Try accessing through results property
-    if (pageIds.length === 0) {
-      Object.values(collectionQuery).forEach((queryResult) => {
-        Object.values(queryResult || {}).forEach((view) => {
-          view?.results?.blockIds?.forEach((id) => {
-            if (!pageIds.includes(id)) {
-              pageIds.push(id);
-            }
-          });
-        });
-      });
-    }
-  }
-
-  // Strategy 4: Fallback to block entries if no collection_query data
-  if (pageIds.length === 0 && block && uuid) {
-    Object.keys(block).forEach((id) => {
-      const pageBlock = block[id]?.value;
-      // Check if it's a page (not a collection itself)
-      if (pageBlock && pageBlock.type === 'page' && pageBlock.parent_id === uuid) {
-        pageIds.push(id);
-      }
+    const notion = new NotionAPI({
+      activeUser: process.env.NOTION_ACTIVE_USER,
     });
-  }
+    const recordMap = await notion.getPage(pageId);
 
-  // Extract published notes
-  const paths = [];
-  for (const id of pageIds) {
-    const pageBlock = block[id]?.value;
-    if (!pageBlock) continue;
+    const uuid = idToUuid(pageId);
+    const collection = Object.values(recordMap.collection)[0]?.value;
+    const block = recordMap.block;
+    const schema = collection?.schema;
 
-    const properties = pageBlock.properties || {};
-    let status = '';
+    // Get all page IDs from collection_query with multiple fallback strategies
+    const pageIds = extractPageIdsFromRecordMap(recordMap, uuid);
 
-    // Check if published
-    for (const [key, val] of Object.entries(properties)) {
-      if (!schema[key]) continue;
-      const propName = schema[key].name;
-      const propType = schema[key].type;
+    console.log(`📊 Found ${pageIds.length} page IDs in getStaticPaths`);
 
-      if (propType === 'select' && propName.toLowerCase() === 'status') {
-        status = getTextContent(val);
-        break;
+    // Extract published notes
+    const paths = [];
+    for (const id of pageIds) {
+      const pageBlock = block[id]?.value;
+      if (!pageBlock) continue;
+
+      const properties = pageBlock.properties || {};
+      let status = '';
+
+      // Check if published
+      for (const [key, val] of Object.entries(properties)) {
+        if (!schema[key]) continue;
+        const propName = schema[key].name;
+        const propType = schema[key].type;
+
+        if (propType === 'select' && propName.toLowerCase() === 'status') {
+          status = getTextContent(val);
+          break;
+        }
+      }
+
+      // NOTE: If status field is missing or empty, we assume the note is published by default.
+      // This behavior allows notes without explicit status to be included in static paths.
+      // To exclude notes without status, change the condition to: typeof status === 'string' && status.toLowerCase() === 'published'
+      if ((typeof status === 'string' && status.toLowerCase() === 'published') || !status) {
+        paths.push({
+          params: { id },
+        });
       }
     }
 
-    // NOTE: If status field is missing or empty, we assume the note is published by default.
-    // This behavior allows notes without explicit status to be included in static paths.
-    // To exclude notes without status, change the condition to: typeof status === 'string' && status.toLowerCase() === 'published'
-    if ((typeof status === 'string' && status.toLowerCase() === 'published') || !status) {
-      paths.push({
-        params: { id },
-      });
-    }
+    return {
+      paths,
+      fallback: 'blocking',
+    };
+  } catch (error) {
+    console.error('❌ Error in getStaticPaths for notes:', error);
+    return {
+      paths: [],
+      fallback: 'blocking',
+    };
   }
-
-  return {
-    paths,
-    fallback: 'blocking',
-  };
 }
 
 export async function getStaticProps({ params }) {
