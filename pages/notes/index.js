@@ -158,18 +158,62 @@ export async function getStaticProps() {
     const block = recordMap.block;
     const schema = collection?.schema;
 
-    // Get all page IDs from collection_query
+    // Get all page IDs from collection_query with multiple fallback strategies
     const collectionQuery = recordMap.collection_query;
-    const views = Object.values(collectionQuery)[0];
     const pageIds = [];
 
-    Object.values(views).forEach((view) => {
-      view?.collection_group_results?.blockIds?.forEach((id) => {
-        if (!pageIds.includes(id)) {
+    if (collectionQuery) {
+      // Strategy 1: Try collection_group_results (standard approach)
+      const views = Object.values(collectionQuery)[0];
+      if (views) {
+        Object.values(views).forEach((view) => {
+          view?.collection_group_results?.blockIds?.forEach((id) => {
+            if (!pageIds.includes(id)) {
+              pageIds.push(id);
+            }
+          });
+        });
+      }
+
+      // Strategy 2: If no IDs found, try direct blockIds access
+      if (pageIds.length === 0) {
+        Object.values(collectionQuery).forEach((queryResult) => {
+          if (queryResult?.blockIds) {
+            queryResult.blockIds.forEach((id) => {
+              if (!pageIds.includes(id)) {
+                pageIds.push(id);
+              }
+            });
+          }
+        });
+      }
+
+      // Strategy 3: Try accessing through results property
+      if (pageIds.length === 0) {
+        Object.values(collectionQuery).forEach((queryResult) => {
+          Object.values(queryResult || {}).forEach((view) => {
+            view?.results?.blockIds?.forEach((id) => {
+              if (!pageIds.includes(id)) {
+                pageIds.push(id);
+              }
+            });
+          });
+        });
+      }
+    }
+
+    // Strategy 4: Fallback to block entries if no collection_query data
+    if (pageIds.length === 0 && block) {
+      Object.keys(block).forEach((id) => {
+        const pageBlock = block[id]?.value;
+        // Check if it's a page (not a collection itself)
+        if (pageBlock && pageBlock.type === 'page' && pageBlock.parent_id === uuid) {
           pageIds.push(id);
         }
       });
-    });
+    }
+
+    console.log(`📊 Found ${pageIds.length} page IDs from collection_query`);
 
     // Extract note data
     const notes = [];
@@ -212,7 +256,8 @@ export async function getStaticProps() {
       }
 
       // Only include notes with title and 'published' status
-      const isPublished = note.status.toLowerCase() === 'published';
+      // If status field is missing or empty, include the note by default
+      const isPublished = !note.status || note.status.toLowerCase() === 'published';
 
       if (note.title && isPublished) {
         notes.push(note);
@@ -237,8 +282,13 @@ export async function getStaticProps() {
 
     console.log(`✅ Extracted ${notes.length} notes`);
     console.log(`✅ Found ${allTags.length} unique tags:`, allTags);
+    if (pageIds.length > 0) {
+      console.log(`📄 Total pages processed: ${pageIds.length}`);
+    }
     if (notes.length > 0) {
       console.log('Sample note:', JSON.stringify(notes[0], null, 2));
+    } else {
+      console.log('⚠️ No published notes found. Check Notion database status field.');
     }
 
     return {

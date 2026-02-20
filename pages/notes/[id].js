@@ -83,18 +83,60 @@ export async function getStaticPaths() {
   const block = recordMap.block;
   const schema = collection?.schema;
 
-  // Get all page IDs from collection_query
+  // Get all page IDs from collection_query with multiple fallback strategies
   const collectionQuery = recordMap.collection_query;
-  const views = Object.values(collectionQuery)[0];
   const pageIds = [];
 
-  Object.values(views).forEach((view) => {
-    view?.collection_group_results?.blockIds?.forEach((id) => {
-      if (!pageIds.includes(id)) {
+  if (collectionQuery) {
+    // Strategy 1: Try collection_group_results (standard approach)
+    const views = Object.values(collectionQuery)[0];
+    if (views) {
+      Object.values(views).forEach((view) => {
+        view?.collection_group_results?.blockIds?.forEach((id) => {
+          if (!pageIds.includes(id)) {
+            pageIds.push(id);
+          }
+        });
+      });
+    }
+
+    // Strategy 2: If no IDs found, try direct blockIds access
+    if (pageIds.length === 0) {
+      Object.values(collectionQuery).forEach((queryResult) => {
+        if (queryResult?.blockIds) {
+          queryResult.blockIds.forEach((id) => {
+            if (!pageIds.includes(id)) {
+              pageIds.push(id);
+            }
+          });
+        }
+      });
+    }
+
+    // Strategy 3: Try accessing through results property
+    if (pageIds.length === 0) {
+      Object.values(collectionQuery).forEach((queryResult) => {
+        Object.values(queryResult || {}).forEach((view) => {
+          view?.results?.blockIds?.forEach((id) => {
+            if (!pageIds.includes(id)) {
+              pageIds.push(id);
+            }
+          });
+        });
+      });
+    }
+  }
+
+  // Strategy 4: Fallback to block entries if no collection_query data
+  if (pageIds.length === 0 && block) {
+    Object.keys(block).forEach((id) => {
+      const pageBlock = block[id]?.value;
+      // Check if it's a page (not a collection itself)
+      if (pageBlock && pageBlock.type === 'page' && pageBlock.parent_id === uuid) {
         pageIds.push(id);
       }
     });
-  });
+  }
 
   // Extract published notes
   const paths = [];
@@ -117,7 +159,7 @@ export async function getStaticPaths() {
       }
     }
 
-    if (status.toLowerCase() === 'published') {
+    if (status.toLowerCase() === 'published' || !status) {
       paths.push({
         params: { id },
       });
