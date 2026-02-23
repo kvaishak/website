@@ -1,4 +1,5 @@
 import { NotionAPI } from "notion-client";
+import { getBlockValue } from "notion-utils";
 import { useTheme } from "next-themes";
 import util from "../../styles/util.module.css";
 import PageContainer from "../../HOC/PageContainer";
@@ -18,23 +19,21 @@ const Articles = ({ recordMap }) => {
   const description =
     "A curated list of written content, including articles, Twitter links, blogs, and more, that I personally enjoyed reading.";
 
-  const { block } = recordMap;
   const finalArticleList = [];
   for (const element in recordMap.block) {
+    const blockValue = getBlockValue(recordMap.block[element]);
+    if (!blockValue) continue;
+    const props = blockValue.properties;
     if (
-      block[element].value.type === "page" &&
-      block[element].value.properties[entryBindings.link] &&
-      block[element].value.properties[entryBindings.expose]
+      blockValue.type === "page" &&
+      props?.[entryBindings.link] &&
+      props?.[entryBindings.expose]
     ) {
       finalArticleList.push({
-        title: block[element].value.properties.title[0][0],
-        link: block[element].value.properties[entryBindings.link][0][0],
-        about: block[element].value.properties[entryBindings.about]
-          ? block[element].value.properties[entryBindings.about][0][0]
-          : "",
-        author: block[element].value.properties[entryBindings.author]
-          ? block[element].value.properties[entryBindings.author][0][0]
-          : "",
+        title: props.title?.[0]?.[0] || "",
+        link: props[entryBindings.link]?.[0]?.[0] || "",
+        about: props[entryBindings.about]?.[0]?.[0] || "",
+        author: props[entryBindings.author]?.[0]?.[0] || "",
       });
     }
   }

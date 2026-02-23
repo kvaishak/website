@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import util from "../../styles/util.module.css";
 import PageContainer from "../../HOC/PageContainer";
-import { defaultMapImageUrl } from "react-notion-x";
+import { defaultMapImageUrl } from "notion-utils";
 
 const Work = ({ recordMap }) => {
   const { theme, systemTheme } = useTheme();

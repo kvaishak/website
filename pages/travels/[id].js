@@ -3,7 +3,7 @@ import { NotionRenderer } from "react-notion-x";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { idToUuid, getTextContent, getDateValue } from "notion-utils";
+import { idToUuid, uuidToId, getBlockValue, getBlockTitle, getPageProperty, getTextContent, getDateValue } from "notion-utils";
 import util from "../../styles/util.module.css";
 import travelStyles from "./[id].module.css";
 import PageContainer from "../../HOC/PageContainer";
@@ -113,49 +113,37 @@ export async function getStaticPaths() {
   });
   const recordMap = await notion.getPage(pageId);
 
-  const uuid = idToUuid(pageId);
-  const collection = Object.values(recordMap.collection)[0]?.value;
   const block = recordMap.block;
-  const schema = collection?.schema;
-
-  // Get all page IDs from collection_query
-  const collectionQuery = recordMap.collection_query;
+  const collectionQuery = recordMap.collection_query ?? {};
   const views = Object.values(collectionQuery)[0];
   const pageIds = [];
-
-  Object.values(views).forEach((view) => {
-    view?.collection_group_results?.blockIds?.forEach((id) => {
-      if (!pageIds.includes(id)) {
-        pageIds.push(id);
-      }
+  if (views && typeof views === "object" && !Array.isArray(views)) {
+    Object.values(views).forEach((view) => {
+      view?.collection_group_results?.blockIds?.forEach((id) => {
+        if (!pageIds.includes(id)) {
+          pageIds.push(id);
+        }
+      });
     });
-  });
+  }
 
-  // Extract published travels
+  function getBlock(blockMap, id) {
+    for (const key of [id, id.includes("-") ? uuidToId(id) : idToUuid(id)]) {
+      const entry = blockMap[key];
+      if (entry) { const b = getBlockValue(entry); if (b) return b; }
+    }
+    return null;
+  }
+
   const paths = [];
   for (const id of pageIds) {
-    const pageBlock = block[id]?.value;
+    const pageBlock = getBlock(block, id);
     if (!pageBlock) continue;
 
-    const properties = pageBlock.properties || {};
-    let status = '';
-
-    // Check if published
-    for (const [key, val] of Object.entries(properties)) {
-      if (!schema[key]) continue;
-      const propName = schema[key].name;
-      const propType = schema[key].type;
-
-      if (propType === 'select' && propName.toLowerCase() === 'status') {
-        status = getTextContent(val);
-        break;
-      }
-    }
-
-    if (status.toLowerCase() === 'published') {
-      paths.push({
-        params: { id },
-      });
+    const statusRaw = getPageProperty("Status", pageBlock, recordMap) ?? getPageProperty("status", pageBlock, recordMap);
+    const status = (typeof statusRaw === "string" ? statusRaw : String(statusRaw ?? "")).toLowerCase().trim();
+    if (status === "published") {
+      paths.push({ params: { id } });
     }
   }
 
@@ -172,47 +160,24 @@ export async function getStaticProps({ params }) {
       activeUser: process.env.NOTION_ACTIVE_USER,
     });
 
-    // First, get the database to access schema
     const databaseId = process.env.NOTION_TRAVELS_ID;
     const databaseRecordMap = await notion.getPage(databaseId);
-    const collection = Object.values(databaseRecordMap.collection)[0]?.value;
-    const schema = collection?.schema;
+    const dbBlock = databaseRecordMap.block;
+    const pageBlock = getBlockValue(dbBlock[id]) ?? getBlockValue(dbBlock[idToUuid(id)]) ?? getBlockValue(dbBlock[uuidToId(id)]);
+    if (!pageBlock) {
+      return { notFound: true };
+    }
 
-    // Fetch the individual travel page
     const recordMap = await notion.getPage(id);
     const uuid = idToUuid(id);
 
-    // Get metadata from the database
-    const pageBlock = databaseRecordMap.block[id]?.value;
-    const properties = pageBlock?.properties || {};
-
-    let travelTitle = 'Travel';
-    let travelStartDate = null;
-    let travelEndDate = null;
-    let travelCountries = [];
-
-    // Extract properties based on schema
-    for (const [key, val] of Object.entries(properties)) {
-      if (!schema[key]) continue;
-
-      const propName = schema[key].name;
-      const propType = schema[key].type;
-
-      if (propName === 'Name' || propName === 'Title' || propType === 'title') {
-        travelTitle = getTextContent(val);
-      } else if (propType === 'date') {
-        // Duration property (date range)
-        const dateValue = getDateValue(val);
-        travelStartDate = dateValue?.start_date;
-        travelEndDate = dateValue?.end_date;
-      } else if (propType === 'multi_select' && propName.toLowerCase() === 'country') {
-        const countries = val.flat().filter(v => typeof v === 'string');
-        if (countries.length > 0) {
-          travelCountries = countries.flatMap(country =>
-            country.split(',').map(c => c.trim())
-          );
-        }
-      }
+    const travelTitle = getBlockTitle(pageBlock, databaseRecordMap) || "Travel";
+    const dateProp = getPageProperty("Date", pageBlock, databaseRecordMap) ?? getPageProperty("date", pageBlock, databaseRecordMap);
+    const travelStartDate = dateProp?.start_date ?? (typeof dateProp === "string" ? dateProp : null);
+    const travelEndDate = dateProp?.end_date ?? null;
+    let travelCountries = getPageProperty("Country", pageBlock, databaseRecordMap) ?? getPageProperty("country", pageBlock, databaseRecordMap);
+    if (!Array.isArray(travelCountries)) {
+      travelCountries = typeof travelCountries === "string" ? travelCountries.split(",").map(c => c.trim()) : [];
     }
 
     return {
