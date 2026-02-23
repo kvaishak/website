@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NotionAPI } from 'notion-client';
 import Link from 'next/link';
-import { idToUuid, getTextContent, getDateValue } from 'notion-utils';
+import { idToUuid, uuidToId, getBlockValue, getTextContent, getDateValue } from 'notion-utils';
 import { geocodeTravels } from '../../lib/geocoding';
 import PageContainer from '../../HOC/PageContainer';
 import ClientOnly from '../../HOC/ClientOnly';
@@ -68,46 +68,54 @@ export async function getStaticProps() {
 
     const recordMap = await notion.getPage(pageId);
 
-    // Extract collection (database) data
-    const collection = Object.values(recordMap.collection)[0]?.value;
-    const collectionView = Object.values(recordMap.collection_view)[0]?.value;
-    const collectionQuery = recordMap.collection_query;
+    // Resolve collection schema (double-wrapped; use getBlockValue)
+    let schema = {};
+    for (const rec of Object.values(recordMap.collection || {})) {
+      const c = getBlockValue(rec);
+      if (c?.schema && Object.keys(c.schema).length > 0) {
+        schema = c.schema;
+        break;
+      }
+    }
 
-    if (!collection || !collectionView || !collectionQuery) {
+    const collectionQuery = recordMap.collection_query;
+    if (!collectionQuery || Object.keys(schema).length === 0) {
       return {
         props: { travels: [], allYears: [] },
         revalidate: 60,
       };
     }
 
-    const schema = collection.schema;
-
-    // Extract page IDs from collection query (same logic as index.js)
     const views = Object.values(collectionQuery)[0];
     const pageIds = [];
-
-    Object.values(views).forEach((view) => {
-      view?.collection_group_results?.blockIds?.forEach((id) => {
-        if (!pageIds.includes(id)) {
-          pageIds.push(id);
-        }
+    if (views && typeof views === "object" && !Array.isArray(views)) {
+      Object.values(views).forEach((view) => {
+        view?.collection_group_results?.blockIds?.forEach((id) => {
+          if (!pageIds.includes(id)) {
+            pageIds.push(id);
+          }
+        });
       });
-    });
+    }
+
+    function getBlock(id) {
+      for (const key of [id, id.includes("-") ? uuidToId(id) : idToUuid(id)]) {
+        const entry = recordMap.block[key];
+        if (entry) { const b = getBlockValue(entry); if (b) return b; }
+      }
+      return null;
+    }
 
     const travels = [];
-
-    // Parse each travel entry
     for (const id of pageIds) {
-      const block = recordMap.block[id]?.value;
-
+      const block = getBlock(id);
       if (!block) continue;
 
       const properties = block.properties;
-
       if (!properties) continue;
 
       const travel = {
-        id: id,
+        id,
         title: '',
         startDate: null,
         endDate: null,
@@ -117,12 +125,11 @@ export async function getStaticProps() {
         location: '',
       };
 
-      // Parse properties using schema
       for (const [key, val] of Object.entries(properties)) {
-        if (!schema[key]) continue;
-
-        const propName = schema[key].name;
-        const propType = schema[key].type;
+        const s = schema[key];
+        if (!s) continue;
+        const propName = s.name;
+        const propType = s.type;
 
         if (propName === 'Name' || propName === 'Title' || propType === 'title') {
           travel.title = getTextContent(val);
@@ -147,9 +154,7 @@ export async function getStaticProps() {
         }
       }
 
-      // Only include published travels with location data
-      const isPublished = travel.status.toLowerCase() === 'published';
-
+      const isPublished = (travel.status || "").toLowerCase() === 'published';
       if (travel.title && isPublished && travel.location) {
         travels.push(travel);
       }
