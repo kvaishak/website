@@ -5,10 +5,22 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { idToUuid, getTextContent, getDateValue } from "notion-utils";
+import { idToUuid, uuidToId, getBlockValue, getDateValue, getTextContent } from "notion-utils";
 import notesStyles from "./index.module.css";
 import util from "../../styles/util.module.css";
 import PageContainer from "../../HOC/PageContainer";
+
+// Get block by id; recordMap.block entries can be double-wrapped (.value.value); use getBlockValue to unwrap
+function getBlockById(blockMap, id) {
+  const candidates = [id, id.includes("-") ? uuidToId(id) : idToUuid(id)];
+  for (const key of candidates) {
+    const entry = blockMap[key];
+    if (!entry) continue;
+    const b = getBlockValue(entry);
+    if (b && typeof b === "object") return b;
+  }
+  return null;
+}
 
 const Notes = ({ notes, allTags }) => {
   const { theme, systemTheme } = useTheme();
@@ -153,69 +165,66 @@ export async function getStaticProps() {
     });
     const recordMap = await notion.getPage(pageId);
 
-    const uuid = idToUuid(pageId);
-    const collection = Object.values(recordMap.collection)[0]?.value;
     const block = recordMap.block;
-    const schema = collection?.schema;
 
     // Get all page IDs from collection_query
     const collectionQuery = recordMap.collection_query;
-    const views = Object.values(collectionQuery)[0];
+    const views = Object.values(collectionQuery || {})[0];
     const pageIds = [];
-
-    Object.values(views).forEach((view) => {
-      view?.collection_group_results?.blockIds?.forEach((id) => {
-        if (!pageIds.includes(id)) {
-          pageIds.push(id);
-        }
+    if (views) {
+      Object.values(views).forEach((view) => {
+        view?.collection_group_results?.blockIds?.forEach((id) => {
+          if (!pageIds.includes(id)) {
+            pageIds.push(id);
+          }
+        });
       });
-    });
+    }
 
-    // Extract note data
+    // Resolve collection schema (entries are double-wrapped like blocks; use getBlockValue)
+    let schema = {};
+    for (const rec of Object.values(recordMap.collection || {})) {
+      const c = getBlockValue(rec);
+      if (c?.schema && Object.keys(c.schema).length > 0) {
+        schema = c.schema;
+        break;
+      }
+    }
+
+    // Extract note data from block properties using schema
     const notes = [];
     for (const id of pageIds) {
-      const pageBlock = block[id]?.value;
+      const pageBlock = getBlockById(block, id);
       if (!pageBlock) continue;
 
       const properties = pageBlock.properties || {};
-      const note = {
-        id,
-        title: '',
-        date: null,
-        tags: [],
-        status: '',
-      };
+      if (Object.keys(properties).length === 0) continue;
+      let title = "";
+      let status = "";
+      let date = null;
+      let tags = [];
 
-      // Extract properties based on schema
       for (const [key, val] of Object.entries(properties)) {
-        if (!schema[key]) continue;
-
-        const propName = schema[key].name;
-        const propType = schema[key].type;
-
-        if (propName === 'Name' || propName === 'Title' || propType === 'title') {
-          note.title = getTextContent(val);
-        } else if (propType === 'date') {
-          const dateValue = getDateValue(val);
-          note.date = dateValue?.start_date;
-        } else if (propType === 'multi_select' && propName.toLowerCase() === 'tags') {
-          // For multi_select tags, the value is an array of arrays
-          const tags = val.flat().filter(v => typeof v === 'string');
-          if (tags.length > 0) {
-            // Split comma-separated tags and trim whitespace
-            note.tags = tags.flatMap(tag => tag.split(',').map(t => t.trim()));
-          }
-        } else if (propType === 'select' && propName.toLowerCase() === 'status') {
-          // For status select field
-          note.status = getTextContent(val);
+        const s = schema[key];
+        if (!s) continue;
+        const name = (s.name || "").toLowerCase();
+        const type = s.type;
+        if (type === "title" || name === "name" || name === "title") {
+          title = getTextContent(val) || title;
+        } else if (type === "select" && (name === "status" || name === "state")) {
+          status = getTextContent(val) || status;
+        } else if (type === "date") {
+          const d = getDateValue(val);
+          date = d?.start_date || null;
+        } else if (type === "multi_select" && name === "tags") {
+          const raw = (val && Array.isArray(val) ? val.flat() : []).filter((v) => typeof v === "string");
+          tags = raw.flatMap((t) => t.split(",").map((x) => x.trim())).filter(Boolean);
         }
       }
 
-      // Only include notes with title and 'published' status
-      const isPublished = note.status.toLowerCase() === 'published';
-
-      if (note.title && isPublished) {
-        notes.push(note);
+      const isPublished = (status || "").toLowerCase().trim() === "published";
+      if (title && isPublished) {
+        notes.push({ id, title, date, tags, status });
       }
     }
 
@@ -226,20 +235,11 @@ export async function getStaticProps() {
       return new Date(b.date) - new Date(a.date);
     });
 
-    // Extract all unique tags
     const allTagsSet = new Set();
     notes.forEach(note => {
-      if (note.tags && note.tags.length > 0) {
-        note.tags.forEach(tag => allTagsSet.add(tag));
-      }
+      (note.tags || []).forEach(tag => allTagsSet.add(tag));
     });
     const allTags = Array.from(allTagsSet).sort();
-
-    console.log(`✅ Extracted ${notes.length} notes`);
-    console.log(`✅ Found ${allTags.length} unique tags:`, allTags);
-    if (notes.length > 0) {
-      console.log('Sample note:', JSON.stringify(notes[0], null, 2));
-    }
 
     return {
       props: {
