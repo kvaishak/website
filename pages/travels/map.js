@@ -88,7 +88,7 @@ export async function getStaticProps() {
 
     const views = Object.values(collectionQuery)[0];
     const pageIds = [];
-    if (views) {
+    if (views && typeof views === "object" && !Array.isArray(views)) {
       Object.values(views).forEach((view) => {
         view?.collection_group_results?.blockIds?.forEach((id) => {
           if (!pageIds.includes(id)) {

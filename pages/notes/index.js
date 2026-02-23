@@ -168,10 +168,10 @@ export async function getStaticProps() {
     const block = recordMap.block;
 
     // Get all page IDs from collection_query
-    const collectionQuery = recordMap.collection_query;
-    const views = Object.values(collectionQuery || {})[0];
+    const collectionQuery = recordMap.collection_query ?? {};
+    const views = Object.values(collectionQuery)[0];
     const pageIds = [];
-    if (views) {
+    if (views && typeof views === "object" && !Array.isArray(views)) {
       Object.values(views).forEach((view) => {
         view?.collection_group_results?.blockIds?.forEach((id) => {
           if (!pageIds.includes(id)) {
