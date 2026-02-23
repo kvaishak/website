@@ -141,9 +141,16 @@ export async function getStaticProps({ params }) {
 
     const noteTitle = getBlockTitle(pageBlock, databaseRecordMap) || "Note";
     const dateProp = getPageProperty("Date", pageBlock, databaseRecordMap) ?? getPageProperty("date", pageBlock, databaseRecordMap);
-    const noteDate = dateProp != null
-      ? (typeof dateProp === "number" ? new Date(dateProp).toISOString().split("T")[0] : dateProp)
-      : null;
+    let noteDate = null;
+    if (dateProp != null) {
+      if (typeof dateProp === "number") {
+        noteDate = new Date(dateProp).toISOString().split("T")[0];
+      } else if (typeof dateProp === "object" && dateProp.start_date) {
+        noteDate = dateProp.start_date;
+      } else if (typeof dateProp === "string") {
+        noteDate = dateProp;
+      }
+    }
     let noteTags = getPageProperty("Tags", pageBlock, databaseRecordMap) ?? getPageProperty("tags", pageBlock, databaseRecordMap);
     if (!Array.isArray(noteTags)) {
       noteTags = typeof noteTags === "string" ? noteTags.split(",").map((t) => t.trim()) : [];

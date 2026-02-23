@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { idToUuid, getTextContent, getDateValue } from "notion-utils";
+import { idToUuid, uuidToId, getBlockValue, getTextContent, getDateValue } from "notion-utils";
 import { geocodeTravels } from "../../lib/geocoding";
 import travelsStyles from "./index.module.css";
 import util from "../../styles/util.module.css";
@@ -196,31 +196,48 @@ export async function getStaticProps() {
     });
     const recordMap = await notion.getPage(pageId);
 
-    const uuid = idToUuid(pageId);
-    const collection = Object.values(recordMap.collection)[0]?.value;
     const block = recordMap.block;
-    const schema = collection?.schema;
+
+    // Resolve collection schema (double-wrapped; use getBlockValue)
+    let schema = {};
+    for (const rec of Object.values(recordMap.collection || {})) {
+      const c = getBlockValue(rec);
+      if (c?.schema && Object.keys(c.schema).length > 0) {
+        schema = c.schema;
+        break;
+      }
+    }
 
     // Get all page IDs from collection_query
     const collectionQuery = recordMap.collection_query;
-    const views = Object.values(collectionQuery)[0];
+    const views = Object.values(collectionQuery || {})[0];
     const pageIds = [];
-
-    Object.values(views).forEach((view) => {
-      view?.collection_group_results?.blockIds?.forEach((id) => {
-        if (!pageIds.includes(id)) {
-          pageIds.push(id);
-        }
+    if (views) {
+      Object.values(views).forEach((view) => {
+        view?.collection_group_results?.blockIds?.forEach((id) => {
+          if (!pageIds.includes(id)) {
+            pageIds.push(id);
+          }
+        });
       });
-    });
+    }
 
-    // Extract travel data
+    function getBlock(id) {
+      for (const key of [id, id.includes("-") ? uuidToId(id) : idToUuid(id)]) {
+        const entry = block[key];
+        if (entry) { const b = getBlockValue(entry); if (b) return b; }
+      }
+      return null;
+    }
+
     const travels = [];
     for (const id of pageIds) {
-      const pageBlock = block[id]?.value;
+      const pageBlock = getBlock(id);
       if (!pageBlock) continue;
 
       const properties = pageBlock.properties || {};
+      if (Object.keys(properties).length === 0) continue;
+
       const travel = {
         id,
         title: '',
@@ -231,26 +248,22 @@ export async function getStaticProps() {
         status: '',
       };
 
-      // Extract properties based on schema
       for (const [key, val] of Object.entries(properties)) {
-        if (!schema[key]) continue;
-
-        const propName = schema[key].name;
-        const propType = schema[key].type;
+        const s = schema[key];
+        if (!s) continue;
+        const propName = s.name;
+        const propType = s.type;
 
         if (propName === 'Name' || propName === 'Title' || propType === 'title') {
           travel.title = getTextContent(val);
         } else if (propType === 'date') {
-          // Duration property (date range)
           const dateValue = getDateValue(val);
           travel.startDate = dateValue?.start_date;
           travel.endDate = dateValue?.end_date;
-          // Extract year from start date
           if (travel.startDate) {
             travel.year = new Date(travel.startDate).getFullYear();
           }
         } else if (propType === 'multi_select' && propName.toLowerCase() === 'country') {
-          // For multi_select countries
           const countries = val.flat().filter(v => typeof v === 'string');
           if (countries.length > 0) {
             travel.countries = countries.flatMap(country =>
@@ -258,17 +271,13 @@ export async function getStaticProps() {
             );
           }
         } else if (propType === 'select' && propName.toLowerCase() === 'status') {
-          // For status select field
           travel.status = getTextContent(val);
         } else if ((propType === 'text' || propType === 'rich_text') && propName.toLowerCase() === 'location') {
-          // For location text/rich_text field (comma-separated place names)
           travel.location = getTextContent(val);
         }
       }
 
-      // Only include travels with title and 'published' status
-      const isPublished = travel.status.toLowerCase() === 'published';
-
+      const isPublished = (travel.status || "").toLowerCase() === 'published';
       if (travel.title && isPublished) {
         travels.push(travel);
       }
@@ -290,14 +299,6 @@ export async function getStaticProps() {
     });
     const allYears = Array.from(allYearsSet).sort((a, b) => b - a);
 
-    console.log(`✅ Extracted ${travels.length} travels`);
-    console.log(`✅ Found ${allYears.length} unique years:`, allYears);
-    if (travels.length > 0) {
-      console.log('Sample travel:', JSON.stringify(travels[0], null, 2));
-    }
-
-    // Geocode travels with location data
-    console.log('🗺️  Starting geocoding for travels...');
     const travelsWithCoordinates = await geocodeTravels(travels);
 
     return {

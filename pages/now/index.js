@@ -58,12 +58,7 @@ export async function getStaticProps() {
   const wakatimeData = await response.json();
 
   // Currently Reading Books Data from Literal
-  let currentlyReading = [];
-  try {
-    currentlyReading = await fetchCurrentlyReading();
-  } catch {
-    // fallback to empty list if Literal API is unavailable
-  }
+  const currentlyReading = await fetchCurrentlyReading();
 
   return {
     props: {
