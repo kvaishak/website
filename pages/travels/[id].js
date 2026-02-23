@@ -5,51 +5,86 @@ import Image from "next/image";
 import Link from "next/link";
 import { idToUuid, getTextContent, getDateValue } from "notion-utils";
 import util from "../../styles/util.module.css";
-import noteStyles from "./[id].module.css";
+import travelStyles from "./[id].module.css";
 import PageContainer from "../../HOC/PageContainer";
 
-const NotePage = ({ recordMap, pageId, noteTitle, noteDate, noteTags }) => {
+// Format duration for date ranges
+function formatDuration(startDate, endDate) {
+  if (!startDate) return '';
+
+  const start = new Date(startDate);
+  const end = endDate ? new Date(endDate) : null;
+
+  if (!end) {
+    // Single day trip
+    return start.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  }
+
+  const startYear = start.getFullYear();
+  const endYear = end.getFullYear();
+  const startMonth = start.getMonth();
+  const endMonth = end.getMonth();
+
+  // Same month and year: "Dec 20 - 28, 2024"
+  if (startYear === endYear && startMonth === endMonth) {
+    return `${start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${end.getDate()}, ${startYear}`;
+  }
+
+  // Same year, different months: "Dec 28 - Jan 3, 2024"
+  if (startYear === endYear) {
+    return `${start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${end.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}, ${startYear}`;
+  }
+
+  // Different years: "Dec 28, 2024 - Jan 3, 2025"
+  return `${start.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })} - ${end.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })}`;
+}
+
+const TravelPage = ({ recordMap, pageId, travelTitle, travelStartDate, travelEndDate, travelCountries }) => {
   const { theme, systemTheme } = useTheme();
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
 
   if (!recordMap) {
     return (
-      <PageContainer title="Note" description="" clientOnly={true}>
+      <PageContainer title="Travel" description="" clientOnly={true}>
         <main className={util.main}>
-          <p>Note not found.</p>
+          <p>Travel not found.</p>
         </main>
       </PageContainer>
     );
   }
 
   return (
-    <PageContainer title={noteTitle} description="" clientOnly={true}>
+    <PageContainer title={travelTitle} description="" clientOnly={true}>
       <main className={util.main}>
         <div className={util.title}>
-          <h1>{noteTitle}</h1>
+          <h1>{travelTitle}</h1>
         </div>
 
-        <div className={noteStyles.noteMeta}>
-          {noteDate && (
-            <span className={noteStyles.noteDate}>
-              {new Date(noteDate).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
+        <div className={travelStyles.travelMeta}>
+          {travelStartDate && (
+            <span className={travelStyles.travelDuration}>
+              {formatDuration(travelStartDate, travelEndDate)}
             </span>
           )}
-          {noteTags && noteTags.length > 0 && (
-            <span className={noteStyles.noteTags}>
-              {noteTags.map((tag) => (
-                <Link
-                  key={tag}
-                  href={`/notes?tags=${encodeURIComponent(tag)}`}
-                  className={noteStyles.tagLink}
-                >
-                  {tag}
-                </Link>
+          {travelCountries && travelCountries.length > 0 && (
+            <span className={travelStyles.travelCountries}>
+              {travelCountries.map((country, idx) => (
+                <span key={idx} className={travelStyles.countryTag}>
+                  {country}
+                </span>
               ))}
             </span>
           )}
@@ -72,7 +107,7 @@ const NotePage = ({ recordMap, pageId, noteTitle, noteDate, noteTags }) => {
 };
 
 export async function getStaticPaths() {
-  const pageId = process.env.NOTION_NOTES_ID;
+  const pageId = process.env.NOTION_TRAVELS_ID;
   const notion = new NotionAPI({
     activeUser: process.env.NOTION_ACTIVE_USER,
   });
@@ -96,7 +131,7 @@ export async function getStaticPaths() {
     });
   });
 
-  // Extract published notes
+  // Extract published travels
   const paths = [];
   for (const id of pageIds) {
     const pageBlock = block[id]?.value;
@@ -138,12 +173,12 @@ export async function getStaticProps({ params }) {
     });
 
     // First, get the database to access schema
-    const databaseId = process.env.NOTION_NOTES_ID;
+    const databaseId = process.env.NOTION_TRAVELS_ID;
     const databaseRecordMap = await notion.getPage(databaseId);
     const collection = Object.values(databaseRecordMap.collection)[0]?.value;
     const schema = collection?.schema;
 
-    // Fetch the individual note page
+    // Fetch the individual travel page
     const recordMap = await notion.getPage(id);
     const uuid = idToUuid(id);
 
@@ -151,9 +186,10 @@ export async function getStaticProps({ params }) {
     const pageBlock = databaseRecordMap.block[id]?.value;
     const properties = pageBlock?.properties || {};
 
-    let noteTitle = 'Note';
-    let noteDate = null;
-    let noteTags = [];
+    let travelTitle = 'Travel';
+    let travelStartDate = null;
+    let travelEndDate = null;
+    let travelCountries = [];
 
     // Extract properties based on schema
     for (const [key, val] of Object.entries(properties)) {
@@ -163,14 +199,18 @@ export async function getStaticProps({ params }) {
       const propType = schema[key].type;
 
       if (propName === 'Name' || propName === 'Title' || propType === 'title') {
-        noteTitle = getTextContent(val);
+        travelTitle = getTextContent(val);
       } else if (propType === 'date') {
+        // Duration property (date range)
         const dateValue = getDateValue(val);
-        noteDate = dateValue?.start_date;
-      } else if (propType === 'multi_select' && propName.toLowerCase() === 'tags') {
-        const tags = val.flat().filter(v => typeof v === 'string');
-        if (tags.length > 0) {
-          noteTags = tags.flatMap(tag => tag.split(',').map(t => t.trim()));
+        travelStartDate = dateValue?.start_date;
+        travelEndDate = dateValue?.end_date;
+      } else if (propType === 'multi_select' && propName.toLowerCase() === 'country') {
+        const countries = val.flat().filter(v => typeof v === 'string');
+        if (countries.length > 0) {
+          travelCountries = countries.flatMap(country =>
+            country.split(',').map(c => c.trim())
+          );
         }
       }
     }
@@ -179,25 +219,27 @@ export async function getStaticProps({ params }) {
       props: {
         recordMap,
         pageId: uuid,
-        noteTitle,
-        noteDate,
-        noteTags,
+        travelTitle,
+        travelStartDate,
+        travelEndDate,
+        travelCountries,
       },
       revalidate: 60,
     };
   } catch (error) {
-    console.error("Error fetching note:", error);
+    console.error("Error fetching travel:", error);
     return {
       props: {
         recordMap: null,
         pageId: null,
-        noteTitle: 'Note',
-        noteDate: null,
-        noteTags: [],
+        travelTitle: 'Travel',
+        travelStartDate: null,
+        travelEndDate: null,
+        travelCountries: [],
       },
       revalidate: 60,
     };
   }
 }
 
-export default NotePage;
+export default TravelPage;

@@ -1,0 +1,281 @@
+.mapWrapper {
+  width: 100%;
+  height: 650px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--linkContainerBorder);
+  margin: 32px 0;
+  background-color: var(--tabbg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s ease;
+  position: relative;
+}
+
+.mapWrapper:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+:global(.dark-theme) .mapWrapper {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+:global(.dark-theme) .mapWrapper:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  position: relative;
+}
+
+/* Year Filter Overlay */
+.yearFilterOverlay {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 10px 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+:global(.dark-theme) .yearFilterOverlay {
+  background-color: rgba(26, 26, 26, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.yearButton {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 450;
+  color: #6b6b6b;
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-variant-numeric: tabular-nums;
+}
+
+.yearButton:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: var(--fg-textColor);
+}
+
+.yearButtonActive {
+  background-color: var(--fg-textColor);
+  color: white;
+  border-color: var(--fg-textColor);
+}
+
+.yearButtonActive:hover {
+  background-color: var(--fg-textColor);
+  opacity: 0.9;
+}
+
+:global(.dark-theme) .yearButton {
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+:global(.dark-theme) .yearButton:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+:global(.dark-theme) .yearButtonActive {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: rgb(16, 16, 16);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* No data message */
+.noDataMessage {
+  width: 100%;
+  padding: 48px 24px;
+  text-align: center;
+  color: #9a988b;
+  font-size: 14px;
+  background-color: var(--tabbg);
+  border: 1px solid var(--linkContainerBorder);
+  border-radius: 12px;
+  margin: 32px 0;
+}
+
+/* Popup Styles */
+.popup {
+  font-family: var(--font-sans);
+  padding: 20px 20px 16px 20px;
+}
+
+.popupPlace {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 14px 0;
+  padding-right: 24px;
+  color: #1a1a1a;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+:global(.dark-theme) .popupPlace {
+  color: #ffffff;
+}
+
+.popupTravels {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.popupTravel {
+  display: block;
+  padding: 12px 14px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.popupTravel:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  transform: translateX(2px);
+}
+
+:global(.dark-theme) .popupTravel {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark-theme) .popupTravel:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.popupTravelInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.popupTravelTitle {
+  font-size: 14px;
+  color: #2b2b2b;
+  line-height: 1.3;
+  font-weight: 450;
+}
+
+:global(.dark-theme) .popupTravelTitle {
+  color: #e8e8e8;
+}
+
+.popupTravelDate {
+  font-size: 12px;
+  color: #9a988b;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+:global(.dark-theme) .popupTravelDate {
+  color: #8a8880;
+}
+
+.popupTravelCountries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.countryTag {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  color: #6b6b6b;
+  font-size: 11px;
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+:global(.dark-theme) .countryTag {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 700px) {
+  .mapWrapper {
+    height: 500px;
+    margin: 24px 0;
+    border-radius: 8px;
+  }
+
+  .yearFilterOverlay {
+    top: 12px;
+    right: 12px;
+    padding: 8px 10px;
+    gap: 6px;
+    max-width: calc(100% - 24px);
+  }
+
+  .yearButton {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+
+  .popup {
+    padding: 16px 16px 14px 16px;
+  }
+
+  .popupPlace {
+    font-size: 15px;
+    margin-bottom: 12px;
+    padding-right: 20px;
+  }
+
+  .popupTravel {
+    padding: 10px 12px;
+  }
+
+  .popupTravelTitle {
+    font-size: 13px;
+  }
+
+  .popupTravelDate {
+    font-size: 11px;
+  }
+
+  .countryTag {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 701px) and (max-width: 1024px) {
+  .mapWrapper {
+    height: 550px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) and (min-width: 701px) {
+  .mapWrapper {
+    height: 500px;
+  }
+}
