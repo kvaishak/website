@@ -31,7 +31,7 @@ export default function ContentRenderer({
 
   if (rawData.provider === "craft") {
     if (rawData.blocks) {
-      return <CraftBlockRenderer blocks={rawData.blocks} />;
+      return <CraftBlockRenderer blocks={rawData.blocks} darkMode={darkMode} />;
     }
     return <CraftContent content={markdown ?? ""} darkMode={darkMode} />;
   }

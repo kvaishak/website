@@ -30,7 +30,7 @@ function renderInline(text) {
  * Renders an array of Craft JSON blocks preserving metadata like color,
  * textStyle, listStyle, and decorations that are lost in the markdown API.
  */
-export default function CraftBlockRenderer({ blocks }) {
+export default function CraftBlockRenderer({ blocks, darkMode }) {
   if (!blocks?.length) return null;
 
   // Group consecutive bullet blocks into <ul> runs
@@ -55,7 +55,7 @@ export default function CraftBlockRenderer({ blocks }) {
   }
 
   return (
-    <div className={styles.craftContent}>
+    <div className={`${styles.craftContent} ${darkMode ? "dark-mode" : ""}`}>
       {groups.map((group, i) => {
         if (group.type === "bullets") {
           return (
@@ -82,10 +82,12 @@ export default function CraftBlockRenderer({ blocks }) {
           );
         }
 
-        // Coloured text — apply inline style, render content inline
+        // Coloured text — apply inline style in light mode only; in dark mode
+        // the colours from Craft are designed for light backgrounds and would
+        // be unreadable, so let the theme's foreground colour take over.
         if (block.color) {
           return (
-            <p key={block.id} style={{ color: block.color }}>
+            <p key={block.id} style={darkMode ? undefined : { color: block.color }}>
               {renderInline(block.markdown)}
             </p>
           );

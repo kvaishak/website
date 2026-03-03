@@ -103,6 +103,16 @@ html {
   --footerBorder: rgba(255, 255, 255, 0.04);
 
   --fg-textColor: rgba(255, 255, 255, 0.9);
+
+  /* Keep notion.css fg vars in sync so components without a .dark-mode wrapper
+     still render white text instead of the dark light-mode default */
+  --fg-color: rgba(255, 255, 255, 0.9);
+  --fg-color-0: rgba(255, 255, 255, 0.9);
+  --fg-color-1: rgba(255, 255, 255, 0.9);
+  --fg-color-2: rgba(255, 255, 255, 0.9);
+  --fg-color-3: rgba(255, 255, 255, 0.9);
+  --fg-color-4: rgba(255, 255, 255, 0.9);
+  --fg-color-6: #fff;
 }
 
 .dark-theme .iconInvert {
