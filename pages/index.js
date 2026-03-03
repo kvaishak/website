@@ -2,10 +2,10 @@ import styles from "./index.module.css";
 import util from "../styles/util.module.css";
 import PageContainer from "../HOC/PageContainer";
 import { useTheme } from "next-themes";
-import CraftContent from "../components/CraftContent";
-import { fetchCraftPage } from "../lib/craft";
+import ContentRenderer from "../components/ContentRenderer";
+import { getPageContent } from "../lib/cms/index.js";
 
-export default function Home({ craftContent, error }) {
+export default function Home({ content, rawData, error }) {
   const { theme, systemTheme } = useTheme();
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
@@ -38,7 +38,11 @@ export default function Home({ craftContent, error }) {
             <p>Unable to load content. Please try again later.</p>
           </div>
         ) : (
-          <CraftContent content={craftContent} darkMode={isDarkMode} />
+          <ContentRenderer
+            rawData={rawData}
+            markdown={content}
+            darkMode={isDarkMode}
+          />
         )}
       </main>
     </PageContainer>
@@ -46,13 +50,25 @@ export default function Home({ craftContent, error }) {
 }
 
 export async function getStaticProps() {
-  const { content, error } = await fetchCraftPage(process.env.CRAFT_HOME_ID);
-
-  return {
-    props: {
-      craftContent: content || "",
-      error: error || null,
-    },
-    revalidate: 60,
-  };
+  try {
+    const { title, markdown, rawData } = await getPageContent("home");
+    return {
+      props: {
+        content: markdown ?? "",
+        rawData,
+        error: null,
+      },
+      revalidate: 60,
+    };
+  } catch (err) {
+    console.error("Error fetching home page content:", err);
+    return {
+      props: {
+        content: "",
+        rawData: { provider: "craft" },
+        error: err.message ?? "Unknown error",
+      },
+      revalidate: 60,
+    };
+  }
 }

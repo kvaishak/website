@@ -6,7 +6,6 @@ import { NotionAPI } from "notion-client";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import Wakatime from "../../components/Wakatime/wakatime";
 import Reading from "../../components/Reading/reading";
 
 import { fetchCurrentlyReading } from "../../lib/reading";
@@ -15,7 +14,6 @@ const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
   const { theme, systemTheme } = useTheme();
   const isDarkMode =
     theme === "system" ? systemTheme === "dark" : theme === "dark";
-  const isWakatimeDataPresent = wakatimeData.data.length > 0;
 
   const title = "Now";
   const description = "What I am doing now, an asynchronous update page.";
@@ -40,7 +38,6 @@ const Now = ({ recordMap, wakatimeData, currentlyReading }) => {
         />
 
         <Reading data={currentlyReading} />
-        {isWakatimeDataPresent && <Wakatime data={wakatimeData} />}
       </main>
     </PageContainer>
   );
