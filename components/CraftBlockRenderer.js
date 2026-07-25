@@ -19,6 +19,7 @@ const InlineLink = ({ href, children, ...props }) => {
 };
 
 function renderInline(text) {
+  if (!text) return null;
   return (
     <ReactMarkdown components={{ p: Unwrapped, a: InlineLink }}>
       {text}
@@ -28,28 +29,36 @@ function renderInline(text) {
 
 /**
  * Renders an array of Craft JSON blocks preserving metadata like color,
- * textStyle, listStyle, and decorations that are lost in the markdown API.
+ * textStyle, listStyle, decorations, quotes, callouts, hr lines, and rich URLs.
  */
 export default function CraftBlockRenderer({ blocks, darkMode }) {
   if (!blocks?.length) return null;
 
-  // Group consecutive bullet blocks into <ul> runs
+  // Group consecutive list blocks (bullets / numbers)
   const groups = [];
-  let currentBulletGroup = null;
+  let currentListGroup = null;
 
   for (const block of blocks) {
-    if (!block.markdown?.trim()) {
-      currentBulletGroup = null;
+    if (block.type === "line") {
+      currentListGroup = null;
+      groups.push({ type: "line", block });
       continue;
     }
-    if (block.listStyle === "bullet") {
-      if (!currentBulletGroup) {
-        currentBulletGroup = { type: "bullets", items: [] };
-        groups.push(currentBulletGroup);
+
+    if (!block.markdown && block.type !== "richUrl") {
+      currentListGroup = null;
+      continue;
+    }
+
+    if (block.listStyle === "bullet" || block.listStyle === "numbered") {
+      const listType = block.listStyle;
+      if (!currentListGroup || currentListGroup.listType !== listType) {
+        currentListGroup = { type: "list", listType, items: [] };
+        groups.push(currentListGroup);
       }
-      currentBulletGroup.items.push(block);
+      currentListGroup.items.push(block);
     } else {
-      currentBulletGroup = null;
+      currentListGroup = null;
       groups.push({ type: "single", block });
     }
   }
@@ -57,18 +66,52 @@ export default function CraftBlockRenderer({ blocks, darkMode }) {
   return (
     <div className={`${styles.craftContent} ${darkMode ? "dark-mode" : ""}`}>
       {groups.map((group, i) => {
-        if (group.type === "bullets") {
+        if (group.type === "line") {
+          return <hr key={group.block.id || i} className={styles.hr} />;
+        }
+
+        if (group.type === "list") {
+          const ListTag = group.listType === "numbered" ? "ol" : "ul";
           return (
-            <ul key={i}>
+            <ListTag key={i}>
               {group.items.map((block) => {
-                const content = block.markdown.replace(/^[-*]\s+/, "");
+                const content = block.markdown.replace(/^([-*]|\d+\.)\s+/, "");
                 return <li key={block.id}>{renderInline(content)}</li>;
               })}
-            </ul>
+            </ListTag>
           );
         }
 
         const { block } = group;
+
+        // Rich URL / Bookmark card
+        if (block.type === "richUrl") {
+          const match = block.markdown?.match(/^\[(.*?)\]\((.*?)\)/);
+          const title = match ? match[1] : block.markdown;
+          const url = match ? match[2] : block.url || "#";
+          let domain = "";
+          try {
+            domain = new URL(url).hostname.replace(/^www\./, "");
+          } catch {
+            domain = url;
+          }
+
+          return (
+            <a
+              key={block.id}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.richUrlCard}
+            >
+              <div className={styles.richUrlBody}>
+                <div className={styles.richUrlTitle}>{title}</div>
+                <div className={styles.richUrlDomain}>{domain}</div>
+              </div>
+              <div className={styles.richUrlIcon}>↗</div>
+            </a>
+          );
+        }
 
         // Callout block
         if (block.decorations?.includes("callout")) {
@@ -76,30 +119,37 @@ export default function CraftBlockRenderer({ blocks, darkMode }) {
             .replace(/<callout>([\s\S]*?)<\/callout>/, "$1")
             .trim();
           return (
-            <blockquote key={block.id}>
-              <p>{renderInline(inner)}</p>
+            <div key={block.id} className={styles.callout}>
+              {renderInline(inner)}
+            </div>
+          );
+        }
+
+        // Quote block
+        if (block.decorations?.includes("quote")) {
+          const inner = block.markdown.replace(/^>\s*/, "").trim();
+          return (
+            <blockquote key={block.id} className={styles.quote}>
+              {renderInline(inner)}
             </blockquote>
           );
         }
 
-        // Coloured text — apply inline style in light mode only; in dark mode
-        // the colours from Craft are designed for light backgrounds and would
-        // be unreadable, so let the theme's foreground colour take over.
+        // Colored text block
         if (block.color) {
           return (
-            <p key={block.id} style={darkMode ? undefined : { color: block.color }}>
+            <p
+              key={block.id}
+              style={darkMode ? undefined : { color: block.color }}
+            >
               {renderInline(block.markdown)}
             </p>
           );
         }
 
-        // All other blocks (headings, paragraphs): let ReactMarkdown handle
-        // the block-level markdown prefix (###, etc.) naturally
+        // Regular headings and text blocks
         return (
-          <ReactMarkdown
-            key={block.id}
-            components={{ a: InlineLink }}
-          >
+          <ReactMarkdown key={block.id} components={{ a: InlineLink }}>
             {block.markdown}
           </ReactMarkdown>
         );
