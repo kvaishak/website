@@ -120,7 +120,9 @@ export default function CraftBlockRenderer({ blocks, darkMode }) {
             .trim();
           return (
             <div key={block.id} className={styles.callout}>
-              {renderInline(inner)}
+              <ReactMarkdown components={{ a: InlineLink }}>
+                {inner}
+              </ReactMarkdown>
             </div>
           );
         }
@@ -130,7 +132,9 @@ export default function CraftBlockRenderer({ blocks, darkMode }) {
           const inner = block.markdown.replace(/^>\s*/, "").trim();
           return (
             <blockquote key={block.id} className={styles.quote}>
-              {renderInline(inner)}
+              <ReactMarkdown components={{ a: InlineLink }}>
+                {inner}
+              </ReactMarkdown>
             </blockquote>
           );
         }

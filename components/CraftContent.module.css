@@ -77,17 +77,29 @@
   color: var(--fg-color-secondary, inherit);
 }
 
+.quote p {
+  margin: 0 0 0.75rem 0;
+}
+
+.quote p:last-child {
+  margin-bottom: 0;
+}
+
 .callout {
   border: 1px solid var(--linkContainerBorderHover, rgba(128, 128, 128, 0.2));
   background: var(--cardBackground, rgba(128, 128, 128, 0.05));
   margin: 1.2rem 0;
   padding: 1rem 1.2rem;
   border-radius: 8px;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .callout p {
-  margin: 0;
+  margin: 0 0 0.85rem 0;
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
 }
 
 .richUrlCard {
