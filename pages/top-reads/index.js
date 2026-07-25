@@ -20,21 +20,23 @@ const Articles = ({ recordMap }) => {
     "A curated list of written content, including articles, Twitter links, blogs, and more, that I personally enjoyed reading.";
 
   const finalArticleList = [];
-  for (const element in recordMap.block) {
-    const blockValue = getBlockValue(recordMap.block[element]);
-    if (!blockValue) continue;
-    const props = blockValue.properties;
-    if (
-      blockValue.type === "page" &&
-      props?.[entryBindings.link] &&
-      props?.[entryBindings.expose]
-    ) {
-      finalArticleList.push({
-        title: props.title?.[0]?.[0] || "",
-        link: props[entryBindings.link]?.[0]?.[0] || "",
-        about: props[entryBindings.about]?.[0]?.[0] || "",
-        author: props[entryBindings.author]?.[0]?.[0] || "",
-      });
+  if (recordMap && recordMap.block) {
+    for (const element in recordMap.block) {
+      const blockValue = getBlockValue(recordMap.block[element]);
+      if (!blockValue) continue;
+      const props = blockValue.properties;
+      if (
+        blockValue.type === "page" &&
+        props?.[entryBindings.link] &&
+        props?.[entryBindings.expose]
+      ) {
+        finalArticleList.push({
+          title: props.title?.[0]?.[0] || "",
+          link: props[entryBindings.link]?.[0]?.[0] || "",
+          about: props[entryBindings.about]?.[0]?.[0] || "",
+          author: props[entryBindings.author]?.[0]?.[0] || "",
+        });
+      }
     }
   }
 
@@ -52,18 +54,28 @@ const Articles = ({ recordMap }) => {
 };
 
 export async function getStaticProps() {
-  const notion = new NotionAPI({
-    activeUser: process.env.NOTION_ACTIVE_USER,
-    // authToken: process.env.NOTION_TOKEN_V2,
-  });
-  const recordMap = await notion.getPage(process.env.NOTION_ARTICLES_ID);
+  try {
+    const notion = new NotionAPI({
+      activeUser: process.env.NOTION_ACTIVE_USER,
+      // authToken: process.env.NOTION_TOKEN_V2,
+    });
+    const recordMap = await notion.getPage(process.env.NOTION_ARTICLES_ID);
 
-  return {
-    props: {
-      recordMap,
-    },
-    revalidate: 60,
-  };
+    return {
+      props: {
+        recordMap: recordMap || { block: {} },
+      },
+      revalidate: 60,
+    };
+  } catch (err) {
+    console.error("Error fetching top-reads page content:", err);
+    return {
+      props: {
+        recordMap: { block: {} },
+      },
+      revalidate: 60,
+    };
+  }
 }
 
 export default Articles;
