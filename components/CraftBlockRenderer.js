@@ -47,6 +47,7 @@ export default function CraftBlockRenderer({ blocks, darkMode }) {
 
     if (!block.markdown && block.type !== "richUrl") {
       currentListGroup = null;
+      groups.push({ type: "blank", block });
       continue;
     }
 
@@ -68,6 +69,10 @@ export default function CraftBlockRenderer({ blocks, darkMode }) {
       {groups.map((group, i) => {
         if (group.type === "line") {
           return <hr key={group.block.id || i} className={styles.hr} />;
+        }
+
+        if (group.type === "blank") {
+          return <div key={group.block.id || i} className={styles.blankLine} />;
         }
 
         if (group.type === "list") {

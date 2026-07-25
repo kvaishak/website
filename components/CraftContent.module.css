@@ -9,9 +9,13 @@
 }
 
 .craftContent p {
-  margin: 1rem 0;
+  margin: 0.75rem 0;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.blankLine {
+  height: 1rem;
 }
 
 .craftContent a {
