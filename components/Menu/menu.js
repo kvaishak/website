@@ -28,10 +28,10 @@ export default function Menu() {
       label: "now",
       path: "/now",
     },
-    {
-      label: "notes",
-      path: "/notes",
-    },
+    // {
+    //   label: "notes",
+    //   path: "/notes",
+    // },
     // {
     //   label: "travels",
     //   path: "/travels",
