@@ -140,7 +140,7 @@ This markdown contains up to 5 most recently updated documents from the multi-do
       {
         "id": "612AF7D6-4E48-411D-8E7B-0FA9A04CD64B",
         "type": "text",
-        "markdown": "This website is the final realization of my vision for a polished, functional, and modern digital home. To learn more about the technical aspects and how this site was made, please visit my [colophon](https://kvaishak.com/colophon)."
+        "markdown": "This website is the final realization of my vision for a polished, functional, and modern digital home. To learn more about the technical aspects and how this site was made, please visit my [colophon](https://vaishak.de/colophon)."
       },
       {
         "id": "55A88CEB-B577-415A-B308-F67735608261",
