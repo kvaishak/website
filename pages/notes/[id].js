@@ -72,53 +72,67 @@ const NotePage = ({ recordMap, pageId, noteTitle, noteDate, noteTags }) => {
 };
 
 export async function getStaticPaths() {
-  const pageId = process.env.NOTION_NOTES_ID;
-  const notion = new NotionAPI({
-    activeUser: process.env.NOTION_ACTIVE_USER,
-  });
-  const recordMap = await notion.getPage(pageId);
+  // If Notion is unreachable (403/network), skip pre-render so the rest of
+  // the site can still build. fallback: 'blocking' regenerates on demand.
+  try {
+    const pageId = process.env.NOTION_NOTES_ID;
+    if (!pageId) {
+      return { paths: [], fallback: "blocking" };
+    }
 
-  const block = recordMap.block;
-  const collectionQuery = recordMap.collection_query ?? {};
-  const views = Object.values(collectionQuery)[0];
-  const pageIds = [];
-  if (views && typeof views === "object" && !Array.isArray(views)) {
-    Object.values(views).forEach((view) => {
-      view?.collection_group_results?.blockIds?.forEach((id) => {
-        if (!pageIds.includes(id)) {
-          pageIds.push(id);
-        }
-      });
+    const notion = new NotionAPI({
+      activeUser: process.env.NOTION_ACTIVE_USER,
     });
-  }
+    const recordMap = await notion.getPage(pageId);
 
-  function getBlockById(blockMap, id) {
-    const candidates = [id, id.includes("-") ? uuidToId(id) : idToUuid(id)];
-    for (const key of candidates) {
-      const entry = blockMap[key];
-      if (!entry) continue;
-      const b = getBlockValue(entry);
-      if (b && typeof b === "object") return b;
+    const block = recordMap.block;
+    const collectionQuery = recordMap.collection_query ?? {};
+    const views = Object.values(collectionQuery)[0];
+    const pageIds = [];
+    if (views && typeof views === "object" && !Array.isArray(views)) {
+      Object.values(views).forEach((view) => {
+        view?.collection_group_results?.blockIds?.forEach((id) => {
+          if (!pageIds.includes(id)) {
+            pageIds.push(id);
+          }
+        });
+      });
     }
-    return null;
-  }
 
-  const paths = [];
-  for (const id of pageIds) {
-    const pageBlock = getBlockById(block, id);
-    if (!pageBlock) continue;
-
-    const statusRaw = getPageProperty("Status", pageBlock, recordMap) ?? getPageProperty("status", pageBlock, recordMap);
-    const status = (typeof statusRaw === "string" ? statusRaw : String(statusRaw ?? "")).toLowerCase().trim();
-    if (status === "published") {
-      paths.push({ params: { id } });
+    function getBlockById(blockMap, id) {
+      const candidates = [id, id.includes("-") ? uuidToId(id) : idToUuid(id)];
+      for (const key of candidates) {
+        const entry = blockMap[key];
+        if (!entry) continue;
+        const b = getBlockValue(entry);
+        if (b && typeof b === "object") return b;
+      }
+      return null;
     }
-  }
 
-  return {
-    paths,
-    fallback: 'blocking',
-  };
+    const paths = [];
+    for (const id of pageIds) {
+      const pageBlock = getBlockById(block, id);
+      if (!pageBlock) continue;
+
+      const statusRaw = getPageProperty("Status", pageBlock, recordMap) ?? getPageProperty("status", pageBlock, recordMap);
+      const status = (typeof statusRaw === "string" ? statusRaw : String(statusRaw ?? "")).toLowerCase().trim();
+      if (status === "published") {
+        paths.push({ params: { id } });
+      }
+    }
+
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch (error) {
+    console.error("Error building note paths (Notion unreachable):", error);
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 }
 
 export async function getStaticProps({ params }) {
