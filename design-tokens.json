@@ -1,0 +1,482 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Design tokens for shak.sh — W3C DTCG format. Light/dark as sibling groups. Non-ratified types use custom-* prefix with $extensions.",
+
+  "color": {
+    "$description": "All colour tokens, split into light and dark mode groups",
+
+    "light": {
+      "brand": {
+        "primary": { "$value": "#33cc66", "$type": "color", "$description": "Primary brand green. --primaryColor" }
+      },
+      "background": {
+        "page":    { "$value": "#ffffff",    "$type": "color", "$description": "--bg" },
+        "surface": { "$value": "#ffffff",    "$type": "color", "$description": "Modal/card surface. --modalBg" },
+        "image":   { "$value": "#f9fafb",    "$type": "color", "$description": "Image placeholder bg. --imageBg" }
+      },
+      "text": {
+        "primary":   { "$value": "rgb(55, 53, 47)",       "$type": "color", "$description": "Main text. --fg-textColor" },
+        "menuLabel": { "$value": "rgba(0, 0, 0, 0.825)",  "$type": "color", "$description": "Nav label text. --menuLabel" }
+      },
+      "border": {
+        "linkContainer":      { "$value": "rgb(245, 245, 245)", "$type": "color", "$description": "--linkContainerBorder" },
+        "linkContainerHover": { "$value": "rgb(230, 230, 230)", "$type": "color", "$description": "--linkContainerBorderHover" },
+        "tab":                { "$value": "rgb(240, 240, 240)", "$type": "color", "$description": "--tabBorder" },
+        "footer":             { "$value": "rgba(0, 0, 0, 0.064)", "$type": "color", "$description": "--footerBorder / --highlightActiveBorder" }
+      },
+      "interactive": {
+        "linkContainerBg":      { "$value": "rgb(255, 255, 255)", "$type": "color", "$description": "--linkContainerBg" },
+        "linkContainerBgHover": { "$value": "rgb(243, 243, 243)", "$type": "color", "$description": "--linkContainerBgHover" },
+        "highlight":            { "$value": "rgba(255, 255, 255, 0.95)", "$type": "color", "$description": "Tab glider active bg. --highlight" },
+        "highlightHover":       { "$value": "rgba(0, 0, 0, 0.04)",  "$type": "color", "$description": "--highlighthover" },
+        "tabBg":                { "$value": "rgba(0, 0, 0, 0.04)",  "$type": "color", "$description": "Tab strip bg. --tabbg" },
+        "tabText":              { "$value": "rgba(0, 0, 0, 0.32)",  "$type": "color", "$description": "Inactive tab text. --tabText" },
+        "menuBg":               { "$value": "rgba(255, 255, 255, 0.05)", "$type": "color", "$description": "Nav backdrop tint. --menubg" }
+      },
+      "overlay": {
+        "backdrop": { "$value": "rgba(0, 0, 0, 0.3)", "$type": "color", "$description": "--overlayDarkness" }
+      }
+    },
+
+    "dark": {
+      "brand": {
+        "primary":        { "$value": "#33cc66", "$type": "color", "$description": "Same as light — brand green is theme-invariant" },
+        "primaryMarker":  { "$value": "#3fd971", "$type": "color", "$description": "Slightly brighter green for map cluster markers in dark mode" }
+      },
+      "background": {
+        "page":    { "$value": "rgb(16, 16, 16)", "$type": "color", "$description": "--bg dark" },
+        "surface": { "$value": "rgb(28, 28, 28)", "$type": "color", "$description": "--modalBg dark" },
+        "image":   { "$value": "#191919",         "$type": "color", "$description": "--imageBg dark" }
+      },
+      "text": {
+        "primary":   { "$value": "rgba(255, 255, 255, 0.9)", "$type": "color", "$description": "--fg-textColor dark" },
+        "menuLabel": { "$value": "rgba(255, 255, 255, 0.8)", "$type": "color", "$description": "--menuLabel dark" }
+      },
+      "border": {
+        "linkContainer":      { "$value": "rgb(26, 26, 26)", "$type": "color", "$description": "--linkContainerBorder dark" },
+        "linkContainerHover": { "$value": "rgb(45, 45, 45)", "$type": "color", "$description": "--linkContainerBorderHover dark" },
+        "tab":                { "$value": "rgb(44, 44, 44)", "$type": "color", "$description": "--tabBorder dark" },
+        "footer":             { "$value": "rgba(255, 255, 255, 0.04)", "$type": "color", "$description": "--footerBorder dark" }
+      },
+      "interactive": {
+        "linkContainerBg":      { "$value": "rgb(21, 21, 21)", "$type": "color", "$description": "--linkContainerBg dark" },
+        "linkContainerBgHover": { "$value": "rgb(42, 42, 42)", "$type": "color", "$description": "--linkContainerBgHover dark" },
+        "highlight":            { "$value": "rgba(255, 255, 255, 0.1)",   "$type": "color", "$description": "--highlight dark" },
+        "highlightHover":       { "$value": "rgba(255, 255, 255, 0.05)",  "$type": "color", "$description": "--highlighthover dark" },
+        "highlightActiveBorder":{ "$value": "rgba(255, 255, 255, 0.04)",  "$type": "color", "$description": "--highlightActiveBorder dark" },
+        "tabBg":                { "$value": "rgba(255, 255, 255, 0.06)",  "$type": "color", "$description": "--tabbg dark" },
+        "tabText":              { "$value": "rgba(255, 255, 255, 0.372)", "$type": "color", "$description": "--tabText dark" },
+        "menuBg":               { "$value": "rgba(16, 16, 16, 0.05)",    "$type": "color", "$description": "--menubg dark" }
+      },
+      "overlay": {
+        "backdrop": { "$value": "rgba(0, 0, 0, 0.65)", "$type": "color", "$description": "--overlayDarkness dark" }
+      }
+    },
+
+    "tag": {
+      "$description": "Notion-style tag chip background colours",
+      "light": {
+        "default": { "$value": "#f1f1f0", "$type": "color" },
+        "gray":    { "$value": "#e3e2e0", "$type": "color" },
+        "brown":   { "$value": "#ece1db", "$type": "color" },
+        "orange":  { "$value": "#f6dfcc", "$type": "color" },
+        "yellow":  { "$value": "#faedcc", "$type": "color" },
+        "green":   { "$value": "#dfeddd", "$type": "color" },
+        "blue":    { "$value": "#d7e5ee", "$type": "color" },
+        "purple":  { "$value": "#e6dfed", "$type": "color" },
+        "pink":    { "$value": "#f2e1e9", "$type": "color" },
+        "red":     { "$value": "#fae3de", "$type": "color" },
+        "text":    { "$value": "rgba(0, 0, 0, 0.74)",   "$type": "color", "$description": "Tag label colour in light mode" }
+      },
+      "dark": {
+        "default": { "$value": "#414141", "$type": "color" },
+        "gray":    { "$value": "#5a5a5a", "$type": "color" },
+        "brown":   { "$value": "#5b3d2f", "$type": "color" },
+        "orange":  { "$value": "#7d4f27", "$type": "color" },
+        "yellow":  { "$value": "#836534", "$type": "color" },
+        "green":   { "$value": "#375841", "$type": "color" },
+        "blue":    { "$value": "#2f4469", "$type": "color" },
+        "purple":  { "$value": "#453061", "$type": "color" },
+        "pink":    { "$value": "#62344b", "$type": "color" },
+        "red":     { "$value": "#673932", "$type": "color" },
+        "text":    { "$value": "rgba(255, 255, 255, 0.68)", "$type": "color", "$description": "Tag label colour in dark mode" }
+      }
+    },
+
+    "notion": {
+      "$description": "react-notion-x CSS variable colour values",
+      "light": {
+        "fg":              { "$value": "rgb(55, 53, 47)",          "$type": "color", "$description": "--fg-color" },
+        "fg0":             { "$value": "rgba(55, 53, 47, 0.09)",   "$type": "color", "$description": "--fg-color-0" },
+        "fg1":             { "$value": "rgba(55, 53, 47, 0.16)",   "$type": "color", "$description": "--fg-color-1" },
+        "fg2":             { "$value": "rgba(55, 53, 47, 0.4)",    "$type": "color", "$description": "--fg-color-2" },
+        "fg3":             { "$value": "rgba(55, 53, 47, 0.6)",    "$type": "color", "$description": "--fg-color-3" },
+        "fg4":             { "$value": "#000000",                  "$type": "color", "$description": "--fg-color-4" },
+        "fg5":             { "$value": "rgba(55, 53, 47, 0.024)",  "$type": "color", "$description": "--fg-color-5" },
+        "fg6":             { "$value": "rgba(55, 53, 47, 0.8)",    "$type": "color", "$description": "--fg-color-6" },
+        "bg":              { "$value": "#ffffff",                  "$type": "color", "$description": "--bg-color" },
+        "bg0":             { "$value": "rgba(135, 131, 120, 0.15)", "$type": "color", "$description": "--bg-color-0 / --bg-color-2" },
+        "bg1":             { "$value": "rgb(247, 246, 243)",       "$type": "color", "$description": "--bg-color-1" },
+        "selectColor0":    { "$value": "rgb(46, 170, 220)",        "$type": "color", "$description": "--select-color-0" },
+        "selectColor1":    { "$value": "rgba(45, 170, 219, 0.3)",  "$type": "color", "$description": "--select-color-1" },
+        "selectColor2":    { "$value": "#d9eff8",                  "$type": "color", "$description": "--select-color-2" },
+        "red":             { "$value": "rgb(224, 62, 62)",         "$type": "color" },
+        "pink":            { "$value": "rgb(173, 26, 114)",        "$type": "color" },
+        "blue":            { "$value": "rgb(11, 110, 153)",        "$type": "color" },
+        "purple":          { "$value": "rgb(105, 64, 165)",        "$type": "color" },
+        "teal":            { "$value": "rgb(77, 100, 97)",         "$type": "color" },
+        "yellow":          { "$value": "rgb(223, 171, 1)",         "$type": "color" },
+        "orange":          { "$value": "rgb(217, 115, 13)",        "$type": "color" },
+        "brown":           { "$value": "rgb(100, 71, 58)",         "$type": "color" },
+        "gray":            { "$value": "rgb(155, 154, 151)",       "$type": "color" },
+        "redBg":           { "$value": "rgb(251, 228, 228)",       "$type": "color" },
+        "pinkBg":          { "$value": "rgb(244, 223, 235)",       "$type": "color" },
+        "blueBg":          { "$value": "rgb(221, 235, 241)",       "$type": "color" },
+        "purpleBg":        { "$value": "rgb(234, 228, 242)",       "$type": "color" },
+        "tealBg":          { "$value": "rgb(221, 237, 234)",       "$type": "color" },
+        "yellowBg":        { "$value": "rgb(251, 243, 219)",       "$type": "color" },
+        "orangeBg":        { "$value": "rgb(250, 235, 221)",       "$type": "color" },
+        "brownBg":         { "$value": "rgb(233, 229, 227)",       "$type": "color" },
+        "grayBg":          { "$value": "rgb(235, 236, 237)",       "$type": "color" }
+      },
+      "dark": {
+        "fg":     { "$value": "rgba(255, 255, 255, 0.9)", "$type": "color", "$description": "--fg-color (dark override in .dark-theme)" },
+        "fg5":    { "$value": "rgba(255, 255, 255, 0.7)", "$type": "color" },
+        "fg6":    { "$value": "#ffffff",                  "$type": "color" },
+        "bg":     { "$value": "#2f3437",                  "$type": "color", "$description": "--bg-color (react-notion-x dark-mode class)" },
+        "bg0":    { "$value": "rgb(71, 76, 80)",          "$type": "color" },
+        "bg1":    { "$value": "rgb(63, 68, 71)",          "$type": "color" },
+        "red":    { "$value": "rgb(255, 115, 105)",       "$type": "color" },
+        "pink":   { "$value": "rgb(226, 85, 161)",        "$type": "color" },
+        "blue":   { "$value": "rgb(82, 156, 202)",        "$type": "color" },
+        "purple": { "$value": "rgb(154, 109, 215)",       "$type": "color" },
+        "teal":   { "$value": "rgb(77, 171, 154)",        "$type": "color" },
+        "yellow": { "$value": "rgb(255, 220, 73)",        "$type": "color" },
+        "orange": { "$value": "rgb(255, 163, 68)",        "$type": "color" },
+        "brown":  { "$value": "rgb(147, 114, 100)",       "$type": "color" },
+        "gray":   { "$value": "rgba(151, 154, 155, 0.95)", "$type": "color" },
+        "redBg":    { "$value": "rgb(89, 65, 65)",        "$type": "color" },
+        "pinkBg":   { "$value": "rgb(83, 59, 76)",        "$type": "color" },
+        "blueBg":   { "$value": "rgb(54, 73, 84)",        "$type": "color" },
+        "purpleBg": { "$value": "rgb(68, 63, 87)",        "$type": "color" },
+        "tealBg":   { "$value": "rgb(53, 76, 75)",        "$type": "color" },
+        "yellowBg": { "$value": "rgb(89, 86, 59)",        "$type": "color" },
+        "orangeBg": { "$value": "rgb(89, 74, 58)",        "$type": "color" },
+        "brownBg":  { "$value": "rgb(67, 64, 64)",        "$type": "color" },
+        "grayBg":   { "$value": "rgb(69, 75, 78)",        "$type": "color" }
+      }
+    }
+  },
+
+  "font": {
+    "$description": "Font family definitions and @font-face metadata",
+    "family": {
+      "sans": {
+        "$value": "Aktiv Grotesk",
+        "$type": "fontFamily",
+        "$description": "Primary UI font. Variable font, weights 100-900. --font-sans"
+      },
+      "display": {
+        "$value": "Caveat",
+        "$type": "fontFamily",
+        "$description": "Handwritten display font for logo/decorative text. Variable font, weights 400-700"
+      },
+      "notion": {
+        "$value": "ui-sans-serif, system-ui, apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, \"Apple Color Emoji\", Arial, sans-serif, \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+        "$type": "fontFamily",
+        "$description": "System fallback stack used by react-notion-x. --notion-font"
+      },
+      "system": {
+        "$value": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+        "$type": "fontFamily",
+        "$description": "System fallback for icon arrows and decorative inline characters"
+      }
+    },
+    "face": {
+      "$description": "Raw font-face data. $type is custom-fontFace (non-ratified); tooling should skip unknown types.",
+      "aktivGrotesk": {
+        "$type": "custom-fontFace",
+        "$extensions": {
+          "fontFace": {
+            "family": "Aktiv Grotesk",
+            "src": "/fonts/AktivGroteskVF_W_Wght.woff2",
+            "formats": ["woff2 supports variations", "woff2-variations"],
+            "weight": "100 900",
+            "display": "block"
+          }
+        }
+      },
+      "caveat": {
+        "$type": "custom-fontFace",
+        "$extensions": {
+          "fontFace": {
+            "family": "Caveat",
+            "src": "/fonts/Caveat-VariableFont_wght.ttf",
+            "formats": ["truetype"],
+            "weight": "400 700",
+            "display": "block"
+          }
+        }
+      }
+    }
+  },
+
+  "typography": {
+    "$description": "Type scale, heading sizes, font weights, and text properties",
+
+    "scale": {
+      "$description": "CSS custom properties --font-title/l/m/s at each breakpoint",
+      "desktop": {
+        "title": { "$value": "20px",   "$type": "dimension", "$description": "--font-title (desktop)" },
+        "l":     { "$value": "14.9px", "$type": "dimension", "$description": "--font-l (desktop)" },
+        "m":     { "$value": "13.7px", "$type": "dimension", "$description": "--font-m (desktop)" },
+        "s":     { "$value": "12.3px", "$type": "dimension", "$description": "--font-s (desktop)" }
+      },
+      "mobile": {
+        "$description": "Overrides applied at max-width: 700px. Note: --font-l is intentionally LARGER on mobile (readability).",
+        "title": { "$value": "18px",   "$type": "dimension" },
+        "l":     { "$value": "16px",   "$type": "dimension" },
+        "m":     { "$value": "14.8px", "$type": "dimension" },
+        "s":     { "$value": "13.3px", "$type": "dimension" }
+      }
+    },
+
+    "heading": {
+      "$description": "Fixed rem-based heading sizes (not using the scale variables)",
+      "h1":        { "$value": "2.275rem", "$type": "dimension", "$description": ".header" },
+      "h1Mobile":  { "$value": "2.5rem",   "$type": "dimension", "$description": ".header on mobile (<700px) — larger" },
+      "projects":  { "$value": "2.25rem",  "$type": "dimension", "$description": ".projectHeader" },
+      "goods":     { "$value": "1.75rem",  "$type": "dimension", "$description": ".goodsHeader" },
+      "readTitle": { "$value": "1.25rem",  "$type": "dimension", "$description": ".readTitle / .read h2" },
+      "readTitleMobile": { "$value": "1.5rem", "$type": "dimension", "$description": ".readTitle on mobile" },
+      "h3":        { "$value": "1rem",     "$type": "dimension", "$description": ".read h3" }
+    },
+
+    "weight": {
+      "$description": "Precise variable-font weights. Only work correctly with Aktiv Grotesk variable font loaded.",
+      "body":          { "$value": 390, "$type": "fontWeight", "$description": "Default paragraph / .description / .tileTitle" },
+      "bodyMedium":    { "$value": 440, "$type": "fontWeight", "$description": ".badge / .textDivider" },
+      "bodyStrong":    { "$value": 450, "$type": "fontWeight", "$description": "Mid-weight labels" },
+      "label":         { "$value": 480, "$type": "fontWeight", "$description": ".backButton / .secondaryButton / .primaryButton" },
+      "readHeading":   { "$value": 540, "$type": "fontWeight", "$description": ".read h2 / .read h3" },
+      "readTitle":     { "$value": 550, "$type": "fontWeight", "$description": ".readTitle" },
+      "heading":       { "$value": 560, "$type": "fontWeight", "$description": ".header" },
+      "goodsHeader":   { "$value": 580, "$type": "fontWeight", "$description": ".goodsHeader" },
+      "projectHeader": { "$value": 620, "$type": "fontWeight", "$description": ".projectHeader" }
+    },
+
+    "lineHeight": {
+      "base":        { "$value": 1.5,  "$type": "number", "$description": "Default content line height" },
+      "description": { "$value": 1.68, "$type": "number", "$description": ".description" },
+      "reading":     { "$value": 1.75, "$type": "number", "$description": ".read p / .read li" },
+      "compact":     { "$value": 1.35, "$type": "number", "$description": ".viewTruncated" },
+      "tileTitle":   { "$value": 1.1,  "$type": "number", "$description": ".tileTitle" },
+      "tileContent": { "$value": 1.4,  "$type": "number", "$description": ".tileContent" },
+      "heading":     { "$value": 1.7,  "$type": "number", "$description": ".read h2 / .read h3 / .readTitle (170%)" },
+      "goodsDesc":   { "$value": 1.38, "$type": "number", "$description": ".goodsDescription" }
+    },
+
+    "letterSpacing": {
+      "base": { "$value": "0.1px", "$type": "dimension", "$description": "Default on p elements" }
+    }
+  },
+
+  "spacing": {
+    "$description": "Layout spacing values",
+    "containerPaddingH":       { "$value": "2rem",  "$type": "dimension", "$description": ".container horizontal padding" },
+    "containerPaddingHMobile": { "$value": "1rem",  "$type": "dimension", "$description": ".page mobile horizontal padding" },
+    "mainPaddingTop":          { "$value": "9rem",  "$type": "dimension", "$description": ".main top padding (desktop)" },
+    "mainPaddingTopMobile":    { "$value": "8rem",  "$type": "dimension", "$description": ".main top padding (mobile)" },
+    "mainPaddingBottom":       { "$value": "4rem",  "$type": "dimension", "$description": ".main bottom padding" },
+    "footerPaddingV":          { "$value": "2rem",  "$type": "dimension", "$description": ".footer vertical padding" },
+    "maxWidthContent":         { "$value": "50rem", "$type": "dimension", "$description": "Standard content column max-width (.title, .content, notion)" },
+    "maxWidthNotion":          { "$value": "720px", "$type": "dimension", "$description": ".projectTopLeft / notion sidebar threshold" },
+    "maxWidthProjects":        { "$value": "1200px", "$type": "dimension", "$description": ".projectColumn max-width" },
+    "maxWidthGoods":           { "$value": "1650px", "$type": "dimension", "$description": ".goodsColumn max-width" },
+    "maxWidthPageColumn":      { "$value": "40rem",  "$type": "dimension", "$description": ".pageColumn max-width" },
+    "embedHeight":             { "$value": "320px",  "$type": "dimension", "$description": ".embed height" },
+    "buttonHeight":            { "$value": "2.075rem", "$type": "dimension", "$description": ".button height" },
+    "tabHeight":               { "$value": "44px",   "$type": "dimension", "$description": ".tab height" },
+    "tabBarHeight":            { "$value": "43px",   "$type": "dimension", "$description": ".tabBar height" },
+    "tabBarTop":               { "$value": "-32px",  "$type": "dimension", "$description": ".tabBar sticky top offset" },
+    "iconSizeDesktop":         { "$value": "16px",   "$type": "dimension", "$description": ".icon width/height (desktop)" },
+    "iconSizeMobile":          { "$value": "22px",   "$type": "dimension", "$description": ".icon width/height (mobile)" }
+  },
+
+  "breakpoint": {
+    "$description": "All max-width unless noted",
+    "smallMobile": { "$value": "500px",  "$type": "dimension", "$description": "Grid collapses to 1 column" },
+    "mobile":      { "$value": "700px",  "$type": "dimension", "$description": "Primary breakpoint for most layout changes" },
+    "medium":      { "$value": "1280px", "$type": "dimension", "$description": "Grid: 3→2 columns" },
+    "large":       { "$value": "1680px", "$type": "dimension", "$description": "Grid: 4→3 columns" },
+    "sidebar": {
+      "$value": "1300px",
+      "$type": "dimension",
+      "$description": "min-width for notion aside/TOC to appear. Also requires min-height: 300px.",
+      "$extensions": { "minHeight": "300px", "isMinWidth": true }
+    }
+  },
+
+  "borderRadius": {
+    "tag":        { "$value": "3px",   "$type": "dimension", "$description": "Tags, code blocks (code {})" },
+    "icon":       { "$value": "5px",   "$type": "dimension", "$description": ".icon" },
+    "xsmall":     { "$value": "4px",   "$type": "dimension", "$description": ".internalLink, .externalLink, .read a, .settingButton, .checkbox (0.25rem)" },
+    "standard":   { "$value": "5px",   "$type": "dimension", "$description": ".popover, .tooltip, .singleButton, .secondaryButton, .primaryButton" },
+    "container":  { "$value": "6px",   "$type": "dimension", "$description": ".inlineCTA, .emptyState, general interactive containers" },
+    "card":       { "$value": "8px",   "$type": "dimension", "$description": ".page card (desktop), .tooltipLarge (0.5rem)" },
+    "media":      { "$value": "10px",  "$type": "dimension", "$description": "Card in reference styles" },
+    "image":      { "$value": "12px",  "$type": "dimension", "$description": ".imageBg, .video, leaflet popup" },
+    "modal":      { "$value": "16px",  "$type": "dimension", "$description": "Contact modal (1rem)" },
+    "pill":       { "$value": "24px",  "$type": "dimension", "$description": ".backButton pill (1.5rem)" },
+    "circle":     { "$value": "50%",   "$type": "dimension", "$description": "Map cluster marker circles" },
+    "menuButton": { "$value": "2em",   "$type": "dimension", "$description": "Let's chat CTA nav button" }
+  },
+
+  "shadow": {
+    "$description": "Box shadow tokens. Multi-layer values are arrays.",
+    "card": {
+      "$value": { "offsetX": "0px", "offsetY": "1px", "blur": "6px", "spread": "0px", "color": "rgba(0, 0, 0, 0.035)" },
+      "$type": "shadow",
+      "$description": ".page card — extremely subtle"
+    },
+    "popover": {
+      "$value": [
+        { "offsetX": "0px", "offsetY": "10px", "blur": "38px", "spread": "-10px", "color": "hsl(206 22% 7% / 60%)" },
+        { "offsetX": "0px", "offsetY": "10px", "blur": "20px", "spread": "-15px", "color": "hsl(206 22% 7% / 30%)" }
+      ],
+      "$type": "shadow",
+      "$description": ".popover (Radix Popover pattern)"
+    },
+    "tooltip": {
+      "$value": [
+        { "offsetX": "0px", "offsetY": "10px", "blur": "38px", "spread": "-10px", "color": "hsl(206 22% 7% / 80%)" },
+        { "offsetX": "0px", "offsetY": "10px", "blur": "20px", "spread": "-15px", "color": "hsl(206 22% 7% / 50%)" }
+      ],
+      "$type": "shadow",
+      "$description": ".tooltip"
+    },
+    "tooltipLarge": {
+      "$value": [
+        { "offsetX": "0px", "offsetY": "10px", "blur": "38px", "spread": "-10px", "color": "hsl(206 22% 7% / 30%)" },
+        { "offsetX": "0px", "offsetY": "10px", "blur": "20px", "spread": "-15px", "color": "hsl(206 22% 7% / 20%)" }
+      ],
+      "$type": "shadow",
+      "$description": ".tooltipLarge"
+    },
+    "leafletPopup": {
+      "$value": { "offsetX": "0px", "offsetY": "4px", "blur": "20px", "spread": "0px", "color": "rgba(0, 0, 0, 0.08)" },
+      "$type": "shadow",
+      "$description": "Leaflet map popup (light mode)"
+    },
+    "leafletPopupDark": {
+      "$value": { "offsetX": "0px", "offsetY": "4px", "blur": "20px", "spread": "0px", "color": "rgba(0, 0, 0, 0.7)" },
+      "$type": "shadow",
+      "$description": "Leaflet map popup (dark mode)"
+    },
+    "clusterMarker": {
+      "$value": [
+        { "offsetX": "0px", "offsetY": "2px", "blur": "6px", "spread": "0px",  "color": "rgba(0, 0, 0, 0.2)" },
+        { "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "2px",  "color": "#ffffff" }
+      ],
+      "$type": "shadow",
+      "$description": "Map cluster marker badge ring + drop shadow"
+    },
+    "clusterMarkerDark": {
+      "$value": [
+        { "offsetX": "0px", "offsetY": "2px", "blur": "8px", "spread": "0px",  "color": "rgba(0, 0, 0, 0.4)" },
+        { "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "3px",  "color": "rgba(255, 255, 255, 0.15)" }
+      ],
+      "$type": "shadow",
+      "$description": "Map cluster marker badge ring in dark mode"
+    }
+  },
+
+  "animation": {
+    "$description": "Motion tokens — durations, easing curves, keyframes, and common transition shorthands",
+
+    "duration": {
+      "hover":    { "$value": "150ms", "$type": "duration", "$description": "Fastest hover transitions (tab scaleX)" },
+      "fast":     { "$value": "200ms", "$type": "duration", "$description": "bg/icon/transform transitions" },
+      "default":  { "$value": "250ms", "$type": "duration", "$description": "colour/border/color transitions" },
+      "popover":  { "$value": "400ms", "$type": "duration", "$description": "Popover entrance animation" },
+      "tooltip":  { "$value": "500ms", "$type": "duration", "$description": "Tooltip entrance animation" },
+      "modalOpen":  { "$value": "250ms", "$type": "duration", "$description": "Modal open animation" },
+      "modalClose": { "$value": "200ms", "$type": "duration", "$description": "Modal close animation" }
+    },
+
+    "easing": {
+      "standard": {
+        "$value": [0.16, 1, 0.3, 1],
+        "$type": "cubicBezier",
+        "$description": "Radix-style spring — used for all popover/tooltip/modal entrances"
+      },
+      "ease":    { "$value": [0.25, 0.1, 0.25, 1.0], "$type": "cubicBezier", "$description": "CSS ease" },
+      "easeOut": { "$value": [0.0,  0.0, 0.58, 1.0], "$type": "cubicBezier", "$description": "CSS ease-out" },
+      "easeIn":  { "$value": [0.42, 0.0, 1.0,  1.0], "$type": "cubicBezier", "$description": "CSS ease-in" }
+    },
+
+    "keyframe": {
+      "$description": "Named @keyframe definitions. $type custom-keyframe; from/to values in $extensions.",
+      "slideUpAndFade": {
+        "$type": "custom-keyframe",
+        "$extensions": {
+          "from": { "opacity": "0", "transform": "translateY(2px)" },
+          "to":   { "opacity": "1", "transform": "translateY(0)" }
+        }
+      },
+      "slideDownAndFade": {
+        "$type": "custom-keyframe",
+        "$extensions": {
+          "from": { "opacity": "0", "transform": "translateY(-2px)" },
+          "to":   { "opacity": "1", "transform": "translateY(0)" }
+        }
+      },
+      "slideLeftAndFade": {
+        "$type": "custom-keyframe",
+        "$extensions": {
+          "from": { "opacity": "0", "transform": "translateX(2px)" },
+          "to":   { "opacity": "1", "transform": "translateX(0)" }
+        }
+      },
+      "slideRightAndFade": {
+        "$type": "custom-keyframe",
+        "$extensions": {
+          "from": { "opacity": "0", "transform": "translateX(-2px)" },
+          "to":   { "opacity": "1", "transform": "translateX(0)" }
+        }
+      }
+    },
+
+    "transition": {
+      "$description": "Common CSS transition shorthand strings for copy-paste into stylesheets",
+      "background": { "$value": "background-color 200ms ease",       "$type": "custom-transition" },
+      "color":      { "$value": "color 250ms ease",                   "$type": "custom-transition" },
+      "border":     { "$value": "border-color 250ms ease",            "$type": "custom-transition" },
+      "all":        { "$value": "all 200ms ease",                     "$type": "custom-transition" },
+      "allFast":    { "$value": "all 150ms ease",                     "$type": "custom-transition" },
+      "opacity":    { "$value": "opacity 150ms ease",                 "$type": "custom-transition" },
+      "linkBorder": { "$value": "border-color 100ms ease-in, opacity 100ms ease-in", "$type": "custom-transition" }
+    }
+  },
+
+  "theme": {
+    "$description": "Theme system metadata",
+    "attribute":           { "$value": "class",       "$type": "custom-string", "$description": "next-themes attribute — applies theme as a CSS class" },
+    "darkClass":           { "$value": "dark-theme",  "$type": "custom-string", "$description": "CSS class applied to <html> in dark mode (next-themes)" },
+    "notionDarkClass":     { "$value": "dark-mode",   "$type": "custom-string", "$description": "CSS class used by react-notion-x for dark mode (separate from darkClass)" },
+    "backdropBlur":        { "$value": "15px",        "$type": "dimension",     "$description": "Nav backdrop-filter blur radius" },
+    "navLogoWidth":        { "$value": "130px",       "$type": "dimension",     "$description": ".logoInvert nav logo width" },
+    "radixColorImports": {
+      "$type": "custom-array",
+      "$description": "Radix UI CSS colour palettes imported in globals.css. Provides --gray1 through --gray12 (and dark variants).",
+      "$extensions": {
+        "imports": [
+          "@radix-ui/colors/gray.css",
+          "@radix-ui/colors/white-alpha.css",
+          "@radix-ui/colors/black-alpha.css",
+          "@radix-ui/colors/gray-dark.css"
+        ]
+      }
+    }
+  }
+}
